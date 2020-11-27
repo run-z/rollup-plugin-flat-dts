@@ -10,7 +10,7 @@
   "excludeNotExported": true,
   "mode": "file",
   "theme": "minimal",
-  "name": ".d.ts flattener",
+  "name": ".d.ts Flattener",
   "out": "./target/typedoc",
   "tsconfig": "tsconfig.json"
 }
