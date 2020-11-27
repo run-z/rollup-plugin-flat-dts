@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "Node",
+    "module": "ES2015",
+    "target": "ES2018",
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "importsNotUsedAsValues": "error",
+    "noEmitHelpers": true,
+    "lib": [
+      "ES2018"
+    ],
+    "types": [
+      "node"
+    ],
+    "outDir": "target/js",
+    "sourceMap": true,
+    "newLine": "LF"
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

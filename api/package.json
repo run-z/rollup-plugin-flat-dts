@@ -1,0 +1,5 @@
+{
+  "main": "../dist/flat-dts.api.cjs",
+  "module": "../dist/flat-dts.api.js",
+  "types": "./index.d.ts"
+}
