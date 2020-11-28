@@ -32,13 +32,12 @@ export async function emitFlatDts(
     compilerOptions.target = target = ts.ScriptTarget.Latest;
   }
 
-  const program = ts.createProgram(
-      files,
-      compilerOptions,
-      ts.createCompilerHost(compilerOptions, true),
-      undefined,
-      errors,
-  );
+  const program = ts.createProgram({
+    rootNames: files,
+    options: compilerOptions,
+    host: ts.createCompilerHost(compilerOptions, true),
+    configFileParsingDiagnostics: errors,
+  });
 
   const { path, content, diagnostics } = await new Promise<EmittedDts>(resolve => {
 
