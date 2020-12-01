@@ -118,16 +118,16 @@ export class ModuleInfo {
 async function packageName(): Promise<string> {
 
   const packageJson = await fs.readFile('package.json', { encoding: 'utf-8' });
-  const result: string | undefined = JSON.parse(packageJson).name;
+  const { name } = JSON.parse(packageJson) as { name?: string };
 
-  if (!result) {
+  if (!name) {
     throw new Error(
         'Can not detect module name automatically. '
         + 'Consider to set `flatDts({ moduleName: \'<MODULE>\' })` option explicitly',
     );
   }
 
-  return result;
+  return name;
 }
 
 /**
