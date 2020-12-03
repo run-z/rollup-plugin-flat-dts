@@ -86,7 +86,7 @@ To adhere to these limitations the project structure could be like this:
    Every such symbols has a javadoc block containing `@internal` tag.
    
    Alternatively, the internal modules follow some naming convention. The `internal` option reflects this convention.
-   E.g. `internal: ['**/impl/**', '**/*.impl]` would treat all `.impl.ts` source files and files impl `impl` directories
+   E.g. `internal: ['**/impl/**', '**/*.impl]` would treat all `.impl.ts` source files and files in `impl/` directories
    as part of internal API. 
 
 3. Rollup entry points are index files.
