@@ -33,7 +33,7 @@
     }
   },
   "peerDependencies": {
-    "rollup": "^2.34.1",
+    "rollup": "^2.34.2",
     "typescript": "~4.1.2"
   },
   "peerDependenciesMeta": {
@@ -54,10 +54,10 @@
     "@types/node": "^12.19.8",
     "@typescript-eslint/eslint-plugin": "^4.9.0",
     "@typescript-eslint/parser": "^4.9.0",
-    "eslint": "^7.14.0",
+    "eslint": "^7.15.0",
     "eslint-plugin-jest": "^24.1.3",
     "gh-pages": "^3.1.0",
-    "rollup": "^2.34.1",
+    "rollup": "^2.34.2",
     "rollup-plugin-sourcemaps": "^0.6.3",
     "rollup-plugin-typescript2": "^0.29.0",
     "run-z": "=1.6.1-bootstrap",
