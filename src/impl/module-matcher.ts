@@ -21,8 +21,8 @@ export function moduleMatcher(patterns: string | readonly string[] | undefined):
 function patternsToGlobs(patterns: string | readonly string[] | undefined): readonly string[] {
   return patterns
       ? (Array.isArray(patterns)
-          ? patterns.map(patternToGlob)
-          : [patternToGlob(patterns)])
+          ? (patterns as readonly string[]).map(patternToGlob)
+          : [patternToGlob(patterns as string)])
       : [];
 }
 
