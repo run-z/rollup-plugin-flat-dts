@@ -1,15 +1,5 @@
 {
-  "disableAutoModuleName": true,
-  "exclude": [
-    "**/index.ts",
-    "**/*.impl.ts",
-    "**/impl/**/*.ts",
-    "**/spec/**/*.ts",
-    "**/*.spec.ts"
-  ],
-  "excludeNotExported": true,
-  "mode": "file",
-  "theme": "minimal",
+  "entryPoints": ["src/plugin.ts", "src/api/index.ts"],
   "name": ".d.ts Flattener",
   "out": "./target/typedoc",
   "tsconfig": "tsconfig.json"
