@@ -301,7 +301,7 @@ Other Tools
 - [@wessberg/rollup-plugin-ts] Is able to generate merged type definitions as well.
 - [API extractor] Does not support multiple entries intentionally.
 
-See more [here](https://github.com/timocov/dts-bundle-generator/issues/68). 
+See more [here](https://github.com/timocov/dts-bundle-generator/discussions/68). 
 
 [rollup-plugin-dts]: https://www.npmjs.com/package/rollup-plugin-dts
 [@wessberg/rollup-plugin-ts]: https://www.npmjs.com/package/@wessberg/rollup-plugin-ts
