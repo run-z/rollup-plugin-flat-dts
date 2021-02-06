@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module rollup-plugin-flat-dts/api
- */
 import type * as ts from 'typescript';
 
 /**

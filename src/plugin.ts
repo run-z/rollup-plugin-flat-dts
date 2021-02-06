@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module rollup-plugin-flat-dts
+ * @module Module rollup-plugin-flat-dts
  */
 import type { OutputPlugin } from 'rollup';
 import type { FlatDts } from './api';

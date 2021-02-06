@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module rollup-plugin-flat-dts/api
- */
 import ts from 'typescript';
 import { DtsSource, DtsTransformer, emptyDts, readCompilerOptions } from '../impl';
 import type { FlatDts } from './flat-dts';
