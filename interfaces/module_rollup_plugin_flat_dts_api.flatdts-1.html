@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>File | .d.ts Flattener</title>
+	<title>FlatDts | .d.ts Flattener</title>
 	<meta name="description" content="Documentation for .d.ts Flattener">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,16 +55,13 @@
 					<a href="../modules.html">.d.ts Flattener</a>
 				</li>
 				<li>
-					<a href="../modules/rollup_plugin_flat_dts.html">rollup-plugin-flat-dts</a>
+					<a href="../modules/module_rollup_plugin_flat_dts_api.html">Module rollup-plugin-flat-dts/api</a>
 				</li>
 				<li>
-					<a href="../modules/rollup_plugin_flat_dts.flatdts.html">FlatDts</a>
-				</li>
-				<li>
-					<a href="rollup_plugin_flat_dts.flatdts.file.html">File</a>
+					<a href="module_rollup_plugin_flat_dts_api.flatdts-1.html">FlatDts</a>
 				</li>
 			</ul>
-			<h1>Interface File</h1>
+			<h1>Interface FlatDts</h1>
 		</div>
 	</div>
 </header>
@@ -74,16 +71,15 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Emitted <code>.d.ts</code> file.</p>
+						<p>Flattened type definitions.</p>
 					</div>
-					<p>The file is not actually written to the disk by <a href="rollup_plugin_flat_dts.flatdts.file.html#writeout">File.writeOut</a> call.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">File</span>
+						<span class="target">FlatDts</span>
 					</li>
 				</ul>
 			</section>
@@ -94,14 +90,15 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rollup_plugin_flat_dts.flatdts.file.html#content" class="tsd-kind-icon">content</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rollup_plugin_flat_dts.flatdts.file.html#path" class="tsd-kind-icon">path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="module_rollup_plugin_flat_dts_api.flatdts-1.html#diagnostics" class="tsd-kind-icon">diagnostics</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="module_rollup_plugin_flat_dts_api.flatdts-1.html#files" class="tsd-kind-icon">files</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="rollup_plugin_flat_dts.flatdts.file.html#writeout" class="tsd-kind-icon">write<wbr>Out</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="module_rollup_plugin_flat_dts_api.flatdts-1.html#formatdiagnostics" class="tsd-kind-icon">format<wbr>Diagnostics</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="module_rollup_plugin_flat_dts_api.flatdts-1.html#writeout" class="tsd-kind-icon">write<wbr>Out</a></li>
 							</ul>
 						</section>
 					</div>
@@ -110,68 +107,91 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="content" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> content</h3>
-					<div class="tsd-signature tsd-kind-icon">content<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="diagnostics" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> diagnostics</h3>
+					<div class="tsd-signature tsd-kind-icon">diagnostics<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">readonly </span><span class="tsd-signature-type">Diagnostic</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/run-z/rollup-plugin-flat-dts/blob/65c1d44/src/api/flat-dts.ts#L179">api/flat-dts.ts:179</a></li>
+							<li>Defined in <a href="https://github.com/run-z/rollup-plugin-flat-dts/blob/03140b4/src/api/flat-dts.ts#L18">api/flat-dts.ts:18</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Emitted <code>.d.ts</code> file contents.</p>
+							<p>Emission diagnostics.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="path" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> path</h3>
-					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="files" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> files</h3>
+					<div class="tsd-signature tsd-kind-icon">files<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">readonly </span><a href="module_rollup_plugin_flat_dts.flatdts.file.html" class="tsd-signature-type" data-tsd-kind="Interface">File</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/run-z/rollup-plugin-flat-dts/blob/65c1d44/src/api/flat-dts.ts#L174">api/flat-dts.ts:174</a></li>
+							<li>Defined in <a href="https://github.com/run-z/rollup-plugin-flat-dts/blob/03140b4/src/api/flat-dts.ts#L13">api/flat-dts.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Emitted <code>.d.ts</code> file path.</p>
+							<p>An array of emitted <code>.d.ts</code> files.</p>
 						</div>
+						<p>May be empty when emission failed.</p>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="writeout" class="tsd-anchor"></a>
-					<h3>write<wbr>Out</h3>
+					<a name="formatdiagnostics" class="tsd-anchor"></a>
+					<h3>format<wbr>Diagnostics</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">write<wbr>Out<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">format<wbr>Diagnostics<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/run-z/rollup-plugin-flat-dts/blob/65c1d44/src/api/flat-dts.ts#L190">api/flat-dts.ts:190</a></li>
+									<li>Defined in <a href="https://github.com/run-z/rollup-plugin-flat-dts/blob/03140b4/src/api/flat-dts.ts#L25">api/flat-dts.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Writes contents to this file.</p>
+									<p>Formats emission diagnostics.</p>
 								</div>
-								<p>Creates the necessary directories.</p>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>A string containing formatted diagnostic messages.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="writeout" class="tsd-anchor"></a>
+					<h3>write<wbr>Out</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">write<wbr>Out<span class="tsd-signature-symbol">(</span>rootDir<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/run-z/rollup-plugin-flat-dts/blob/03140b4/src/api/flat-dts.ts#L34">api/flat-dts.ts:34</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Writes all type definition files.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> path: <span class="tsd-signature-type">string</span></h5>
+									<h5>rootDir: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Target file path. Defaults to {@link name}.</p>
+										<p>A root directory to place <code>.d.ts</code> files to. Defaults to working directory.</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>A promise resolved when file written.</p>
+							<p>A promise resolved when all files written.</p>
 						</li>
 					</ul>
 				</section>
@@ -183,33 +203,39 @@
 					<li class=" ">
 						<a href="../modules.html">Modules</a>
 					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/module_rollup_plugin_flat_dts.html">Module rollup-<wbr>plugin-<wbr>flat-<wbr>dts</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/module_rollup_plugin_flat_dts_api.html">Module rollup-<wbr>plugin-<wbr>flat-<wbr>dts/api</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="rollup_plugin_flat_dts.flatdts.entrydecl.html" class="tsd-kind-icon">Entry<wbr>Decl</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="rollup_plugin_flat_dts.flatdts.file.html" class="tsd-kind-icon">File</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-module">
+						<a href="module_rollup_plugin_flat_dts_api.flatdts-1.html" class="tsd-kind-icon">Flat<wbr>Dts</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="rollup_plugin_flat_dts.flatdts.file.html#content" class="tsd-kind-icon">content</a>
+								<a href="module_rollup_plugin_flat_dts_api.flatdts-1.html#diagnostics" class="tsd-kind-icon">diagnostics</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="rollup_plugin_flat_dts.flatdts.file.html#path" class="tsd-kind-icon">path</a>
+								<a href="module_rollup_plugin_flat_dts_api.flatdts-1.html#files" class="tsd-kind-icon">files</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="rollup_plugin_flat_dts.flatdts.file.html#writeout" class="tsd-kind-icon">write<wbr>Out</a>
+								<a href="module_rollup_plugin_flat_dts_api.flatdts-1.html#formatdiagnostics" class="tsd-kind-icon">format<wbr>Diagnostics</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="module_rollup_plugin_flat_dts_api.flatdts-1.html#writeout" class="tsd-kind-icon">write<wbr>Out</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="rollup_plugin_flat_dts.flatdts.options.html" class="tsd-kind-icon">Options</a>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/module_rollup_plugin_flat_dts_api.html#emitflatdts" class="tsd-kind-icon">emit<wbr>Flat<wbr>Dts</a>
 					</li>
 				</ul>
 			</nav>
