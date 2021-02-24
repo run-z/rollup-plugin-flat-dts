@@ -34,7 +34,7 @@
   },
   "peerDependencies": {
     "rollup": "^2.39.1",
-    "typescript": "~4.2.2"
+    "typescript": "4.1.5 - 4.3"
   },
   "peerDependenciesMeta": {
     "rollup": {
