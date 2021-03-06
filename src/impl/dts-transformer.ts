@@ -19,10 +19,10 @@ export class DtsTransformer {
     this._index = new ModuleIndex(_source);
   }
 
-  async transform(): Promise<FlatDts> {
+  async transform(initialDiagnostics: readonly ts.Diagnostic[]): Promise<FlatDts> {
 
     const topLevel = await this._transform();
-    const diagnostics: ts.Diagnostic[] = [];
+    const diagnostics: ts.Diagnostic[] = initialDiagnostics.slice();
     const files = this._emitFiles(topLevel, diagnostics);
 
     return flatDts(files, diagnostics);
