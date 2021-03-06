@@ -37,20 +37,14 @@ export async function emitFlatDts(
 
   const { path, content, diagnostics } = await new Promise<EmittedDts>(resolve => {
 
-    let path = dtsFile;
-    let content: string | undefined;
-
-    const { diagnostics } = program.emit(
+    program.emit(
         undefined /* all source files */,
         (file, text) => {
-          path = file;
-          content = text;
+          resolve({ path: file, content: text, diagnostics: {} as any });
         },
         undefined /* cancellationToken */,
         true /* emitOnlyDtsFiles */,
     );
-
-    resolve({ path, content, diagnostics });
   });
 
   if (content == null) {
