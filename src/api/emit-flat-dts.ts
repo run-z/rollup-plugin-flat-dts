@@ -40,17 +40,33 @@ export async function emitFlatDts(
     let path = dtsFile;
     let content: string | undefined;
 
-    const { diagnostics } = program.emit(
-        undefined /* all source files */,
-        (file, text) => {
-          path = file;
-          content = text;
-        },
-        undefined /* cancellationToken */,
-        true /* emitOnlyDtsFiles */,
-    );
+    try {
 
-    resolve({ path, content, diagnostics });
+      const { diagnostics } = program.emit(
+          undefined /* all source files */,
+          (file, text) => {
+            path = file;
+            content = text;
+          },
+          undefined /* cancellationToken */,
+          true /* emitOnlyDtsFiles */,
+      );
+
+      resolve({ path, content, diagnostics });
+    } catch (error) {
+      resolve({
+        path,
+        content,
+        diagnostics: [{
+          category: ts.DiagnosticCategory.Error,
+          code: 9999,
+          file: undefined,
+          start: undefined,
+          length: undefined,
+          messageText: error instanceof Error ? error.message : String(error),
+        }],
+      });
+    }
   });
 
   if (content == null) {
@@ -60,7 +76,7 @@ export async function emitFlatDts(
   const src = ts.createSourceFile(path, content, target);
   const transformer = new DtsTransformer(new DtsSource(src, dtsOptions, compilerOptions));
 
-  return transformer.transform();
+  return transformer.transform(diagnostics);
 }
 
 /**
