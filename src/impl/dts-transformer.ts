@@ -176,11 +176,11 @@ export class DtsTransformer {
     const { text: from } = moduleSpecifier as ts.StringLiteral;
     const fromModule = await this._index.byName(from);
 
-    if (fromModule !== enclosing) {
+    if (fromModule.declareAs !== enclosing.declareAs) {
       // Import from another module.
 
       if (fromModule.isInternal) {
-        // Drop the imports from internal modules.
+        // Drop import from internal module.
         return noneTransformed();
       }
 
@@ -264,11 +264,11 @@ export class DtsTransformer {
     const { text: from } = moduleSpecifier as ts.StringLiteral;
     const fromModule = await this._index.byName(from);
 
-    if (fromModule !== enclosing) {
+    if (fromModule.declareAs !== enclosing.declareAs) {
       // Export from another module.
 
       if (fromModule.isInternal) {
-        // Drop the imports from internal modules.
+        // Drop export from internal module.
         return noneTransformed();
       }
 
@@ -286,7 +286,7 @@ export class DtsTransformer {
       };
     }
 
-    // Import from the same module.
+    // Export from the same module.
     const { exportClause } = statement;
 
     if (!exportClause) {
