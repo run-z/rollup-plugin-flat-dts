@@ -34,85 +34,8 @@ export class DtsSource {
   ) {
   }
 
-  createPrinter(): ts.Printer {
-    return ts.createPrinter(
-        {
-          newLine: this.setup.compilerOptions.newLine,
-        },
-        this._printHandlers(),
-    );
-  }
-
   destroy(): void {
     this.map?.destroy();
-  }
-
-  private _printHandlers(): ts.PrintHandlers | undefined {
-
-    const { map } = this;
-
-    if (!map) {
-      return;
-    }
-
-    const reportNode = (node: ts.Node): void => {
-
-      const range = ts.getSourceMapRange(node);
-
-      if (range.pos < 0 || range.pos >= range.end) {
-        return;
-      }
-
-      const sourceFile = node.getSourceFile();
-
-      if (!sourceFile) {
-        return;
-      }
-
-      const dtsStart = sourceFile.getLineAndCharacterOfPosition(range.pos);
-      const { source, line: startLine, column: startColumn } = map.consumer.originalPositionFor({
-        line: dtsStart.line + 1,
-        column: dtsStart.character,
-      });
-
-      if (source == null || startLine == null || startColumn == null) {
-        return;
-      }
-
-      const dtsEnd = sourceFile.getLineAndCharacterOfPosition(range.end);
-      const { line: endLine, column: endColumn } = map.consumer.originalPositionFor({
-        line: dtsEnd.line + 1,
-        column: dtsEnd.character,
-      });
-
-      if (endLine == null || endColumn == null) {
-        return;
-      }
-
-      const tsSource = map.tsSource(source);
-      const srcStart = tsSource.getPositionOfLineAndCharacter(startLine - 1, startColumn);
-      const srcEnd = tsSource.getPositionOfLineAndCharacter(endLine - 1, endColumn);
-
-      console.debug(
-          node.getText(this.source),
-          dtsStart,
-          startLine,
-          startColumn,
-          dtsEnd,
-          endLine,
-          endColumn,
-          '-> ' + source + ' "' + tsSource.text.substring(srcStart, srcEnd) + '"',
-      );
-    };
-
-    return {
-      substituteNode: (_hint, node) => {
-
-        reportNode(node);
-
-        return node;
-      },
-    };
   }
 
 }
