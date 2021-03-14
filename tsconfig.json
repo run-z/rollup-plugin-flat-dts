@@ -14,7 +14,8 @@
     "importsNotUsedAsValues": "error",
     "noEmitHelpers": true,
     "lib": [
-      "ES2018"
+      "ES2018",
+      "ES2019.Array"
     ],
     "types": [
       "node"

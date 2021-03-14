@@ -1,38 +1,36 @@
-import ts from 'typescript';
+import { promises as fs } from 'fs';
+import { dirname } from 'path';
+import type ts from 'typescript';
+import type { FlatDts } from '../api';
 import type { DtsSource } from './dts-source';
 
 /**
  * @internal
  */
-export class DtsPrinter {
+export abstract class DtsPrinter<TSource extends DtsSource = DtsSource> {
 
-  private readonly _printer: ts.Printer;
-  private _out = '';
-
-  constructor(private readonly _source: DtsSource) {
-    this._printer = ts.createPrinter(
-        {
-          newLine: _source.setup.compilerOptions.newLine,
-        },
-    );
+  constructor(readonly source: TSource) {
   }
 
-  print(node: ts.Node): this {
-    this._out += this._printer.printNode(ts.EmitHint.Unspecified, node, this._source.source);
-    return this;
-  }
+  abstract print(node: ts.Node): this;
 
-  text(text: string): this {
-    this._out += text;
-    return this;
-  }
+  abstract text(text: string): this;
 
   nl(): this {
-    return this.text(this._source.setup.eol);
+    return this.text(this.source.setup.eol);
   }
 
-  toString(): string {
-    return this._out;
+  abstract toFiles(name: string): readonly FlatDts.File[];
+
+  protected createDtsFile(path: string, content: string): FlatDts.File {
+    return {
+      path,
+      content,
+      async writeOut(filePath = path) {
+        await fs.mkdir(dirname(filePath), { recursive: true });
+        return fs.writeFile(filePath, content);
+      },
+    };
   }
 
 }

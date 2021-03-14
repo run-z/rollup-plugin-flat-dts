@@ -38,6 +38,23 @@ export class DtsSource {
     this.map?.destroy();
   }
 
+  hasMap(): this is DtsSource.WithMap {
+    return !!this.source;
+  }
+
+}
+
+/**
+ * @internal
+ */
+export namespace DtsSource {
+
+  export interface WithMap extends DtsSource {
+
+    readonly map: DtsSourceMap;
+
+  }
+
 }
 
 /**

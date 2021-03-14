@@ -1,9 +1,10 @@
 import type ts from 'typescript';
 import type { FlatDts } from '../api';
-import { DtsPrinter } from './dts-printer';
+import type { DtsPrinter } from './dts-printer';
 import type { DtsSource } from './dts-source';
-import { dtsFile } from './flat-dts.impl';
 import type { ModuleInfo } from './module-info';
+import { SimpleDtsPrinter } from './simple-dts-printer';
+import { SourceMapDtsPrinter } from './source-map-dts-printer';
 
 /**
  * @internal
@@ -27,9 +28,11 @@ export class DtsContent {
     this._statements.push(statement);
   }
 
-  dtsFile(): FlatDts.File {
+  toFiles(): readonly FlatDts.File[] {
 
-    const printer = new DtsPrinter(this.source);
+    const printer = this.source.hasMap()
+        ? new SourceMapDtsPrinter(this.source)
+        : new SimpleDtsPrinter(this.source);
 
     this.module.prelude(printer);
     this._prelude(printer);
@@ -41,7 +44,7 @@ export class DtsContent {
       printer.print(statement).nl();
     });
 
-    return dtsFile(this.module.file!, printer.toString());
+    return printer.toFiles(this.module.file!);
   }
 
   private _prelude(printer: DtsPrinter): void {

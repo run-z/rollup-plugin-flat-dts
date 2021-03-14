@@ -1,5 +1,5 @@
 import ts from 'typescript';
-import { DtsSetup, DtsSource, DtsSourceFile, DtsTransformer, emptyDts } from '../impl';
+import { DtsSetup, DtsSource, DtsSourceFile, DtsTransformer, emptyFlatDts } from '../impl';
 import type { FlatDts } from './flat-dts';
 
 /**
@@ -59,7 +59,7 @@ export async function emitFlatDts(
   const source = await DtsSource.create(sources, setup);
 
   if (!source) {
-    return emptyDts(diagnostics);
+    return emptyFlatDts(diagnostics);
   }
 
   try {

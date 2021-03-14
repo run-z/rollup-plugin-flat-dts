@@ -1,5 +1,4 @@
-import { promises as fs } from 'fs';
-import { dirname, resolve } from 'path';
+import { resolve } from 'path';
 import ts from 'typescript';
 import type { FlatDts } from '../api';
 
@@ -15,7 +14,7 @@ const FORMAT_HOST: ts.FormatDiagnosticsHost = {
 /**
  * @internal
  */
-export function formatDiagnostics(this: FlatDts): string {
+function formatDiagnostics(this: FlatDts): string {
   return this.diagnostics.length
       ? ts.formatDiagnosticsWithColorAndContext(this.diagnostics, FORMAT_HOST)
       : '';
@@ -24,21 +23,7 @@ export function formatDiagnostics(this: FlatDts): string {
 /**
  * @internal
  */
-export function dtsFile(path: string, content: string): FlatDts.File {
-  return {
-    path,
-    content,
-    async writeOut(filePath = path) {
-      await fs.mkdir(dirname(filePath), { recursive: true });
-      return fs.writeFile(filePath, content);
-    },
-  };
-}
-
-/**
- * @internal
- */
-export function emptyDts(diagnostics: readonly ts.Diagnostic[]): FlatDts {
+export function emptyFlatDts(diagnostics: readonly ts.Diagnostic[]): FlatDts {
   return {
     files: [],
     diagnostics,
@@ -52,7 +37,7 @@ export function emptyDts(diagnostics: readonly ts.Diagnostic[]): FlatDts {
 /**
  * @internal
  */
-export function flatDts(
+export function createFlatDts(
     files: readonly FlatDts.File[],
     diagnostics: readonly ts.Diagnostic[] = [],
 ): FlatDts {
