@@ -1,6 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import type { FlatDts } from '../api';
+import type { DtsPrinter } from './dts-printer';
 import type { DtsSource } from './dts-source';
 
 /**
@@ -15,14 +16,14 @@ export class ModuleInfo {
 
   static async main(source: DtsSource): Promise<ModuleInfo> {
 
-    const { moduleName = await packageName() } = source.dtsOptions;
+    const { moduleName = await packageName() } = source.setup.dtsOptions;
 
     return new ModuleInfo(
         source,
         moduleName,
         {
           file: source.source.fileName,
-          libs: referredLibs(source, source.compilerOptions),
+          libs: referredLibs(source, source.setup.compilerOptions),
         },
     );
   }
@@ -64,15 +65,10 @@ export class ModuleInfo {
     }
   }
 
-  prelude(): string {
-
-    let out = '';
-
+  prelude(printer: DtsPrinter): void {
     for (const lib of this._libs) {
-      out += `/// <reference lib="${lib}" />${this.source.eol}`;
+      printer.text(`/// <reference lib="${lib}" />`).nl();
     }
-
-    return out;
   }
 
   nested(name: string, desc: FlatDts.EntryDecl): ModuleInfo {
@@ -139,7 +135,7 @@ function referredLibs(
     defaultLibs = noReferredLibs,
 ): ReadonlySet<string> {
   if (lib === true) {
-    lib = source.compilerOptions.lib;
+    lib = source.setup.compilerOptions.lib;
   }
   if (lib == null) {
     return defaultLibs;

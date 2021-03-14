@@ -18,7 +18,7 @@ export class ModuleIndex {
 
   constructor(private readonly _source: DtsSource) {
 
-    const { source, dtsOptions } = _source;
+    const { source, setup: { dtsOptions } } = _source;
     const { entries = {} } = dtsOptions;
 
     this._meta = new DtsMeta(source);

@@ -24,6 +24,7 @@ export default {
   ],
   external: [
     ...Object.keys(pkg.peerDependencies),
+    ...Object.keys(pkg.dependencies),
     ...builtinModules,
   ],
   manualChunks(id) {

@@ -56,11 +56,9 @@ export class DtsTransformer {
       }
     }
 
-    const printer = this._source.createPrinter();
-
     return Array.from(
         contentByPath.values(),
-        content => content.dtsFile(printer),
+        content => content.dtsFile(),
     );
   }
 
