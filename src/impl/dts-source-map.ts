@@ -1,5 +1,5 @@
 import { SourceMapConsumer } from 'source-map';
-import ts from 'typescript';
+import type ts from 'typescript';
 import type { DtsSetup } from './dts-setup';
 
 /**
@@ -7,65 +7,40 @@ import type { DtsSetup } from './dts-setup';
  */
 export class DtsSourceMap {
 
-  static async create(file: ts.SourceMapSource, setup: DtsSetup): Promise<DtsSourceMap> {
+  static async create(path: string, content: string, setup: DtsSetup): Promise<DtsSourceMap> {
     return new DtsSourceMap(
-        file,
-        await new SourceMapConsumer(file.text, setup.sourceURL(file.fileName).href),
+        await new SourceMapConsumer(content, setup.sourceURL(path).href),
         setup,
     );
   }
 
   private constructor(
-      readonly file: ts.SourceMapSource,
       readonly consumer: SourceMapConsumer,
       readonly setup: DtsSetup,
   ) {}
 
   originalRange(node: ts.Node, source: ts.SourceFile): DtsLocationRange | undefined {
 
-    const { pos: mapStartPos, end: mapEndPos } = ts.getSourceMapRange(node);
-    const srcStart = this._sourceLocation(source, mapStartPos);
+    const startPos = node.getStart(source);
+    const endPos = node.getEnd();
+
+    if (startPos < 0 || endPos < 0) {
+      return;
+    }
+
+    const srcStart = this._sourceLocation(source, startPos);
 
     if (!srcStart) {
       return;
     }
 
-    const srcEnd = this._sourceLocation(source, mapEndPos);
+    const srcEnd = this._sourceLocation(source, endPos);
 
     if (!srcEnd) {
       return;
     }
 
-    const startPos = node.getStart(source);
-    const endPos = node.getEnd();
-
-    const start = source.getLineAndCharacterOfPosition(startPos);
-    const mapStart = source.getLineAndCharacterOfPosition(mapStartPos);
-
-    const end = source.getLineAndCharacterOfPosition(endPos);
-    const mapEnd = source.getLineAndCharacterOfPosition(mapEndPos);
-
-    const text = node.getText(source);
-
-    if (text.trim() === 'formatDiagnostics') {
-      console.debug(srcStart, mapStart, start, srcEnd, end, mapEnd);
-    }
-
-    const startLineOffset = start.line - mapStart.line;
-    const endLineOffset = mapEnd.line - end.line;
-
-    return [
-      {
-        source: srcStart.source,
-        line: srcStart.line + startLineOffset,
-        col: srcStart.col + (startLineOffset ? 0 : (start.character - mapStart.character)),
-      },
-      {
-        source: srcEnd.source,
-        line: srcEnd.line - endLineOffset,
-        col: srcEnd.col - (endLineOffset ? 0 : (mapEnd.character - end.character)),
-      },
-    ];
+    return [srcStart, srcEnd];
   }
 
   destroy(): void {

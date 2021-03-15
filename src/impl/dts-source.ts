@@ -10,26 +10,19 @@ export class DtsSource {
   static async create(sources: readonly DtsSourceFile[], setup: DtsSetup): Promise<DtsSource | undefined> {
 
     let source: ts.SourceFile | undefined;
-    let sourceMap: ts.SourceMapSource | undefined;
+    let sourceMap: { path: string; content: string } | undefined;
 
     for (const { path, content } of sources) {
       if (path.endsWith('.d.ts')) {
         source = ts.createSourceFile(path, content, setup.scriptTarget, true);
       } else if (path.endsWith('.d.ts.map')) {
-        sourceMap = ts.createSourceMapSource(
-            path,
-            content,
-            pos => {
-              console.debug(pos);
-              return pos;
-            },
-        );
+        sourceMap = { path, content };
       }
     }
 
     return source && new DtsSource(
         source,
-        sourceMap && await DtsSourceMap.create(sourceMap, setup),
+        sourceMap && await DtsSourceMap.create(sourceMap.path, sourceMap.content, setup),
         setup,
     );
   }
