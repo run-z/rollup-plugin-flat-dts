@@ -39,7 +39,7 @@ export class DtsSource {
   }
 
   hasMap(): this is DtsSource.WithMap {
-    return !!this.source;
+    return !!this.map;
   }
 
 }

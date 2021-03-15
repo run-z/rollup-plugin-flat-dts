@@ -12,10 +12,7 @@ export class DtsMapper {
   private readonly _genDts: ts.SourceFile;
   private readonly _generator: SourceMapGenerator;
 
-  constructor(
-      private readonly _source: DtsSource.WithMap,
-      dtsFile: FlatDts.File,
-  ) {
+  constructor(private readonly _source: DtsSource.WithMap, dtsFile: FlatDts.File) {
 
     const { setup } = _source;
 
