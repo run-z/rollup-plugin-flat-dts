@@ -1,0 +1,90 @@
+import { SourceMapGenerator } from 'source-map';
+import ts from 'typescript';
+import type { FlatDts } from '../api';
+import { DtsNodeChildren } from './dts-node-children';
+import type { DtsSource } from './dts-source';
+
+/**
+ * @internal
+ */
+export class DtsMapper {
+
+  private readonly _genDts: ts.SourceFile;
+  private readonly _generator: SourceMapGenerator;
+
+  constructor(
+      private readonly _source: DtsSource.WithMap,
+      dtsFile: FlatDts.File,
+  ) {
+    // Re-parse just generated `.d.ts`.
+    this._genDts = ts.createSourceFile(
+        dtsFile.path,
+        dtsFile.content,
+        _source.setup.scriptTarget,
+        false,
+        ts.ScriptKind.TS,
+    );
+
+    this._generator = new SourceMapGenerator({
+      sourceRoot: _source.map.consumer.sourceRoot,
+      file: dtsFile.path,
+    });
+  }
+
+  map(orgNodes: readonly ts.Node[]): string {
+    this._mapNodes(orgNodes, this._genDts.statements);
+    return this._generator.toString();
+  }
+
+  private _mapNodes(orgNodes: readonly ts.Node[], genNodes: readonly ts.Node[]): void {
+    // Assume the re-parsed AST has the same structure as an original one.
+    orgNodes.forEach((orgNode, i) => {
+      this._mapNode(orgNode, genNodes[i]);
+    });
+  }
+
+  private _mapNode(orgNode: ts.Node, genNode: ts.Node): void {
+
+    const orgRange = this._source.map.originalRange(orgNode);
+    const genStartPos = genNode.getStart(this._genDts);
+
+    if (!orgRange || genStartPos < 0) {
+      this._mapChildren(orgNode, genNode);
+      return;
+    }
+
+    const [orgStart, orgEnd] = orgRange;
+    const genStart = this._genDts.getLineAndCharacterOfPosition(genStartPos);
+
+    this._generator.addMapping({
+      generated: { line: genStart.line + 1, column: genStart.character },
+      original: { line: orgStart.line + 1, column: orgStart.col },
+      source: orgStart.source,
+    });
+
+    this._mapChildren(orgNode, genNode);
+
+    const genEnd = this._genDts.getLineAndCharacterOfPosition(genNode.getEnd());
+
+    this._generator.addMapping({
+      generated: { line: genEnd.line + 1, column: genEnd.character },
+      original: { line: orgEnd.line + 1, column: orgEnd.col },
+      source: orgEnd.source,
+    });
+  }
+
+  private _mapChildren(orgNode: ts.Node, genNode: ts.Node): void {
+
+    const orgChildren = new DtsNodeChildren(orgNode);
+    const genChildren = new DtsNodeChildren(genNode);
+
+    if (orgChildren.size) {
+      console.debug([...orgChildren].map(c => c.kind), orgNode.getText(this._source.source), '\n----------------');
+    }
+
+    this._mapNodes([...orgChildren], [...genChildren]);
+  }
+
+}
+
+

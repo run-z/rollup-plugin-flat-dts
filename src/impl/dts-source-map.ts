@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { BasicSourceMapConsumer, SourceMapConsumer } from 'source-map';
 import ts from 'typescript';
 import type { DtsSetup } from './dts-setup';
@@ -16,29 +15,11 @@ export class DtsSourceMap {
     );
   }
 
-  private readonly _tsSources = new Map<string, ts.SourceFile>();
-
   private constructor(
       readonly file: ts.SourceMapSource,
       readonly consumer: BasicSourceMapConsumer,
       readonly setup: DtsSetup,
   ) {}
-
-  tsSource(file: string): ts.SourceFile {
-
-    let source = this._tsSources.get(file);
-
-    if (!source) {
-      source = ts.createSourceFile(
-          file,
-          fs.readFileSync(this.setup.sourceURL(file)).toString(),
-          this.setup.scriptTarget,
-      );
-      this._tsSources.set(file, source);
-    }
-
-    return source;
-  }
 
   originalRange(node: ts.Node): DtsLocationRange | undefined {
 
@@ -83,7 +64,7 @@ export class DtsSourceMap {
       return;
     }
 
-    return { source, line: line - 1, col: column, pos };
+    return { source, line: line - 1, col: column };
   }
 
 }
@@ -100,5 +81,4 @@ export interface DtsLocation {
   readonly source: string;
   readonly line: number;
   readonly col: number;
-  readonly pos: number;
 }

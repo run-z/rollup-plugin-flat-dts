@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 import { dirname } from 'path';
-import type ts from 'typescript';
+import ts from 'typescript';
 import type { FlatDts } from '../api';
 import type { DtsSource } from './dts-source';
 
@@ -9,12 +9,26 @@ import type { DtsSource } from './dts-source';
  */
 export abstract class DtsPrinter<TSource extends DtsSource = DtsSource> {
 
+  private readonly _printer: ts.Printer;
+  private _out = '';
+
   constructor(readonly source: TSource) {
+    this._printer = ts.createPrinter(
+        {
+          newLine: source.setup.compilerOptions.newLine,
+        },
+    );
   }
 
-  abstract print(node: ts.Node): this;
+  print(node: ts.Node): this {
+    this.text(this._printer.printNode(ts.EmitHint.Unspecified, node, this.source.source));
+    return this;
+  }
 
-  abstract text(text: string): this;
+  text(text: string): this {
+    this._out += text;
+    return this;
+  }
 
   nl(): this {
     return this.text(this.source.setup.eol);
@@ -22,7 +36,7 @@ export abstract class DtsPrinter<TSource extends DtsSource = DtsSource> {
 
   abstract toFiles(name: string): readonly FlatDts.File[];
 
-  protected createDtsFile(path: string, content: string): FlatDts.File {
+  protected createFile(path: string, content = this._out): FlatDts.File {
     return {
       path,
       content,

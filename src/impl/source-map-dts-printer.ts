@@ -1,5 +1,6 @@
-import ts from 'typescript';
+import type ts from 'typescript';
 import type { FlatDts } from '../api';
+import { DtsMapper } from './dts-mapper';
 import { DtsPrinter } from './dts-printer';
 import type { DtsSource } from './dts-source';
 
@@ -8,30 +9,26 @@ import type { DtsSource } from './dts-source';
  */
 export class SourceMapDtsPrinter extends DtsPrinter<DtsSource.WithMap> {
 
-  private readonly _printer: ts.Printer;
-  private _out = '';
-
-  constructor(source: DtsSource.WithMap) {
-    super(source);
-    this._printer = ts.createPrinter(
-        {
-          newLine: source.setup.compilerOptions.newLine,
-        },
-    );
-  }
+  private readonly _nodes: ts.Node[] = [];
 
   print(node: ts.Node): this {
-    this.text(this._printer.printNode(ts.EmitHint.Unspecified, node, this.source.source));
-    return this;
-  }
-
-  text(text: string): this {
-    this._out += text;
-    return this;
+    this._nodes.push(node);
+    return super.print(node);
   }
 
   toFiles(name: string): readonly FlatDts.File[] {
-    return [this.createDtsFile(name, this._out)];
+
+    const dts = this.createFile(name);
+    const sourceMap = this._createSourceMapFile(dts);
+
+    return [dts, sourceMap];
+  }
+
+  private _createSourceMapFile(dtsFile: FlatDts.File): FlatDts.File {
+    return this.createFile(
+        `${dtsFile.path}.map`,
+        new DtsMapper(this.source, dtsFile).map(this._nodes).toString(),
+    );
   }
 
 }
