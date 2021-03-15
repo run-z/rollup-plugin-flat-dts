@@ -16,7 +16,14 @@ export class DtsSource {
       if (path.endsWith('.d.ts')) {
         source = ts.createSourceFile(path, content, setup.scriptTarget, true);
       } else if (path.endsWith('.d.ts.map')) {
-        sourceMap = ts.createSourceMapSource(path, content);
+        sourceMap = ts.createSourceMapSource(
+            path,
+            content,
+            pos => {
+              console.debug(pos);
+              return pos;
+            },
+        );
       }
     }
 

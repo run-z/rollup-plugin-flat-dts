@@ -21,28 +21,51 @@ export class DtsSourceMap {
       readonly setup: DtsSetup,
   ) {}
 
-  originalRange(node: ts.Node): DtsLocationRange | undefined {
+  originalRange(node: ts.Node, source: ts.SourceFile): DtsLocationRange | undefined {
 
-    const sourceFile = node.getSourceFile();
+    const { pos: mapStartPos, end: mapEndPos } = ts.getSourceMapRange(node);
+    const srcStart = this._sourceLocation(source, mapStartPos);
 
-    if (!sourceFile) {
+    if (!srcStart) {
       return;
     }
 
-    const { pos, end } = ts.getSourceMapRange(node);
-    const startLoc = this._sourceLocation(sourceFile, pos);
+    const srcEnd = this._sourceLocation(source, mapEndPos);
 
-    if (!startLoc) {
+    if (!srcEnd) {
       return;
     }
 
-    const endLoc = this._sourceLocation(sourceFile, end);
+    const startPos = node.getStart(source);
+    const endPos = node.getEnd();
 
-    if (!endLoc) {
-      return;
+    const start = source.getLineAndCharacterOfPosition(startPos);
+    const mapStart = source.getLineAndCharacterOfPosition(mapStartPos);
+
+    const end = source.getLineAndCharacterOfPosition(endPos);
+    const mapEnd = source.getLineAndCharacterOfPosition(mapEndPos);
+
+    const text = node.getText(source);
+
+    if (text.trim() === 'formatDiagnostics') {
+      console.debug(srcStart, mapStart, start, srcEnd, end, mapEnd);
     }
 
-    return [startLoc, endLoc];
+    const startLineOffset = start.line - mapStart.line;
+    const endLineOffset = mapEnd.line - end.line;
+
+    return [
+      {
+        source: srcStart.source,
+        line: srcStart.line + startLineOffset,
+        col: srcStart.col + (startLineOffset ? 0 : (start.character - mapStart.character)),
+      },
+      {
+        source: srcEnd.source,
+        line: srcEnd.line - endLineOffset,
+        col: srcEnd.col - (endLineOffset ? 0 : (mapEnd.character - end.character)),
+      },
+    ];
   }
 
   destroy(): void {
@@ -54,10 +77,10 @@ export class DtsSourceMap {
       return;
     }
 
-    const startLoc = sourceFile.getLineAndCharacterOfPosition(pos);
+    const location = sourceFile.getLineAndCharacterOfPosition(pos);
     const { source, line, column } = this.consumer.originalPositionFor({
-      line: startLoc.line + 1,
-      column: startLoc.character,
+      line: location.line + 1,
+      column: location.character,
     });
 
     if (source == null || line == null || column == null) {

@@ -57,7 +57,7 @@ export class DtsMapper {
 
   private _mapNode(orgNode: ts.Node, genNode: ts.Node): void {
 
-    const orgRange = this._source.map.originalRange(orgNode);
+    const orgRange = this._source.map.originalRange(orgNode, this._source.source);
     const genStartPos = genNode.getStart(this._genDts);
 
     if (!orgRange || genStartPos < 0) {
