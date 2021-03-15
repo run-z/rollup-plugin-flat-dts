@@ -36,11 +36,23 @@ export class DtsMapper {
     return this._generator.toString();
   }
 
-  private _mapNodes(orgNodes: readonly ts.Node[], genNodes: readonly ts.Node[]): void {
+  private _mapNodes(orgNodes: Iterable<ts.Node>, genNodes: Iterable<ts.Node>): void {
     // Assume the re-parsed AST has the same structure as an original one.
-    orgNodes.forEach((orgNode, i) => {
-      this._mapNode(orgNode, genNodes[i]);
-    });
+
+    const orgIt = orgNodes[Symbol.iterator]();
+    const genIt = genNodes[Symbol.iterator]();
+
+    for (;;) {
+
+      const orgNext = orgIt.next();
+      const genNext = genIt.next();
+
+      if (orgNext.done || genNext.done) {
+        break;
+      }
+
+      this._mapNode(orgNext.value, genNext.value);
+    }
   }
 
   private _mapNode(orgNode: ts.Node, genNode: ts.Node): void {
@@ -74,15 +86,7 @@ export class DtsMapper {
   }
 
   private _mapChildren(orgNode: ts.Node, genNode: ts.Node): void {
-
-    const orgChildren = new DtsNodeChildren(orgNode);
-    const genChildren = new DtsNodeChildren(genNode);
-
-    if (orgChildren.size) {
-      console.debug([...orgChildren].map(c => c.kind), orgNode.getText(this._source.source), '\n----------------');
-    }
-
-    this._mapNodes([...orgChildren], [...genChildren]);
+    this._mapNodes(new DtsNodeChildren(orgNode), new DtsNodeChildren(genNode));
   }
 
 }
