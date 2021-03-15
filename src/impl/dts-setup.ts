@@ -87,7 +87,64 @@ export class DtsSetup {
   }
 
   sourceURL(path: string): URL {
-    return new URL(path, pathToFileURL('./'));
+    return new URL(path, this.root());
+  }
+
+  root(): URL {
+    return pathToFileURL('./');
+  }
+
+  relativePath(path: string): string {
+
+    const cwd = this.root();
+    const { href: cwdHref } = cwd;
+    const { href } = new URL(path, cwd);
+
+    if (!href.startsWith(cwdHref)) {
+      return path;
+    }
+
+    return href.substr(cwdHref.length);
+  }
+
+  basename(path: string): string {
+
+    const idx = path.lastIndexOf('/');
+
+    return idx < 0 ? path : path.substr(idx + 1);
+  }
+
+  pathToRoot(path: string): string {
+
+    const cwd = this.root();
+    const { href: cwdHref } = cwd;
+    const { href } = new URL(path, cwd);
+
+    if (!href.startsWith(cwdHref)) {
+      return path;
+    }
+
+    let relative = href.substr(cwdHref.length);
+    let result = '';
+
+    for (;;) {
+
+      const idx = relative.lastIndexOf('/');
+
+      if (idx < 0) {
+        break;
+      }
+
+      if (result) {
+        result += '/..';
+      } else {
+        result = '..';
+      }
+
+      relative = relative.substr(0, idx);
+    }
+
+    return result;
   }
 
 }

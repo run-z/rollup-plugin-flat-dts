@@ -16,18 +16,21 @@ export class DtsMapper {
       private readonly _source: DtsSource.WithMap,
       dtsFile: FlatDts.File,
   ) {
+
+    const { setup } = _source;
+
     // Re-parse just generated `.d.ts`.
     this._genDts = ts.createSourceFile(
         dtsFile.path,
         dtsFile.content,
-        _source.setup.scriptTarget,
+        setup.scriptTarget,
         false,
         ts.ScriptKind.TS,
     );
 
     this._generator = new SourceMapGenerator({
-      sourceRoot: _source.map.consumer.sourceRoot,
-      file: dtsFile.path,
+      sourceRoot: setup.pathToRoot(dtsFile.path),
+      file: setup.basename(dtsFile.path),
     });
   }
 

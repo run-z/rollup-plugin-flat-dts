@@ -1,4 +1,4 @@
-import { BasicSourceMapConsumer, SourceMapConsumer } from 'source-map';
+import { SourceMapConsumer } from 'source-map';
 import ts from 'typescript';
 import type { DtsSetup } from './dts-setup';
 
@@ -10,14 +10,14 @@ export class DtsSourceMap {
   static async create(file: ts.SourceMapSource, setup: DtsSetup): Promise<DtsSourceMap> {
     return new DtsSourceMap(
         file,
-        await new SourceMapConsumer(JSON.parse(file.text), setup.sourceURL(file.fileName).href),
+        await new SourceMapConsumer(file.text, setup.sourceURL(file.fileName).href),
         setup,
     );
   }
 
   private constructor(
       readonly file: ts.SourceMapSource,
-      readonly consumer: BasicSourceMapConsumer,
+      readonly consumer: SourceMapConsumer,
       readonly setup: DtsSetup,
   ) {}
 
@@ -64,7 +64,11 @@ export class DtsSourceMap {
       return;
     }
 
-    return { source, line: line - 1, col: column };
+    return {
+      source: this.setup.relativePath(source),
+      line: line - 1,
+      col: column,
+    };
   }
 
 }

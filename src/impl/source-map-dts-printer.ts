@@ -20,8 +20,15 @@ export class SourceMapDtsPrinter extends DtsPrinter<DtsSource.WithMap> {
 
     const dts = this.createFile(name);
     const sourceMap = this._createSourceMapFile(dts);
+    const { setup } = this.source;
 
-    return [dts, sourceMap];
+    return [
+      this.createFile(
+          dts.path,
+          `${dts.content}//# sourceMappingURL=${setup.basename(sourceMap.path)}${setup.eol}`,
+      ),
+      sourceMap,
+    ];
   }
 
   private _createSourceMapFile(dtsFile: FlatDts.File): FlatDts.File {
