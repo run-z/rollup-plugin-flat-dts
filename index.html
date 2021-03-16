@@ -169,6 +169,42 @@
 						generated <code>.d.ts</code> files.</p>
 					</li>
 				</ul>
+				<a href="#declaration-maps-experimental" id="declaration-maps-experimental" style="color: inherit; text-decoration: none;">
+					<h2>Declaration Maps (Experimental)</h2>
+				</a>
+				<p>When <a href="https://www.typescriptlang.org/tsconfig#declarationMap">declarationMap</a> compiler option enabled a declaration map file(s) (<code>.d.ts.map</code>) will be generated next to <code>.d.ts</code>
+				ones:</p>
+				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">commonjs</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@rollup/plugin-commonjs&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">nodeResolve</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@rollup/plugin-node-resolve&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">flatDts</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rollup-plugin-flat-dts&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">sourcemaps</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rollup-plugin-sourcemaps&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">ts</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rollup-plugin-typescript2&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #AF00DB">default</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">input:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./src/index.ts&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #001080">plugins:</span><span style="color: #000000"> [</span>
+<span style="color: #000000">    </span><span style="color: #795E26">commonjs</span><span style="color: #000000">(),</span>
+<span style="color: #000000">    </span><span style="color: #795E26">ts</span><span style="color: #000000">(),</span>
+<span style="color: #000000">    </span><span style="color: #795E26">nodeResolve</span><span style="color: #000000">(),</span>
+<span style="color: #000000">    </span><span style="color: #795E26">sourcemaps</span><span style="color: #000000">(),</span>
+<span style="color: #000000">  ],</span>
+<span style="color: #000000">  </span><span style="color: #001080">output:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">format:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;esm&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">sourcemap:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">file:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dist/index.js&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">plugins:</span><span style="color: #000000"> [</span>
+<span style="color: #000000">      </span><span style="color: #795E26">flatDts</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">compilerOptions:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">          </span><span style="color: #001080">declarationMap:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">, </span><span style="color: #008000">/* Generate declaration maps */</span>
+<span style="color: #000000">        },</span>
+<span style="color: #000000">      }),</span>
+<span style="color: #000000">    ],</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">};</span>
+</code></pre>
+				<p>Declaration maps can be used by IDE to navigate to TypeScript source file instead of type declaration when both
+					available. This functionality relies on IDE heuristics, and declaration maps generated by this tool may not suit it
+				fully. So, don&#39;t be surprised if that does not work as expected.</p>
 				<a href="#multiple-entries" id="multiple-entries" style="color: inherit; text-decoration: none;">
 					<h2>Multiple Entries</h2>
 				</a>
@@ -266,8 +302,6 @@
   declaration: true,
   // Prevent output to declaration directory
   declarationDir: null,
-  // Source maps unsupported
-  declarationMap: false,
   // Skip &quot;.js&quot; generation
   emitDeclarationOnly: true,
   // Single file emission is impossible with this flag set
