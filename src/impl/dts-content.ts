@@ -1,12 +1,11 @@
-import ts from 'typescript';
+import type ts from 'typescript';
 import type { FlatDts } from '../api';
+import type { DtsPrinter } from './dts-printer';
 import type { DtsSource } from './dts-source';
-import { dtsFile } from './flat-dts.impl';
 import type { ModuleInfo } from './module-info';
+import { SimpleDtsPrinter } from './simple-dts-printer';
+import { SourceMapDtsPrinter } from './source-map-dts-printer';
 
-/**
- * @internal
- */
 export class DtsContent {
 
   private readonly _refs = new Set<ModuleInfo>();
@@ -26,41 +25,35 @@ export class DtsContent {
     this._statements.push(statement);
   }
 
-  dtsFile(printer: ts.Printer): FlatDts.File {
+  toFiles(): readonly FlatDts.File[] {
 
-    const { source, eol } = this.source;
-    const content = this._statements.reduce(
-        (out, statement) => {
-          if (out) {
-            out += eol;
-          } else {
-            out = this._prelude();
-          }
+    const printer = this.source.hasMap()
+        ? new SourceMapDtsPrinter(this.source)
+        : new SimpleDtsPrinter(this.source);
 
-          return out + printer.printNode(ts.EmitHint.Unspecified, statement, source) + eol;
-        },
-        '',
-    );
+    this.module.prelude(printer);
+    this._prelude(printer);
 
-    return dtsFile(this.module.file!, content);
+    this._statements.forEach((statement, i) => {
+      if (i) {
+        printer.nl();
+      }
+      printer.print(statement).nl();
+    });
+
+    return printer.toFiles(this.module.file!);
   }
 
-  private _prelude(): string {
-
-    const { eol } = this.source;
-    let out = this.module.prelude();
-
+  private _prelude(printer: DtsPrinter): void {
     for (const ref of this._refs) {
 
       const path = this.module.pathTo(ref);
 
       if (path) {
         // No need to refer to itself.
-        out += `/// <reference path="${path}" />${eol}`;
+        printer.text(`/// <reference path="${path}" />`).nl();
       }
     }
-
-    return out;
   }
 
 }

@@ -1,16 +1,13 @@
 import { resolve } from 'path';
 import ts from 'typescript';
 import type { FlatDts } from '../api';
+import { createFlatDts } from './create-flat-dts';
 import { DtsContent } from './dts-content';
 import type { DtsSource } from './dts-source';
-import { flatDts } from './flat-dts.impl';
 import { ModuleIndex } from './module-index';
 import type { ModuleInfo } from './module-info';
 import { allTransformed, noneTransformed, TopLevelStatement, Transformed } from './transformed';
 
-/**
- * @internal
- */
 export class DtsTransformer {
 
   private readonly _index: ModuleIndex;
@@ -25,7 +22,7 @@ export class DtsTransformer {
     const diagnostics: ts.Diagnostic[] = initialDiagnostics.slice();
     const files = this._emitFiles(topLevel, diagnostics);
 
-    return flatDts(files, diagnostics);
+    return createFlatDts(files, diagnostics);
   }
 
   private _emitFiles(
@@ -56,12 +53,7 @@ export class DtsTransformer {
       }
     }
 
-    const printer = this._source.createPrinter();
-
-    return Array.from(
-        contentByPath.values(),
-        content => content.dtsFile(printer),
-    );
+    return [...contentByPath.values()].flatMap(content => content.toFiles());
   }
 
   private async _transform(): Promise<Transformed<TopLevelStatement[]>[]> {
@@ -392,9 +384,6 @@ export class DtsTransformer {
 
 }
 
-/**
- * @internal
- */
 function isBodyBlock(body: ts.ModuleDeclaration['body']): body is ts.ModuleBlock {
   return !!body && ts.isModuleBlock(body);
 }

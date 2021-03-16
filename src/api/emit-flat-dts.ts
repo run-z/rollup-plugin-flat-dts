@@ -1,5 +1,5 @@
 import ts from 'typescript';
-import { DtsSource, DtsTransformer, emptyDts, readCompilerOptions } from '../impl';
+import { DtsSetup, DtsSource, DtsSourceFile, DtsTransformer, emptyFlatDts } from '../impl';
 import type { FlatDts } from './flat-dts';
 
 /**
@@ -15,18 +15,8 @@ export async function emitFlatDts(
     dtsOptions: FlatDts.Options = {},
 ): Promise<FlatDts> {
 
-  const { compilerOptions, files, errors } = readCompilerOptions(dtsOptions);
-  const { file: dtsFile = 'index.d.ts' } = dtsOptions;
-
-  delete compilerOptions.outDir;
-  compilerOptions.outFile = dtsFile;
-
-  let { target } = compilerOptions;
-
-  if (!target) {
-    // Set target to latest if absent
-    compilerOptions.target = target = ts.ScriptTarget.Latest;
-  }
+  const setup = new DtsSetup(dtsOptions);
+  const { compilerOptions, files, errors } = setup;
 
   const program = ts.createProgram({
     rootNames: files,
@@ -35,28 +25,25 @@ export async function emitFlatDts(
     configFileParsingDiagnostics: errors,
   });
 
-  const { path, content, diagnostics } = await new Promise<EmittedDts>(resolve => {
+  const { sources, diagnostics } = await new Promise<EmittedDts>(resolve => {
 
-    let path = dtsFile;
-    let content: string | undefined;
+    const sources: DtsSourceFile[] = [];
 
     try {
 
       const { diagnostics } = program.emit(
           undefined /* all source files */,
-          (file, text) => {
-            path = file;
-            content = text;
+          (path, content) => {
+            sources.push({ path, content });
           },
           undefined /* cancellationToken */,
           true /* emitOnlyDtsFiles */,
       );
 
-      resolve({ path, content, diagnostics });
+      resolve({ sources, diagnostics });
     } catch (error) {
       resolve({
-        path,
-        content,
+        sources,
         diagnostics: [{
           category: ts.DiagnosticCategory.Error,
           code: 9999,
@@ -69,21 +56,27 @@ export async function emitFlatDts(
     }
   });
 
-  if (content == null) {
-    return emptyDts(diagnostics);
+  const source = await DtsSource.create(sources, setup);
+
+  if (!source) {
+    return emptyFlatDts(diagnostics);
   }
 
-  const src = ts.createSourceFile(path, content, target);
-  const transformer = new DtsTransformer(new DtsSource(src, dtsOptions, compilerOptions));
+  try {
 
-  return transformer.transform(diagnostics);
+    const transformer = new DtsTransformer(source);
+
+    return transformer.transform(diagnostics);
+  } finally {
+    source.destroy();
+  }
 }
 
-/**
- * @internal
- */
 interface EmittedDts {
-  readonly path: string;
-  readonly content?: string;
+
+  readonly sources: readonly DtsSourceFile[];
+
   readonly diagnostics: readonly ts.Diagnostic[];
+
 }
+

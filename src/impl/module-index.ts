@@ -4,9 +4,6 @@ import type { DtsSource } from './dts-source';
 import { ModuleInfo } from './module-info';
 import { moduleMatcher } from './module-matcher';
 
-/**
- * @internal
- */
 export class ModuleIndex {
 
   private readonly _meta: DtsMeta;
@@ -18,7 +15,7 @@ export class ModuleIndex {
 
   constructor(private readonly _source: DtsSource) {
 
-    const { source, dtsOptions } = _source;
+    const { source, setup: { dtsOptions } } = _source;
     const { entries = {} } = dtsOptions;
 
     this._meta = new DtsMeta(source);

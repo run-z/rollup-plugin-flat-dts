@@ -43,7 +43,8 @@
   },
   "dependencies": {
     "is-glob": "^4.0.1",
-    "micromatch": "^4.0.2"
+    "micromatch": "^4.0.2",
+    "source-map": "^0.7.3"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.1.0",
@@ -71,10 +72,10 @@
     "bootstrap": "rollup --config ./rollup.config.js",
     "build": "run-z +z bootstrap dts",
     "ci:all": "run-z +z all",
-    "clean": "run-z +z --then shx rm -rf index.d.ts '*/index.d.ts' dist target",
+    "clean": "run-z +z --then shx rm -rf 'index.d.ts?(.map)' '*/index.d.ts?(.map)' dist target",
     "doc": "run-z +z --then typedoc",
     "doc:publish": "run-z doc --then gh-pages --dist target/typedoc --dotfiles",
-    "dts": "node ./build/build-dts.js",
+    "dts": "node --enable-source-maps ./build/build-dts.js",
     "lint": "run-z +z --then eslint . --ext .js,.ts",
     "test": "run-z",
     "z": "run-z +bootstrap,+lint +dts,+lint"

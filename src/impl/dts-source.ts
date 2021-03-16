@@ -1,39 +1,60 @@
 import ts from 'typescript';
-import type { FlatDts } from '../api';
+import type { DtsSetup } from './dts-setup';
+import { DtsSourceMap } from './dts-source-map';
 
-/**
- * @internal
- */
 export class DtsSource {
 
-  readonly eol: string;
+  static async create(sources: readonly DtsSourceFile[], setup: DtsSetup): Promise<DtsSource | undefined> {
+
+    let source: ts.SourceFile | undefined;
+    let sourceMap: { path: string; content: string } | undefined;
+
+    for (const { path, content } of sources) {
+      if (path.endsWith('.d.ts')) {
+        source = ts.createSourceFile(path, content, setup.scriptTarget, true);
+      } else if (path.endsWith('.d.ts.map')) {
+        sourceMap = { path, content };
+      }
+    }
+
+    return source && new DtsSource(
+        source,
+        sourceMap && await DtsSourceMap.create(sourceMap.path, sourceMap.content, setup),
+        setup,
+    );
+  }
 
   constructor(
       readonly source: ts.SourceFile,
-      readonly dtsOptions: FlatDts.Options,
-      readonly compilerOptions: ts.CompilerOptions,
+      readonly map: DtsSourceMap | undefined,
+      readonly setup: DtsSetup,
   ) {
-    this.eol = eolString(compilerOptions);
   }
 
-  createPrinter(): ts.Printer {
-    return ts.createPrinter({
-      newLine: this.compilerOptions.newLine,
-    });
+  destroy(): void {
+    this.map?.destroy();
+  }
+
+  hasMap(): this is DtsSource.WithMap {
+    return !!this.map;
   }
 
 }
 
-/**
- * @internal
- */
-function eolString({ newLine }: ts.CompilerOptions): string {
-  switch (newLine) {
-  case ts.NewLineKind.LineFeed:
-    return '\n';
-  case ts.NewLineKind.CarriageReturnLineFeed:
-    return '\r\n';
-  default:
-    return ts.sys.newLine;
+export namespace DtsSource {
+
+  export interface WithMap extends DtsSource {
+
+    readonly map: DtsSourceMap;
+
   }
+
+}
+
+export interface DtsSourceFile {
+
+  readonly path: string;
+
+  readonly content: string;
+
 }

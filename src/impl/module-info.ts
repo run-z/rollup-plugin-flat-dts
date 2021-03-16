@@ -1,28 +1,23 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import type { FlatDts } from '../api';
+import type { DtsPrinter } from './dts-printer';
 import type { DtsSource } from './dts-source';
 
-/**
- * @internal
- */
 const noReferredLibs: ReadonlySet<string> = (/*#__PURE__*/ new Set());
 
-/**
- * @internal
- */
 export class ModuleInfo {
 
   static async main(source: DtsSource): Promise<ModuleInfo> {
 
-    const { moduleName = await packageName() } = source.dtsOptions;
+    const { moduleName = await packageName() } = source.setup.dtsOptions;
 
     return new ModuleInfo(
         source,
         moduleName,
         {
           file: source.source.fileName,
-          libs: referredLibs(source, source.compilerOptions),
+          libs: referredLibs(source, source.setup.compilerOptions),
         },
     );
   }
@@ -64,15 +59,10 @@ export class ModuleInfo {
     }
   }
 
-  prelude(): string {
-
-    let out = '';
-
+  prelude(printer: DtsPrinter): void {
     for (const lib of this._libs) {
-      out += `/// <reference lib="${lib}" />${this.source.eol}`;
+      printer.text(`/// <reference lib="${lib}" />`).nl();
     }
-
-    return out;
   }
 
   nested(name: string, desc: FlatDts.EntryDecl): ModuleInfo {
@@ -112,9 +102,6 @@ export class ModuleInfo {
 
 }
 
-/**
- * @internal
- */
 async function packageName(): Promise<string> {
 
   const packageJson = await fs.readFile('package.json', { encoding: 'utf-8' });
@@ -130,16 +117,13 @@ async function packageName(): Promise<string> {
   return name;
 }
 
-/**
- * @internal
- */
 function referredLibs(
     source: DtsSource,
     { lib }: { lib?: FlatDts.Options['lib'] },
     defaultLibs = noReferredLibs,
 ): ReadonlySet<string> {
   if (lib === true) {
-    lib = source.compilerOptions.lib;
+    lib = source.setup.compilerOptions.lib;
   }
   if (lib == null) {
     return defaultLibs;
@@ -158,9 +142,6 @@ function referredLibs(
   return result;
 }
 
-/**
- * @internal
- */
 function referredLib(name: string): string {
   return name.endsWith('.d.ts') && name.startsWith('lib.') ? name.slice(4, -5) : name;
 }

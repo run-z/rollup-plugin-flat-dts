@@ -10,9 +10,13 @@ emitFlatDts({
   tsconfig: path.join(rootDir, 'tsconfig.json'),
   moduleName: 'rollup-plugin-flat-dts',
   lib: true,
+  compilerOptions: {
+    declarationMap: true,
+  },
   entries: {
     api: { file: 'api/index.d.ts' },
   },
+  internal: 'impl',
 }).then(flatDts => {
   if (flatDts.diagnostics.length) {
     console.error(flatDts.formatDiagnostics());
