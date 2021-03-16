@@ -6,9 +6,6 @@ import type { ModuleInfo } from './module-info';
 import { SimpleDtsPrinter } from './simple-dts-printer';
 import { SourceMapDtsPrinter } from './source-map-dts-printer';
 
-/**
- * @internal
- */
 export class DtsContent {
 
   private readonly _refs = new Set<ModuleInfo>();

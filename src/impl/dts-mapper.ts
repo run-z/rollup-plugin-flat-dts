@@ -4,9 +4,6 @@ import type { FlatDts } from '../api';
 import { DtsNodeChildren } from './dts-node-children';
 import type { DtsSource } from './dts-source';
 
-/**
- * @internal
- */
 export class DtsMapper {
 
   private readonly _genDts: ts.SourceFile;

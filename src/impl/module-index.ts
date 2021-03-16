@@ -4,9 +4,6 @@ import type { DtsSource } from './dts-source';
 import { ModuleInfo } from './module-info';
 import { moduleMatcher } from './module-matcher';
 
-/**
- * @internal
- */
 export class ModuleIndex {
 
   private readonly _meta: DtsMeta;

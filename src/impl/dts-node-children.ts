@@ -1,8 +1,5 @@
 import ts from 'typescript';
 
-/**
- * @internal
- */
 export class DtsNodeChildren extends Set<ts.Node> {
 
   constructor(node: ts.Node) {

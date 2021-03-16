@@ -3,9 +3,6 @@ import ts from 'typescript';
 import { pathToFileURL, URL } from 'url';
 import type { FlatDts } from '../api';
 
-/**
- * @internal
- */
 const MANDATORY_COMPILER_OPTIONS: ts.CompilerOptions = {
   // Avoid extra work
   checkJs: false,
@@ -31,9 +28,6 @@ const MANDATORY_COMPILER_OPTIONS: ts.CompilerOptions = {
   stripInternal: true,
 };
 
-/**
- * @internal
- */
 export class DtsSetup {
 
   readonly compilerOptions: Readonly<ts.CompilerOptions>;

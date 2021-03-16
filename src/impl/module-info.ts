@@ -4,14 +4,8 @@ import type { FlatDts } from '../api';
 import type { DtsPrinter } from './dts-printer';
 import type { DtsSource } from './dts-source';
 
-/**
- * @internal
- */
 const noReferredLibs: ReadonlySet<string> = (/*#__PURE__*/ new Set());
 
-/**
- * @internal
- */
 export class ModuleInfo {
 
   static async main(source: DtsSource): Promise<ModuleInfo> {
@@ -108,9 +102,6 @@ export class ModuleInfo {
 
 }
 
-/**
- * @internal
- */
 async function packageName(): Promise<string> {
 
   const packageJson = await fs.readFile('package.json', { encoding: 'utf-8' });
@@ -126,9 +117,6 @@ async function packageName(): Promise<string> {
   return name;
 }
 
-/**
- * @internal
- */
 function referredLibs(
     source: DtsSource,
     { lib }: { lib?: FlatDts.Options['lib'] },
@@ -154,9 +142,6 @@ function referredLibs(
   return result;
 }
 
-/**
- * @internal
- */
 function referredLib(name: string): string {
   return name.endsWith('.d.ts') && name.startsWith('lib.') ? name.slice(4, -5) : name;
 }

@@ -2,9 +2,6 @@ import ts from 'typescript';
 import type { DtsSetup } from './dts-setup';
 import { DtsSourceMap } from './dts-source-map';
 
-/**
- * @internal
- */
 export class DtsSource {
 
   static async create(sources: readonly DtsSourceFile[], setup: DtsSetup): Promise<DtsSource | undefined> {
@@ -44,9 +41,6 @@ export class DtsSource {
 
 }
 
-/**
- * @internal
- */
 export namespace DtsSource {
 
   export interface WithMap extends DtsSource {
@@ -57,9 +51,6 @@ export namespace DtsSource {
 
 }
 
-/**
- * @internal
- */
 export interface DtsSourceFile {
 
   readonly path: string;

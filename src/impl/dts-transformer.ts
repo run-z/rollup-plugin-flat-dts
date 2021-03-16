@@ -8,9 +8,6 @@ import { ModuleIndex } from './module-index';
 import type { ModuleInfo } from './module-info';
 import { allTransformed, noneTransformed, TopLevelStatement, Transformed } from './transformed';
 
-/**
- * @internal
- */
 export class DtsTransformer {
 
   private readonly _index: ModuleIndex;
@@ -387,9 +384,6 @@ export class DtsTransformer {
 
 }
 
-/**
- * @internal
- */
 function isBodyBlock(body: ts.ModuleDeclaration['body']): body is ts.ModuleBlock {
   return !!body && ts.isModuleBlock(body);
 }

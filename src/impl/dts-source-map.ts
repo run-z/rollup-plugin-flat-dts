@@ -2,9 +2,6 @@ import { SourceMapConsumer } from 'source-map';
 import type ts from 'typescript';
 import type { DtsSetup } from './dts-setup';
 
-/**
- * @internal
- */
 export class DtsSourceMap {
 
   static async create(path: string, content: string, setup: DtsSetup): Promise<DtsSourceMap> {
@@ -68,14 +65,8 @@ export class DtsSourceMap {
 
 }
 
-/**
- * @internal
- */
 export type DtsLocationRange = readonly [DtsLocation, DtsLocation];
 
-/**
- * @internal
- */
 export interface DtsLocation {
   readonly source: string;
   readonly line: number;

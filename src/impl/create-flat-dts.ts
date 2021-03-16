@@ -2,27 +2,18 @@ import { resolve } from 'path';
 import ts from 'typescript';
 import type { FlatDts } from '../api';
 
-/**
- * @internal
- */
 const FORMAT_HOST: ts.FormatDiagnosticsHost = {
   getCurrentDirectory: () => ts.sys.getCurrentDirectory(),
   getNewLine: () => ts.sys.newLine,
   getCanonicalFileName: ts.sys.useCaseSensitiveFileNames ? f => f : f => f.toLowerCase(),
 };
 
-/**
- * @internal
- */
 function formatDiagnostics(this: FlatDts): string {
   return this.diagnostics.length
       ? ts.formatDiagnosticsWithColorAndContext(this.diagnostics, FORMAT_HOST)
       : '';
 }
 
-/**
- * @internal
- */
 export function emptyFlatDts(diagnostics: readonly ts.Diagnostic[]): FlatDts {
   return {
     files: [],
@@ -34,9 +25,6 @@ export function emptyFlatDts(diagnostics: readonly ts.Diagnostic[]): FlatDts {
   };
 }
 
-/**
- * @internal
- */
 export function createFlatDts(
     files: readonly FlatDts.File[],
     diagnostics: readonly ts.Diagnostic[] = [],

@@ -16,6 +16,7 @@ emitFlatDts({
   entries: {
     api: { file: 'api/index.d.ts' },
   },
+  internal: 'impl',
 }).then(flatDts => {
   if (flatDts.diagnostics.length) {
     console.error(flatDts.formatDiagnostics());

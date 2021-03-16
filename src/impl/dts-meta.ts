@@ -1,8 +1,5 @@
 import ts from 'typescript';
 
-/**
- * @internal
- */
 export class DtsMeta {
 
   private readonly _declaredModules: ReadonlySet<string>;

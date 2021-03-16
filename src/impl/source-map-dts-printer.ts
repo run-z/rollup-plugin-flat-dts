@@ -4,9 +4,6 @@ import { DtsMapper } from './dts-mapper';
 import { DtsPrinter } from './dts-printer';
 import type { DtsSource } from './dts-source';
 
-/**
- * @internal
- */
 export class SourceMapDtsPrinter extends DtsPrinter<DtsSource.WithMap> {
 
   private readonly _nodes: ts.Node[] = [];
