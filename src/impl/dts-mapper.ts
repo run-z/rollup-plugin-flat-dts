@@ -1,4 +1,4 @@
-import { SourceMapGenerator } from 'source-map';
+import { Mapping, SourceMapGenerator } from 'source-map';
 import ts from 'typescript';
 import type { FlatDts } from '../api';
 import { DtsNodeChildren } from './dts-node-children';
@@ -8,6 +8,7 @@ export class DtsMapper {
 
   private readonly _genDts: ts.SourceFile;
   private readonly _generator: SourceMapGenerator;
+  private _lastMapping?: Mapping;
 
   constructor(private readonly _source: DtsSource.WithMap, dtsFile: FlatDts.File) {
 
@@ -65,7 +66,7 @@ export class DtsMapper {
     const [orgStart, orgEnd] = orgRange;
     const genStart = this._genDts.getLineAndCharacterOfPosition(genStartPos);
 
-    this._generator.addMapping({
+    this._addMapping({
       generated: { line: genStart.line + 1, column: genStart.character },
       original: { line: orgStart.line + 1, column: orgStart.col },
       source: orgStart.source,
@@ -75,7 +76,7 @@ export class DtsMapper {
 
     const genEnd = this._genDts.getLineAndCharacterOfPosition(genNode.getEnd());
 
-    this._generator.addMapping({
+    this._addMapping({
       generated: { line: genEnd.line + 1, column: genEnd.character },
       original: { line: orgEnd.line + 1, column: orgEnd.col },
       source: orgEnd.source,
@@ -84,6 +85,39 @@ export class DtsMapper {
 
   private _mapChildren(orgNode: ts.Node, genNode: ts.Node): void {
     this._mapNodes(new DtsNodeChildren(orgNode), new DtsNodeChildren(genNode));
+  }
+
+  private _addMapping(mapping: Mapping): void {
+    if (this._lastMapping
+        && this._lastMapping.source === mapping.source
+        && this._lastMapping.generated.line === mapping.generated.line
+        && this._lastMapping.original.line === mapping.original.line) {
+
+      // Mapping from and to the same line
+      const genOffset = mapping.generated.column - this._lastMapping.generated.column;
+
+      if (genOffset >= 0) {
+
+        const orgOffset = mapping.original.column - this._lastMapping.original.column;
+
+        if (genOffset === orgOffset) {
+          // The column offset remained the same.
+          // Span with the previous mapping segment.
+          return;
+        }
+      } else {
+        // Out of order mapping.
+        // Should never happen though.
+        console.warn(
+            'Out of order node mapping. The resulting declaration map could be damaged',
+            mapping,
+            this._lastMapping,
+        );
+      }
+    }
+
+    this._lastMapping = mapping;
+    this._generator.addMapping(mapping);
   }
 
 }
