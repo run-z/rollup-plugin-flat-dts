@@ -14,10 +14,7 @@ export class DtsSourceMap {
     );
   }
 
-  private constructor(
-      readonly consumer: SourceMapConsumer,
-      readonly setup: DtsSetup,
-  ) {}
+  private constructor(readonly map: SourceMapConsumer, readonly setup: DtsSetup) {}
 
   originalRange(node: ts.Node, source: ts.SourceFile): DtsLocationRange | undefined {
 
@@ -44,7 +41,7 @@ export class DtsSourceMap {
   }
 
   destroy(): void {
-    this.consumer.destroy();
+    this.map.destroy();
   }
 
   private _sourceLocation(sourceFile: ts.SourceFile, pos: number): DtsLocation | undefined {
@@ -53,7 +50,7 @@ export class DtsSourceMap {
     }
 
     const location = sourceFile.getLineAndCharacterOfPosition(pos);
-    const { source, line, column } = this.consumer.originalPositionFor({
+    const { source, line, column } = this.map.originalPositionFor({
       line: location.line + 1,
       column: location.character,
     });
