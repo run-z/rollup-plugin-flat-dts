@@ -8,7 +8,7 @@ export class DtsMapper {
 
   private readonly _genDts: ts.SourceFile;
   private readonly _generator: SourceMapGenerator;
-  private _lastMapping?: Mapping;
+  private readonly _line: Mapping[] = [];
 
   constructor(private readonly _source: DtsSource.WithMap, dtsFile: FlatDts.File) {
 
@@ -31,6 +31,7 @@ export class DtsMapper {
 
   map(orgNodes: readonly ts.Node[]): string {
     this._mapNodes(orgNodes, this._genDts.statements);
+    this._endLine();
     return this._generator.toString();
   }
 
@@ -88,38 +89,61 @@ export class DtsMapper {
   }
 
   private _addMapping(mapping: Mapping): void {
-    if (this._lastMapping
-        && this._lastMapping.source === mapping.source
-        && this._lastMapping.generated.line === mapping.generated.line
-        && this._lastMapping.original.line === mapping.original.line) {
 
+    const [prev] = this._line;
+
+    if (prev
+        && prev.source === mapping.source
+        && prev.generated.line === mapping.generated.line
+        && prev.original.line === mapping.original.line) {
       // Mapping from and to the same line
-      const genOffset = mapping.generated.column - this._lastMapping.generated.column;
+      this._line.push(mapping);
+      return;
+    }
 
-      if (genOffset >= 0) {
+    this._endLine();
+    this._line.length = 0;
+    this._line.push(mapping);
+  }
 
-        const orgOffset = mapping.original.column - this._lastMapping.original.column;
+  _endLine(): void {
+    // Sort line mappings by column number
+    this._line.sort(compareMappingColumns);
+
+    const lastIdx = this._line.length - 1;
+
+    this._line.forEach((mapping, i) => {
+      if (i && i < lastIdx) {// Always record the first and the last mapping
+
+        const prev = this._line[i - 1];
+        const genOffset = mapping.generated.column - prev.generated.column;
+
+        if (!genOffset) {
+          // No need to record the same mapping twice.
+          return;
+        }
+        /*
+        // Disabled. It seems that spanning subsequent segments breaks IDE navigation.
+
+        const orgOffset = mapping.original.column - prev.original.column;
 
         if (genOffset === orgOffset) {
           // The column offset remained the same.
           // Span with the previous mapping segment.
           return;
         }
-      } else {
-        // Out of order mapping.
-        // Should never happen though.
-        console.warn(
-            'Out of order node mapping. The resulting declaration map could be damaged',
-            mapping,
-            this._lastMapping,
-        );
+        */
       }
-    }
 
-    this._lastMapping = mapping;
-    this._generator.addMapping(mapping);
+      this._generator.addMapping(mapping);
+    });
   }
 
 }
 
-
+function compareMappingColumns(
+    { generated: { column: col1 } }: Mapping,
+    { generated: { column: col2 } }: Mapping,
+): number {
+  return col1 - col2;
+}
