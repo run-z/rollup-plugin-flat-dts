@@ -24,14 +24,5 @@ module.exports = {
         browser: true,
       },
     },
-    {
-      files: ['*.spec.ts'],
-      extends: [
-        '@run-z/eslint-config/jest',
-      ],
-      parserOptions: {
-        project: './tsconfig.spec.json',
-      },
-    },
   ],
 };
