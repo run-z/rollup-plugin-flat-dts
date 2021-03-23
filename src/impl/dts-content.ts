@@ -45,13 +45,15 @@ export class DtsContent {
   }
 
   private _prelude(printer: DtsPrinter): void {
-    for (const ref of this._refs) {
+    if (this.module.refs) {
+      for (const ref of this._refs) {
 
-      const path = this.module.pathTo(ref);
+        const path = this.module.pathTo(ref);
 
-      if (path) {
-        // No need to refer to itself.
-        printer.text(`/// <reference path="${path}" />`).nl();
+        if (path) {
+          // No need to refer itself.
+          printer.text(`/// <reference path="${path}" />`).nl();
+        }
       }
     }
   }
