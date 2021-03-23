@@ -10,14 +10,26 @@ export class ModuleInfo {
 
   static async main(source: DtsSource): Promise<ModuleInfo> {
 
-    const { moduleName = await packageName() } = source.setup.dtsOptions;
+    const {
+      source: {
+        fileName: file,
+      },
+      setup: {
+        dtsOptions: {
+          moduleName = await packageName(),
+          refs = true,
+        },
+        compilerOptions,
+      },
+    } = source;
 
     return new ModuleInfo(
         source,
         moduleName,
         {
-          file: source.source.fileName,
-          libs: referredLibs(source, source.setup.compilerOptions),
+          file,
+          libs: referredLibs(source, compilerOptions),
+          refs,
         },
     );
   }
@@ -33,6 +45,7 @@ export class ModuleInfo {
   readonly isExternal: boolean;
   readonly isInternal: boolean;
   readonly file: string | undefined;
+  readonly refs: boolean;
   private readonly _libs: ReadonlySet<string>;
 
   private constructor(
@@ -44,17 +57,20 @@ export class ModuleInfo {
           | {
               file: string;
               libs: ReadonlySet<string>;
+              refs: boolean;
           },
   ) {
     if (typeof kind === 'string') {
       this.isExternal = kind === 'external';
       this.isInternal = !this.isExternal;
       this.file = undefined;
+      this.refs = false;
       this._libs = noReferredLibs;
     } else {
       this.isExternal = false;
       this.isInternal = false;
       this.file = kind.file;
+      this.refs = kind.refs;
       this._libs = kind.libs;
     }
   }
@@ -65,9 +81,9 @@ export class ModuleInfo {
     }
   }
 
-  nested(name: string, desc: FlatDts.EntryDecl): ModuleInfo {
+  nested(name: string, decl: FlatDts.EntryDecl): ModuleInfo {
 
-    let { as: declareAs = name } = desc;
+    let { as: declareAs = name } = decl;
 
     if (this.declareAs) {
       declareAs = `${this.declareAs}/${declareAs}`;
@@ -78,8 +94,9 @@ export class ModuleInfo {
           this.source,
           declareAs,
           {
-            file: desc.file ?? this.file!,
-            libs: referredLibs(this.source, desc, this._libs),
+            file: decl.file ?? this.file!,
+            libs: referredLibs(this.source, decl, this._libs),
+            refs: decl.refs ?? this.refs,
           },
       );
     }

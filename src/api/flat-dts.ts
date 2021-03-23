@@ -98,6 +98,15 @@ export namespace FlatDts {
     readonly lib?: boolean | string | readonly string[];
 
     /**
+     * Whether to add file references.
+     *
+     * A file reference is added when one entry refers another one.
+     *
+     * @defaultValue `true`
+     */
+    readonly refs?: boolean;
+
+    /**
      * External module names.
      *
      * An array of external module names and their [glob] patterns. These names won't be changed during flattening
@@ -154,6 +163,15 @@ export namespace FlatDts {
      * When omitted the contents are merged into main `.d.ts.` file.
      */
     readonly file?: string;
+
+    /**
+     * Whether to add file references.
+     *
+     * A file reference is added for each entry this one refers.
+     *
+     * @defaultValue Inherited from {@link Options.refs `refs` flattening option}.
+     */
+    readonly refs?: boolean;
 
   }
 

@@ -117,12 +117,18 @@ Configuration Options
 
   A map of entry name declarations ([see below](#multiple-entries)).
   
-- `lib` Whether to add [triple-slash] directives to refer the libraries used.
+- `lib` - Whether to add [triple-slash] directives to refer the libraries used.
 
   Allowed values:
   - `true` to add an entry for each referred library from `lib` compiler option,
   - `false` (the default) to not add any library references,
   - an explicit list of libraries to refer.
+
+- `refs` - Whether to add file references.
+
+  A file reference is added when one entry refers another one.
+
+  `true` by default.
   
 - `external` - External module names.
 
@@ -227,6 +233,8 @@ export default {
             as: 'web',              // belong to `my-package/web` sub-module.
                                     // (Would be `my-package/browser` if omitted)
             lib: 'DOM',             // Add `DOM` library reference.
+            refs: false,            // Do not add triple-slash file references to other entries.
+                                    // Otherwise, a file reference will be added for each entry this one refers.
             file: 'web/index.d.ts', // Write type definitions to separate `.d.ts` file.
                                     // (Would be written to main `index.d.ts` if omitted) 
           },
