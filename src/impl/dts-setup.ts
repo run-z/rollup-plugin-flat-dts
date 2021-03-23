@@ -20,8 +20,6 @@ const MANDATORY_COMPILER_OPTIONS: ts.CompilerOptions = {
   noEmit: false,
   // Skip code generation when error occurs
   noEmitOnError: true,
-  // Ensure TS2742 errors are visible
-  preserveSymlinks: true,
   // Ignore errors in library type definitions
   skipLibCheck: true,
   // Always strip internal exports
