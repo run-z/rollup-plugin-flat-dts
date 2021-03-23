@@ -151,13 +151,17 @@
 					<li><p><code>entries</code> - Module entries.</p>
 						<p>A map of entry name declarations (<a href="#multiple-entries">see below</a>).</p>
 					</li>
-					<li><p><code>lib</code> Whether to add <a href="https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html">triple-slash</a> directives to refer the libraries used.</p>
+					<li><p><code>lib</code> - Whether to add <a href="https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html">triple-slash</a> directives to refer the libraries used.</p>
 						<p>Allowed values:</p>
 						<ul>
 							<li><code>true</code> to add an entry for each referred library from <code>lib</code> compiler option,</li>
 							<li><code>false</code> (the default) to not add any library references,</li>
 							<li>an explicit list of libraries to refer.</li>
 						</ul>
+					</li>
+					<li><p><code>refs</code> - Whether to add file references.</p>
+						<p>A file reference is added when one entry refers another one.</p>
+						<p><code>true</code> by default.</p>
 					</li>
 					<li><p><code>external</code> - External module names.</p>
 						<p>An array of external module names and their <a href="https://www.npmjs.com/package/micromatch">glob</a> patterns. These names won&#39;t be changed during flattening
@@ -246,6 +250,8 @@
 <span style="color: #000000">            </span><span style="color: #001080">as:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;web&#039;</span><span style="color: #000000">,              </span><span style="color: #008000">// belong to `my-package/web` sub-module.</span>
 <span style="color: #000000">                                    </span><span style="color: #008000">// (Would be `my-package/browser` if omitted)</span>
 <span style="color: #000000">            </span><span style="color: #001080">lib:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;DOM&#039;</span><span style="color: #000000">,             </span><span style="color: #008000">// Add `DOM` library reference.</span>
+<span style="color: #000000">            </span><span style="color: #001080">refs:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000">,            </span><span style="color: #008000">// Do not add triple-slash file references to other entries.</span>
+<span style="color: #000000">                                    </span><span style="color: #008000">// Otherwise, a file reference will be added for each entry this one refers.</span>
 <span style="color: #000000">            </span><span style="color: #001080">file:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;web/index.d.ts&#039;</span><span style="color: #000000">, </span><span style="color: #008000">// Write type definitions to separate `.d.ts` file.</span>
 <span style="color: #000000">                                    </span><span style="color: #008000">// (Would be written to main `index.d.ts` if omitted) </span>
 <span style="color: #000000">          },</span>
@@ -312,8 +318,6 @@
   noEmit: false,
   // Skip code generation when error occurs
   noEmitOnError: true,
-  // Ensure TS2742 errors are visible
-  preserveSymlinks: true,
   // Ignore errors in library type definitions
   skipLibCheck: true,
   // Always strip internal exports
