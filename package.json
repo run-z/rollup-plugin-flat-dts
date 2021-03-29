@@ -33,7 +33,7 @@
     }
   },
   "peerDependencies": {
-    "rollup": "^2.42.0",
+    "rollup": "^2.43.1",
     "typescript": "4.1.5 - 4.3"
   },
   "peerDependenciesMeta": {
@@ -48,16 +48,16 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.1.0",
-    "@rollup/plugin-node-resolve": "^11.2.0",
+    "@rollup/plugin-node-resolve": "^11.2.1",
     "@run-z/eslint-config": "^1.2.1",
     "@types/is-glob": "^4.0.1",
     "@types/micromatch": "^4.0.1",
-    "@types/node": "^12.20.6",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
-    "eslint": "^7.22.0",
+    "@types/node": "^12.20.7",
+    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "@typescript-eslint/parser": "^4.19.0",
+    "eslint": "^7.23.0",
     "gh-pages": "^3.1.0",
-    "rollup": "^2.42.4",
+    "rollup": "^2.43.1",
     "rollup-plugin-sourcemaps": "^0.6.3",
     "rollup-plugin-typescript2": "^0.30.0",
     "run-z": "=1.7.1-bootstrap",
