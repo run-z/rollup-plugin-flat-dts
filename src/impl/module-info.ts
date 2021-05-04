@@ -17,9 +17,9 @@ export class ModuleInfo {
       setup: {
         dtsOptions: {
           moduleName = await packageName(),
+          lib,
           refs = true,
         },
-        compilerOptions,
       },
     } = source;
 
@@ -28,7 +28,7 @@ export class ModuleInfo {
         moduleName,
         {
           file,
-          libs: referredLibs(source, compilerOptions),
+          libs: referredLibs(source, lib),
           refs,
         },
     );
@@ -55,10 +55,10 @@ export class ModuleInfo {
           | 'internal'
           | 'external'
           | {
-              file: string;
-              libs: ReadonlySet<string>;
-              refs: boolean;
-          },
+        file: string;
+        libs: ReadonlySet<string>;
+        refs: boolean;
+      },
   ) {
     if (typeof kind === 'string') {
       this.isExternal = kind === 'external';
@@ -95,7 +95,7 @@ export class ModuleInfo {
           declareAs,
           {
             file: decl.file ?? this.file!,
-            libs: referredLibs(this.source, decl, this._libs),
+            libs: referredLibs(this.source, decl.lib, this._libs),
             refs: decl.refs ?? this.refs,
           },
       );
@@ -136,7 +136,7 @@ async function packageName(): Promise<string> {
 
 function referredLibs(
     source: DtsSource,
-    { lib }: { lib?: FlatDts.Options['lib'] },
+    lib: FlatDts.Options['lib'],
     defaultLibs = noReferredLibs,
 ): ReadonlySet<string> {
   if (lib === true) {
