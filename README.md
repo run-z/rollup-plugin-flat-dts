@@ -57,7 +57,7 @@ This plugin flattens type definitions instead of merging them. This applies seve
 
 1. Every export in every TypeScript file considered exported from the package (i.e. part of public API).
 
-   Mark internal exports (internal API) with `@internal` javadoc tag to prevent this, or declare internal modules with
+   Mark internal exports (internal API) with `@internal` jsdoc tag to prevent this, or declare internal modules with
    `internal` option. 
    
 2. Default exports supported only at the top level and in entry points ([see below](#multiple-entries)).
@@ -83,10 +83,10 @@ To adhere to these limitations the project structure could be like this:
 
 2. All exported symbols that are not re-exported by index files considered part of internal API.
 
-   Every such symbols has a javadoc block containing `@internal` tag.
+   Every such symbols has a jsdoc block containing `@internal` tag.
    
    Alternatively, the internal modules follow some naming convention. The `internal` option reflects this convention.
-   E.g. `internal: ['**/impl/**', '**/*.impl]` would treat all `.impl.ts` source files and files in `impl/` directories
+   E.g. `internal: ['**/impl/**', '**/*.impl']` would treat all `.impl.ts` source files and files in `impl/` directories
    as part of internal API. 
 
 3. Rollup entry points are index files.
