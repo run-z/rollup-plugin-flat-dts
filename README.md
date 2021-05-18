@@ -297,7 +297,7 @@ So, here what this plugin is doing:
 
 1. Generates single-file type definition by overriding original `tsconfig.json` options with the following:
    
-   ```json5
+   ```jsonc
    {
      // Avoid extra work
      checkJs: false,
