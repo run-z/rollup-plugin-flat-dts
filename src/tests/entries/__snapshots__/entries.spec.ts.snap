@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`With multiple entries emits multiple definition files when entry file name specified: file1 1`] = `
+"declare module \\"rollup-plugin-flat-dts/entry1\\" {
+    export interface Entry1 {
+        readonly name: 'entry1';
+    }
+}
+"
+`;
+
+exports[`With multiple entries emits multiple definition files when entry file name specified: file2 1`] = `
+"declare module \\"rollup-plugin-flat-dts/entry2\\" {
+    export interface Entry2 {
+        readonly name: 'entry2';
+    }
+}
+"
+`;
+
+exports[`With multiple entries emits multiple definition files when entry file name specified: file3 1`] = `
+"/// <reference path=\\"entry1.d.ts\\" />
+/// <reference path=\\"entry2.d.ts\\" />
+declare module \\"rollup-plugin-flat-dts\\" {
+    export * from \\"rollup-plugin-flat-dts/entry1\\";
+    export * from \\"rollup-plugin-flat-dts/entry2\\";
+    export interface Root {
+        readonly name: 'root';
+    }
+}
+"
+`;
+
+exports[`With multiple entries emits one definition file when entry file name omitted 1`] = `
+"declare module \\"rollup-plugin-flat-dts/entry1\\" {
+    export interface Entry1 {
+        readonly name: 'entry1';
+    }
+}
+
+declare module \\"rollup-plugin-flat-dts/entry2\\" {
+    export interface Entry2 {
+        readonly name: 'entry2';
+    }
+}
+
+declare module \\"rollup-plugin-flat-dts\\" {
+    export * from \\"rollup-plugin-flat-dts/entry1\\";
+    export * from \\"rollup-plugin-flat-dts/entry2\\";
+    export interface Root {
+        readonly name: 'root';
+    }
+}
+"
+`;
+
+exports[`With multiple entries merges multiple entries with the same file name: file1 1`] = `
+"declare module \\"rollup-plugin-flat-dts/entry1\\" {
+    export interface Entry1 {
+        readonly name: 'entry1';
+    }
+}
+
+declare module \\"rollup-plugin-flat-dts/entry2\\" {
+    export interface Entry2 {
+        readonly name: 'entry2';
+    }
+}
+"
+`;
+
+exports[`With multiple entries merges multiple entries with the same file name: file2 1`] = `
+"/// <reference path=\\"entries.d.ts\\" />
+/// <reference path=\\"entries.d.ts\\" />
+declare module \\"rollup-plugin-flat-dts\\" {
+    export * from \\"rollup-plugin-flat-dts/entry1\\";
+    export * from \\"rollup-plugin-flat-dts/entry2\\";
+    export interface Root {
+        readonly name: 'root';
+    }
+}
+"
+`;
+
+exports[`With multiple entries renames the entry when its final name specified 1`] = `
+"declare module \\"rollup-plugin-flat-dts/test-entry1\\" {
+    export interface Entry1 {
+        readonly name: 'entry1';
+    }
+}
+
+declare module \\"rollup-plugin-flat-dts/test-entry2\\" {
+    export interface Entry2 {
+        readonly name: 'entry2';
+    }
+}
+
+declare module \\"rollup-plugin-flat-dts\\" {
+    export * from \\"rollup-plugin-flat-dts/test-entry1\\";
+    export * from \\"rollup-plugin-flat-dts/test-entry2\\";
+    export interface Root {
+        readonly name: 'root';
+    }
+}
+"
+`;

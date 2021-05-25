@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`For interfaces emits declaration map: dts 1`] = `
+"declare module \\"rollup-plugin-flat-dts\\" {
+    export interface TestInterface {
+        readonly foo: string;
+    }
+}
+//# sourceMappingURL=index.d.ts.map
+"
+`;
+
+exports[`For interfaces emits declaration map: source map 1`] = `"{\\"version\\":3,\\"sources\\":[\\"src/tests/interfaces/interfaces.ts\\"],\\"names\\":[],\\"mappings\\":\\";IAAA,MAAM,WAAW,aAAa;QAE5B,QAAQ,CAAC,GAAG,EAAE,MAAM,CAAC;KAEtB\\",\\"file\\":\\"index.d.ts\\",\\"sourceRoot\\":\\"\\"}"`;
+
+exports[`For interfaces emits type definitions 1`] = `
+"declare module \\"rollup-plugin-flat-dts\\" {
+    export interface TestInterface {
+        readonly foo: string;
+    }
+}
+"
+`;
