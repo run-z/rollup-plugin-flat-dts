@@ -18,6 +18,7 @@
       "ES2019.Array"
     ],
     "types": [
+      "jest",
       "node"
     ],
     "outDir": "target/js",
