@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`For imports with \`.js\` extension emits declaration map: dts 1`] = `
+"declare module \\"test-package/imported\\" {
+    export interface Imported {
+        readonly name: 'imported';
+    }
+}
+
+declare module \\"test-package\\" {
+    export * from \\"test-package/imported\\";
+}
+//# sourceMappingURL=index.d.ts.map
+"
+`;
+
+exports[`For imports with \`.js\` extension emits declaration map: source map 1`] = `"{\\"version\\":3,\\"sources\\":[\\"src/tests/imports/imported.ts\\",\\"src/tests/imports/importer.ts\\"],\\"names\\":[],\\"mappings\\":\\";IAAA,MAAM,WAAW,QAAQ;QACvB,QAAQ,CAAC,IAAI,EAAE,UAAU,CAAC;KAC3B;;;;ICFD,sCAA8B\\",\\"file\\":\\"index.d.ts\\",\\"sourceRoot\\":\\"\\"}"`;
+
+exports[`For imports with \`.js\` extension emits type definitions 1`] = `
+"declare module \\"test-package/imported\\" {
+    export interface Imported {
+        readonly name: 'imported';
+    }
+}
+
+declare module \\"test-package\\" {
+    export * from \\"test-package/imported\\";
+}
+"
+`;
