@@ -7,6 +7,7 @@ export function testDts(
 ): Promise<FlatDts> {
   return emitFlatDts({
     tsconfig: `src/tests/${root}/tsconfig.json`,
+    moduleName: 'test-package',
     ...options,
   });
 }

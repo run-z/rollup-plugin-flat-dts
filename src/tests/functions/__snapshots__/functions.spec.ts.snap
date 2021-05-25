@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`For functions emits declaration map: dts 1`] = `
-"declare module \\"rollup-plugin-flat-dts\\" {
+"declare module \\"test-package\\" {
     export function testFunction(prefix: string, ...args: string[]): string;
 }
 //# sourceMappingURL=index.d.ts.map
@@ -11,7 +11,7 @@ exports[`For functions emits declaration map: dts 1`] = `
 exports[`For functions emits declaration map: source map 1`] = `"{\\"version\\":3,\\"sources\\":[\\"src/tests/functions/functions.ts\\"],\\"names\\":[],\\"mappings\\":\\";IAAA,MAAM,UAAU,YAAY,CAAC,MAAM,EAAE,MAAM,EAAE,GAAG,IAAI,EAAE,MAAM,EAAE,GAAG,MAAM,CAEtE\\",\\"file\\":\\"index.d.ts\\",\\"sourceRoot\\":\\"\\"}"`;
 
 exports[`For functions emits type definitions 1`] = `
-"declare module \\"rollup-plugin-flat-dts\\" {
+"declare module \\"test-package\\" {
     export function testFunction(prefix: string, ...args: string[]): string;
 }
 "
