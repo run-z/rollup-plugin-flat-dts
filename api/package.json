@@ -1,4 +1,4 @@
 {
-  "main": "../dist/flat-dts.api.js",
+  "main": "../dist/flat-dts.api.cjs",
   "types": "./index.d.ts"
 }

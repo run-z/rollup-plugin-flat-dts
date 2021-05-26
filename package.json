@@ -20,7 +20,6 @@
   },
   "type": "module",
   "main": "./dist/flat-dts.plugin.cjs",
-  "module": "./dist/flat-dts.plugin.js",
   "types": "./index.d.ts",
   "exports": {
     ".": {
