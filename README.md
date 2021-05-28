@@ -310,7 +310,8 @@ So, here what this plugin is doing:
      // Single file emission is impossible with this flag set
      isolatedModules: false,
      // Generate single file
-     module: "None",
+     // `System`, in contrast to `None`, permits the use of `import.meta`
+     module: "System",
      // Always emit
      noEmit: false,
      // Skip code generation when error occurs
