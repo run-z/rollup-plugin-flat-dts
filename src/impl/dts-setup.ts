@@ -15,7 +15,8 @@ const MANDATORY_COMPILER_OPTIONS: ts.CompilerOptions = {
   // Single file emission is impossible with this flag set
   isolatedModules: false,
   // Generate single file
-  module: ts.ModuleKind.None,
+  // `System`, in contrast to `None`, permits the use of `import.meta`
+  module: ts.ModuleKind.System,
   // Always emit
   noEmit: false,
   // Skip code generation when error occurs
