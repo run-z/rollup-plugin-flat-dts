@@ -72,7 +72,7 @@
   },
   "scripts": {
     "all": "run-z +z build,lint,test",
-    "bootstrap": "rollup --config ./rollup.config.js",
+    "bootstrap": "rollup -c",
     "build": "run-z +z bootstrap dts",
     "ci:all": "run-z all +cmd:jest/--ci/--runInBand",
     "clean": "run-z +z --then shx rm -rf 'index.d.ts?(.map)' '*/index.d.ts?(.map)' dist target",

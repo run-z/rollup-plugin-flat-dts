@@ -1,11 +1,13 @@
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
-import { builtinModules } from 'module';
+import { builtinModules, createRequire } from 'module';
 import path from 'path';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import ts from 'rollup-plugin-typescript2';
 import typescript from 'typescript';
-import pkg from './package.json';
+
+const req = createRequire(import.meta.url);
+const pkg = req('./package.json');
 
 export default {
   input: {
