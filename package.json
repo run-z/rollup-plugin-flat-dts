@@ -80,7 +80,7 @@
     "doc:publish": "run-z doc --then gh-pages --dist target/typedoc --dotfiles",
     "dts": "node --enable-source-maps ./build/build-dts.js",
     "lint": "run-z +z --then eslint . --ext .js,.ts",
-    "test": "run-z +z --then jest",
+    "test": "run-z +z env:NODE_OPTIONS='--experimental-vm-modules --no-warnings' --then jest",
     "z": "run-z +cmd:rollup,+cmd:eslint,+cmd:jest +dts,+cmd:eslint,+cmd:jest"
   }
 }
