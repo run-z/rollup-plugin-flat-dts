@@ -3,6 +3,7 @@ Flatten `.d.ts` Files
 
 [![NPM][npm-image]][npm-url]
 [![Build Status][build-status-img]][build-status-link]
+[![Code Quality][quality-img]][quality-link]
 [![GitHub Project][github-image]][github-url]
 [![API Documentation][api-docs-image]][API documentation]
 
@@ -10,6 +11,8 @@ Flatten `.d.ts` Files
 [npm-url]: https://www.npmjs.com/package/rollup-plugin-flat-dts
 [build-status-img]: https://github.com/run-z/rollup-plugin-flat-dts/workflows/Build/badge.svg
 [build-status-link]: https://github.com/run-z/rollup-plugin-flat-dts/actions?query=workflow:Build
+[quality-img]: https://app.codacy.com/project/badge/Grade/387d9672b1c546cda630bf3cb04d5cd2
+[quality-link]: https://www.codacy.com/gh/run-z/rollup-plugin-flat-dts/dashboard?utm_source=github.com&utm_medium=referral&utm_content=run-z/rollup-plugin-flat-dts&utm_campaign=Badge_Grade
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
 [github-url]: https://github.com/run-z/rollup-plugin-flat-dts
 [api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
