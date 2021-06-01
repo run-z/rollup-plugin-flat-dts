@@ -387,5 +387,3 @@ export class DtsTransformer {
 function isBodyBlock(body: ts.ModuleDeclaration['body']): body is ts.ModuleBlock {
   return !!body && ts.isModuleBlock(body);
 }
-
-

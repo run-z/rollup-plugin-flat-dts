@@ -162,4 +162,3 @@ function referredLibs(
 function referredLib(name: string): string {
   return name.endsWith('.d.ts') && name.startsWith('lib.') ? name.slice(4, -5) : name;
 }
-

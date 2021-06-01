@@ -79,4 +79,3 @@ interface EmittedDts {
   readonly diagnostics: readonly ts.Diagnostic[];
 
 }
-
