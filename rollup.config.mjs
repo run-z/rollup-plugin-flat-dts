@@ -2,6 +2,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import { builtinModules, createRequire } from 'module';
 import path from 'path';
+import { defineConfig } from 'rollup';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import ts from 'rollup-plugin-typescript2';
 import typescript from 'typescript';
@@ -9,7 +10,7 @@ import typescript from 'typescript';
 const req = createRequire(import.meta.url);
 const pkg = req('./package.json');
 
-export default {
+export default defineConfig({
   input: {
     'flat-dts.api': './src/api/index.ts',
     'flat-dts.plugin': './src/plugin.ts',
@@ -54,4 +55,4 @@ export default {
       hoistTransitiveImports: false,
     },
   ],
-};
+});
