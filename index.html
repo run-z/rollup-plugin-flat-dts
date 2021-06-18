@@ -63,6 +63,7 @@
 				</a>
 				<p><a href="https://www.npmjs.com/package/rollup-plugin-flat-dts"><img src="https://img.shields.io/npm/v/rollup-plugin-flat-dts.svg?logo=npm" alt="NPM"></a>
 					<a href="https://github.com/run-z/rollup-plugin-flat-dts/actions?query=workflow:Build"><img src="https://github.com/run-z/rollup-plugin-flat-dts/workflows/Build/badge.svg" alt="Build Status"></a>
+					<a href="https://www.codacy.com/gh/run-z/rollup-plugin-flat-dts/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=run-z/rollup-plugin-flat-dts&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/387d9672b1c546cda630bf3cb04d5cd2" alt="Code Quality"></a>
 					<a href="https://github.com/run-z/rollup-plugin-flat-dts"><img src="https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational" alt="GitHub Project"></a>
 				<a href="https://run-z.github.io/rollup-plugin-flat-dts"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
 				<a href="#example-configuration" id="example-configuration" style="color: inherit; text-decoration: none;">
@@ -101,7 +102,7 @@
 				<p>This plugin flattens type definitions instead of merging them. This applies severe limitations to the source code:</p>
 				<ol>
 					<li><p>Every export in every TypeScript file considered exported from the package (i.e. part of public API).</p>
-						<p>Mark internal exports (internal API) with <code>@internal</code> javadoc tag to prevent this, or declare internal modules with
+						<p>Mark internal exports (internal API) with <code>@internal</code> jsdoc tag to prevent this, or declare internal modules with
 						<code>internal</code> option. </p>
 					</li>
 					<li><p>Default exports supported only at the top level and in entry points (<a href="#multiple-entries">see below</a>).</p>
@@ -123,9 +124,9 @@
 						<p>Index file also re-export all symbols from nested directories with statements like <code>export * from &#39;./dir&#39;;</code></p>
 					</li>
 					<li><p>All exported symbols that are not re-exported by index files considered part of internal API.</p>
-						<p>Every such symbols has a javadoc block containing <code>@internal</code> tag.</p>
+						<p>Every such symbols has a jsdoc block containing <code>@internal</code> tag.</p>
 						<p>Alternatively, the internal modules follow some naming convention. The <code>internal</code> option reflects this convention.
-							E.g. <code>internal: [&#39;**/impl/**&#39;, &#39;**/*.impl]</code> would treat all <code>.impl.ts</code> source files and files in <code>impl/</code> directories
+							E.g. <code>internal: [&#39;**/impl/**&#39;, &#39;**/*.impl&#39;]</code> would treat all <code>.impl.ts</code> source files and files in <code>impl/</code> directories
 						as part of internal API. </p>
 					</li>
 					<li><p>Rollup entry points are index files.</p>
@@ -301,28 +302,29 @@
 				<p>So, here what this plugin is doing:</p>
 				<ol>
 					<li><p>Generates single-file type definition by overriding original <code>tsconfig.json</code> options with the following:</p>
-						<pre><code class="language-json5">{
-  // Avoid extra work
-  checkJs: false,
-  // Ensure &quot;.d.ts&quot; modules are generated
-  declaration: true,
-  // Prevent output to declaration directory
-  declarationDir: null,
-  // Skip &quot;.js&quot; generation
-  emitDeclarationOnly: true,
-  // Single file emission is impossible with this flag set
-  isolatedModules: false,
-  // Generate single file
-  module: &quot;None&quot;,
-  // Always emit
-  noEmit: false,
-  // Skip code generation when error occurs
-  noEmitOnError: true,
-  // Ignore errors in library type definitions
-  skipLibCheck: true,
-  // Always strip internal exports
-  stripInternal: true,
-}
+						<pre><code class="language-jsonc"><span style="color: #000000">{</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Avoid extra work</span>
+<span style="color: #000000">  </span><span style="color: #CD3131">checkJs</span><span style="color: #000000">: </span><span style="color: #0000FF">false</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Ensure &quot;.d.ts&quot; modules are generated</span>
+<span style="color: #000000">  </span><span style="color: #CD3131">declaration</span><span style="color: #000000">: </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Prevent output to declaration directory</span>
+<span style="color: #000000">  </span><span style="color: #CD3131">declarationDir</span><span style="color: #000000">: </span><span style="color: #0000FF">null</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Skip &quot;.js&quot; generation</span>
+<span style="color: #000000">  </span><span style="color: #CD3131">emitDeclarationOnly</span><span style="color: #000000">: </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Single file emission is impossible with this flag set</span>
+<span style="color: #000000">  </span><span style="color: #CD3131">isolatedModules</span><span style="color: #000000">: </span><span style="color: #0000FF">false</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Generate single file</span>
+<span style="color: #000000">  </span><span style="color: #008000">// `System`, in contrast to `None`, permits the use of `import.meta`</span>
+<span style="color: #000000">  </span><span style="color: #CD3131">module</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;System&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Always emit</span>
+<span style="color: #000000">  </span><span style="color: #CD3131">noEmit</span><span style="color: #000000">: </span><span style="color: #0000FF">false</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Skip code generation when error occurs</span>
+<span style="color: #000000">  </span><span style="color: #CD3131">noEmitOnError</span><span style="color: #000000">: </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Ignore errors in library type definitions</span>
+<span style="color: #000000">  </span><span style="color: #CD3131">skipLibCheck</span><span style="color: #000000">: </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Always strip internal exports</span>
+<span style="color: #000000">  </span><span style="color: #CD3131">stripInternal</span><span style="color: #000000">: </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">}</span>
 </code></pre>
 					</li>
 					<li><p>The generated file consists of <code>declare module &quot;path/to/file&quot; { ... }</code> statements. One such statement per each
