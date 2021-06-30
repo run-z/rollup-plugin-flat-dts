@@ -32,7 +32,7 @@
     }
   },
   "peerDependencies": {
-    "rollup": "^2.52.3",
+    "rollup": "^2.52.4",
     "typescript": "4.1.5 - 4.4"
   },
   "peerDependenciesMeta": {
@@ -46,23 +46,23 @@
     "source-map": "^0.7.3"
   },
   "devDependencies": {
-    "@jest/globals": "^27.0.5",
+    "@jest/globals": "^27.0.6",
     "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@run-z/eslint-config": "^1.3.0",
     "@types/is-glob": "^4.0.1",
     "@types/micromatch": "^4.0.1",
     "@types/node": "^12.20.15",
-    "@typescript-eslint/eslint-plugin": "^4.28.0",
-    "@typescript-eslint/parser": "^4.28.0",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
     "eslint": "^7.29.0",
     "eslint-plugin-jest": "^24.3.6",
     "gh-pages": "^3.2.3",
-    "jest": "^27.0.5",
+    "jest": "^27.0.6",
     "jest-junit": "^12.2.0",
     "remark-cli": "^9.0.0",
     "remark-preset-lint-recommended": "^5.0.0",
-    "rollup": "^2.52.3",
+    "rollup": "^2.52.4",
     "rollup-plugin-sourcemaps": "^0.6.3",
     "rollup-plugin-typescript2": "^0.30.0",
     "run-z": "=1.9.1-bootstrap",
