@@ -32,7 +32,7 @@
     }
   },
   "peerDependencies": {
-    "rollup": "^2.53.1",
+    "rollup": "^2.53.2",
     "typescript": "4.1.5 - 4.4"
   },
   "peerDependenciesMeta": {
@@ -62,7 +62,7 @@
     "jest-junit": "^12.2.0",
     "remark-cli": "^9.0.0",
     "remark-preset-lint-recommended": "^5.0.0",
-    "rollup": "^2.53.1",
+    "rollup": "^2.53.2",
     "rollup-plugin-sourcemaps": "^0.6.3",
     "rollup-plugin-typescript2": "^0.30.0",
     "run-z": "=1.9.1-bootstrap",
