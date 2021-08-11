@@ -51,28 +51,28 @@ export namespace FlatDts {
      *
      * @defaultValue `"tsconfig.json"`
      */
-    readonly tsconfig?: string;
+    readonly tsconfig?: string | undefined;
 
     /**
      * TypeScript compiler options to apply.
      *
      * Override the options from {@link tsconfig}.
      */
-    readonly compilerOptions?: ts.CompilerOptions;
+    readonly compilerOptions?: ts.CompilerOptions | undefined;
 
     /**
      * Output `.d.ts` file name relative to output directory.
      *
      * @defaultValue `index.d.ts`
      */
-    readonly file?: string;
+    readonly file?: string | undefined;
 
     /**
      * The module name to replace flattened module declarations with.
      *
      * @defaultValue Package name extracted from `package.json` found in current directory.
      */
-    readonly moduleName?: string;
+    readonly moduleName?: string | undefined;
 
     /**
      * Module entries.
@@ -95,7 +95,7 @@ export namespace FlatDts {
      *
      * @defaultValue `false`
      */
-    readonly lib?: boolean | string | readonly string[];
+    readonly lib?: boolean | string | readonly string[] | undefined;
 
     /**
      * Whether to add file references.
@@ -104,7 +104,7 @@ export namespace FlatDts {
      *
      * @defaultValue `true`
      */
-    readonly refs?: boolean;
+    readonly refs?: boolean | undefined;
 
     /**
      * External module names.
@@ -116,7 +116,7 @@ export namespace FlatDts {
      *
      * [glob]: https://www.npmjs.com/package/micromatch
      */
-    readonly external?: string | readonly string[];
+    readonly external?: string | readonly string[] | undefined;
 
     /**
      * Internal module names.
@@ -126,7 +126,7 @@ export namespace FlatDts {
      *
      * [glob]: https://www.npmjs.com/package/micromatch
      */
-    readonly internal?: string | readonly string[];
+    readonly internal?: string | readonly string[] | undefined;
 
   }
 
@@ -142,7 +142,7 @@ export namespace FlatDts {
      *
      * @defaultValue The same as {@link name}.
      */
-    readonly as?: string;
+    readonly as?: string | undefined;
 
     /**
      * Whether to add [triple-slash](https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html)
@@ -155,14 +155,14 @@ export namespace FlatDts {
      *
      * @defaultValue Inherited from {@link Options.lib `lib` flattening option}.
      */
-    readonly lib?: boolean | string | readonly string[];
+    readonly lib?: boolean | string | readonly string[] | undefined;
 
     /**
      * Output `.d.ts` file name relative to output directory.
      *
      * When omitted the contents are merged into main `.d.ts.` file.
      */
-    readonly file?: string;
+    readonly file?: string | undefined;
 
     /**
      * Whether to add file references.
@@ -171,7 +171,7 @@ export namespace FlatDts {
      *
      * @defaultValue Inherited from {@link Options.refs `refs` flattening option}.
      */
-    readonly refs?: boolean;
+    readonly refs?: boolean | undefined;
 
   }
 
