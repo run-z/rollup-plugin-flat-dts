@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module Module rollup-plugin-flat-dts
  */
-import { relative, resolve } from 'path';
+import { relative, resolve, dirname } from 'path';
 import type { OutputPlugin } from 'rollup';
 import type { FlatDts } from './api';
 import { emitFlatDts } from './api';
@@ -21,13 +21,17 @@ export default function flatDtsPlugin(dtsOptions?: FlatDts.Options): OutputPlugi
 
     name: 'flat-dts',
 
-    async generateBundle({ dir }): Promise<void> {
+    async generateBundle({ dir, file }): Promise<void> {
 
       let assetPath = (filePath: string): string => filePath;
 
+      if (file != null) {
+        dir = dirname(file);
+      }
+
       if (dir != null) {
         dtsOptions = dtsOptionsRelativeToDir(dir, dtsOptions);
-        assetPath = filePath => relative(dir, filePath);
+        assetPath = filePath => relative(dir as string, filePath);
       }
 
       const dts = await emitFlatDts(dtsOptions);
