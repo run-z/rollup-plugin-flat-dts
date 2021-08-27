@@ -13,7 +13,7 @@ export class DtsMeta {
 
         const { name } = statement as ts.ModuleDeclaration;
 
-        if (!ts.isIdentifierOrPrivateIdentifier(name)) {
+        if (!ts.isMemberName(name)) {
           declaredModules.add(name.text);
         }
       }

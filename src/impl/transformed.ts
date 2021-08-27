@@ -3,8 +3,8 @@ import type { ModuleInfo } from './module-info';
 
 export interface Transformed<T extends unknown[]> {
   readonly to: T | [];
-  readonly dia?: ts.Diagnostic[];
-  readonly refs?: ModuleInfo[];
+  readonly dia?: ts.Diagnostic[] | undefined;
+  readonly refs?: ModuleInfo[] | undefined;
 }
 
 export type TopLevelStatement = readonly [target: ModuleInfo, statement: ts.Statement];

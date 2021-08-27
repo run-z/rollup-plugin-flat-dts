@@ -74,7 +74,7 @@ export class DtsTransformer {
   private async _topLevelModuleDecl(
       decl: ts.ModuleDeclaration,
   ): Promise<Transformed<TopLevelStatement[]>> {
-    if (ts.isIdentifierOrPrivateIdentifier(decl.name)) {
+    if (ts.isMemberName(decl.name)) {
       return { to: [[await this._index.main(), decl]] };
     }
 
@@ -319,7 +319,7 @@ export class DtsTransformer {
       enclosing: ModuleInfo,
       decl: ts.ModuleDeclaration,
   ): Promise<Transformed<ts.Statement[]>> {
-    if (ts.isIdentifierOrPrivateIdentifier(decl.name)) {
+    if (ts.isMemberName(decl.name)) {
       return { to: [decl] };
     }
 

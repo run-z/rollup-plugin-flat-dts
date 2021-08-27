@@ -9,7 +9,7 @@ const MANDATORY_COMPILER_OPTIONS: ts.CompilerOptions = {
   // Ensure ".d.ts" modules are generated
   declaration: true,
   // Prevent output to declaration directory
-  declarationDir: undefined,
+  declarationDir: undefined!,
   // Skip ".js" generation
   emitDeclarationOnly: true,
   // Single file emission is impossible with this flag set
