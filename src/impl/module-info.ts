@@ -122,7 +122,7 @@ export class ModuleInfo {
 async function packageName(): Promise<string> {
 
   const packageJson = await fs.readFile('package.json', { encoding: 'utf-8' });
-  const { name } = JSON.parse(packageJson) as { name?: string };
+  const { name } = JSON.parse(packageJson) as { name?: string | undefined };
 
   if (!name) {
     throw new Error(
