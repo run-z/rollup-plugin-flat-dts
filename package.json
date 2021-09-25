@@ -72,7 +72,7 @@
     "ts-jest": "^27.0.5",
     "tslib": "^2.3.1",
     "typedoc": "^0.22.4",
-    "typescript": "~4.4.3"
+    "typescript": "~4.5.0-dev.20210925"
   },
   "scripts": {
     "all": "run-z +z build,lint,test",

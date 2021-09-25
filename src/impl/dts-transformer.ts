@@ -184,6 +184,7 @@ export class DtsTransformer {
             statement.modifiers,
             statement.importClause,
             ts.factory.createStringLiteral(fromModule.declareAs),
+            statement.assertClause,
         )],
         refs: [fromModule],
       };
@@ -230,6 +231,7 @@ export class DtsTransformer {
                 namedBindings,
             ),
             ts.factory.createStringLiteral(enclosing.declareAs),
+            statement.assertClause,
         ),
       ],
       dia: name ? [this._diagnostics(statement, 'Unsupported default import')] : undefined,
@@ -273,6 +275,7 @@ export class DtsTransformer {
             statement.isTypeOnly,
             statement.exportClause,
             ts.factory.createStringLiteral(fromModule.declareAs),
+            statement.assertClause,
         )],
         refs: [fromModule],
       };
@@ -303,6 +306,7 @@ export class DtsTransformer {
             statement.isTypeOnly,
             ts.factory.updateNamedExports(exportClause, elements),
             undefined,
+            statement.assertClause,
         )],
       };
     }
