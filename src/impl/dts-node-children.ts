@@ -11,23 +11,29 @@ export class DtsNodeChildren extends Set<ts.Node> {
     switch (node.kind) {
     case ts.SyntaxKind.ModuleDeclaration:
       this._addModuleDecl(node as ts.ModuleDeclaration);
+
       break;
     case ts.SyntaxKind.ModuleBlock:
       this._addModuleBlock(node as ts.ModuleBlock);
+
       break;
     case ts.SyntaxKind.ClassExpression:
     case ts.SyntaxKind.ClassDeclaration:
     case ts.SyntaxKind.InterfaceDeclaration:
       this._addInterfaceDecl(node as ts.InterfaceDeclaration);
+
       break;
     case ts.SyntaxKind.TypeAliasDeclaration:
       this._addTypeAliasDecl(node as ts.TypeAliasDeclaration);
+
       break;
     case ts.SyntaxKind.EnumDeclaration:
       this._addEnumDecl(node as ts.EnumDeclaration);
+
       break;
     case ts.SyntaxKind.EnumMember:
       this._addEnumMember(node as ts.EnumMember);
+
       break;
     case ts.SyntaxKind.CallSignature:
     case ts.SyntaxKind.Constructor:
@@ -44,120 +50,157 @@ export class DtsNodeChildren extends Set<ts.Node> {
     case ts.SyntaxKind.FunctionExpression:
     case ts.SyntaxKind.ArrowFunction:
       this._addFunctionDecl(node as ts.SignatureDeclarationBase);
+
       break;
     case ts.SyntaxKind.QualifiedName:
       this._addQualifiedName(node as ts.QualifiedName);
+
       break;
     case ts.SyntaxKind.ComputedPropertyName:
       this._addComputedPropertyName(node as ts.ComputedPropertyName);
+
       break;
     case ts.SyntaxKind.TypeParameter:
       this._addTypeParameterDecl(node as ts.TypeParameterDeclaration);
+
       break;
     case ts.SyntaxKind.VariableDeclaration:
       this._addVariableDecl(node as ts.VariableDeclaration);
+
       break;
     case ts.SyntaxKind.Parameter:
       this._addParameterDecl(node as ts.ParameterDeclaration);
+
       break;
     case ts.SyntaxKind.BindingElement:
       this._addBindingElement(node as ts.BindingElement);
+
       break;
     case ts.SyntaxKind.PropertySignature:
       this._addPropertySignature(node as ts.PropertySignature);
+
       break;
     case ts.SyntaxKind.PropertyDeclaration:
       this._addPropertyDecl(node as ts.PropertyDeclaration);
+
       break;
     case ts.SyntaxKind.ObjectBindingPattern:
     case ts.SyntaxKind.ArrayBindingPattern:
       this._addBindingPattern(node as ts.BindingPattern);
+
       break;
     case ts.SyntaxKind.TypeReference:
       this._addTypeReference(node as ts.TypeReferenceNode);
+
       break;
     case ts.SyntaxKind.TypePredicate:
       this._addTypePredicate(node as ts.TypePredicateNode);
+
       break;
     case ts.SyntaxKind.TypeQuery:
       this._addTypeQuery(node as ts.TypeQueryNode);
+
       break;
     case ts.SyntaxKind.TypeLiteral:
       this._addTypeLiteral(node as ts.TypeLiteralNode);
+
       break;
     case ts.SyntaxKind.TupleType:
       this._addTupleType(node as ts.TupleTypeNode);
+
       break;
     case ts.SyntaxKind.NamedTupleMember:
       this._addNamedTupleMember(node as ts.NamedTupleMember);
+
       break;
     case ts.SyntaxKind.OptionalType:
       this._addOptionalType(node as ts.OptionalTypeNode);
+
       break;
     case ts.SyntaxKind.RestType:
       this._addRestType(node as ts.RestTypeNode);
+
       break;
     case ts.SyntaxKind.UnionType:
     case ts.SyntaxKind.IntersectionType:
       this._addUnionOrIntersectionType(node as ts.UnionOrIntersectionTypeNode);
+
       break;
     case ts.SyntaxKind.ConditionalType:
       this._addConditionalType(node as ts.ConditionalTypeNode);
+
       break;
     case ts.SyntaxKind.InferType:
       this._addInferType(node as ts.InferTypeNode);
+
       break;
     case ts.SyntaxKind.ParenthesizedType:
       this._addParenthesizedType(node as ts.ParenthesizedTypeNode);
+
       break;
     case ts.SyntaxKind.TypeOperator:
       this._addTypeOperator(node as ts.TypeOperatorNode);
+
       break;
     case ts.SyntaxKind.IndexedAccessType:
       this._addIndexedAccessType(node as ts.IndexedAccessTypeNode);
+
       break;
     case ts.SyntaxKind.MappedType:
       this._addMappedType(node as ts.MappedTypeNode);
+
       break;
     case ts.SyntaxKind.LiteralType:
       this._addLiteralType(node as ts.LiteralTypeNode);
+
       break;
     case ts.SyntaxKind.TemplateLiteralType:
       this._addTemplateLiteralType(node as ts.TemplateLiteralTypeNode);
+
       break;
     case ts.SyntaxKind.TemplateLiteralTypeSpan:
       this._addTemplateLiteralTypeSpan(node as ts.TemplateLiteralTypeSpan);
+
       break;
     case ts.SyntaxKind.ImportDeclaration:
       this._addImportDecl(node as ts.ImportDeclaration);
+
       break;
     case ts.SyntaxKind.ImportClause:
       this._addImportClause(node as ts.ImportClause);
+
       break;
     case ts.SyntaxKind.ExportDeclaration:
       this._addExportDecl(node as ts.ExportDeclaration);
+
       break;
     case ts.SyntaxKind.NamespaceImport:
     case ts.SyntaxKind.NamespaceExport:
     case ts.SyntaxKind.NamespaceExportDeclaration:
       this._addNamedDecl(node as ts.NamedDeclaration);
+
       break;
     case ts.SyntaxKind.NamedImports:
     case ts.SyntaxKind.NamedExports:
       this._addNamedImportsOrExports(node as ts.NamedImportsOrExports);
+
       break;
     case ts.SyntaxKind.ImportSpecifier:
     case ts.SyntaxKind.ExportSpecifier:
       this._addImportOrExportSpecifier(node as ts.ImportOrExportSpecifier);
+
       break;
     case ts.SyntaxKind.ImportEqualsDeclaration:
       this._addImportEqualsDecl(node as ts.ImportEqualsDeclaration);
+
       break;
     case ts.SyntaxKind.ExternalModuleReference:
       this._addExternalModuleRef(node as ts.ExternalModuleReference);
+
       break;
     case ts.SyntaxKind.ExportAssignment:
       this._addExportAssignment(node as ts.ExportAssignment);
+
       break;
     }
   }

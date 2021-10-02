@@ -19,11 +19,13 @@ export abstract class DtsPrinter<TSource extends DtsSource = DtsSource> {
 
   print(node: ts.Node): this {
     this.text(this._printer.printNode(ts.EmitHint.Unspecified, node, this.source.source));
+
     return this;
   }
 
   text(text: string): this {
     this._out += text;
+
     return this;
   }
 
@@ -39,6 +41,7 @@ export abstract class DtsPrinter<TSource extends DtsSource = DtsSource> {
       content,
       async writeOut(filePath = path) {
         await fs.mkdir(dirname(filePath), { recursive: true });
+
         return fs.writeFile(filePath, content);
       },
     };

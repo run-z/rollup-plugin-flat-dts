@@ -34,6 +34,7 @@ export default defineConfig({
     if (id === path.resolve('src', 'plugin.ts')) {
       return 'flat-dts.plugin';
     }
+
     return 'flat-dts.api';
   },
   output: [
