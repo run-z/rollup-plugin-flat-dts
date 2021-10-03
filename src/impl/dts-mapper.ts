@@ -32,6 +32,7 @@ export class DtsMapper {
   map(orgNodes: readonly ts.Node[]): string {
     this._mapNodes(orgNodes, this._genDts.statements);
     this._endLine();
+
     return this._generator.toString();
   }
 
@@ -61,6 +62,7 @@ export class DtsMapper {
 
     if (!orgRange || genStartPos < 0) {
       this._mapChildren(orgNode, genNode);
+
       return;
     }
 
@@ -98,6 +100,7 @@ export class DtsMapper {
         && prev.original.line === mapping.original.line) {
       // Mapping from and to the same line
       this._line.push(mapping);
+
       return;
     }
 

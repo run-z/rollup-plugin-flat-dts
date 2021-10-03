@@ -68,6 +68,7 @@ export class DtsTransformer {
     if (statement.kind === ts.SyntaxKind.ModuleDeclaration) {
       return this._topLevelModuleDecl(statement as ts.ModuleDeclaration);
     }
+
     return { to: [[await this._index.main(), statement]] };
   }
 

@@ -21,6 +21,7 @@ emitFlatDts({
   if (flatDts.diagnostics.length) {
     console.error(flatDts.formatDiagnostics());
   }
+
   return flatDts.writeOut();
 }).catch(error => {
   console.error('Failed to generate type definitions', error);

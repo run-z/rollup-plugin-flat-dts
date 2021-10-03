@@ -18,6 +18,7 @@ export class DtsContent {
     if (refs) {
       refs.forEach(ref => this._refs.add(ref));
     }
+
     return this;
   }
 

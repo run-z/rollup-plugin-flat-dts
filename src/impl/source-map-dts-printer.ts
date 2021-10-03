@@ -10,6 +10,7 @@ export class SourceMapDtsPrinter extends DtsPrinter<DtsSource.WithMap> {
 
   print(node: ts.Node): this {
     this._nodes.push(node);
+
     return super.print(node);
   }
 
