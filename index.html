@@ -1,397 +1,170 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>.d.ts Flattener</title>
-	<meta name="description" content="Documentation for .d.ts Flattener">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">.d.ts Flattener</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>.d.ts Flattener</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#flatten-dts-files" id="flatten-dts-files" style="color: inherit; text-decoration: none;">
-					<h1>Flatten <code>.d.ts</code> Files </h1>
-				</a>
-				<p><a href="https://www.npmjs.com/package/rollup-plugin-flat-dts"><img src="https://img.shields.io/npm/v/rollup-plugin-flat-dts.svg?logo=npm" alt="NPM"></a>
-					<a href="https://github.com/run-z/rollup-plugin-flat-dts/actions?query=workflow:Build"><img src="https://github.com/run-z/rollup-plugin-flat-dts/workflows/Build/badge.svg" alt="Build Status"></a>
-					<a href="https://www.codacy.com/gh/run-z/rollup-plugin-flat-dts/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=run-z/rollup-plugin-flat-dts&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/387d9672b1c546cda630bf3cb04d5cd2" alt="Code Quality"></a>
-					<a href="https://github.com/run-z/rollup-plugin-flat-dts"><img src="https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational" alt="GitHub Project"></a>
-				<a href="https://run-z.github.io/rollup-plugin-flat-dts"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
-				<a href="#example-configuration" id="example-configuration" style="color: inherit; text-decoration: none;">
-					<h2>Example Configuration</h2>
-				</a>
-				<p>Add the following <code>rollup.config.js</code>:</p>
-				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">commonjs</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@rollup/plugin-commonjs&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">nodeResolve</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@rollup/plugin-node-resolve&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">flatDts</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rollup-plugin-flat-dts&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">sourcemaps</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rollup-plugin-sourcemaps&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">ts</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rollup-plugin-typescript2&#039;</span><span style="color: #000000">;</span>
+<!DOCTYPE html><html class="default no-js"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>.d.ts Flattener</title><meta name="description" content="Documentation for .d.ts Flattener"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">.d.ts Flattener</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1> .d.ts Flattener</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#flatten-dts-files" id="flatten-dts-files" style="color: inherit; text-decoration: none;">
+  <h1>Flatten <code>.d.ts</code> Files </h1>
+</a>
+<p><a href="https://www.npmjs.com/package/rollup-plugin-flat-dts"><img src="https://img.shields.io/npm/v/rollup-plugin-flat-dts.svg?logo=npm" alt="NPM"></a>
+<a href="https://github.com/run-z/rollup-plugin-flat-dts/actions?query=workflow:Build"><img src="https://github.com/run-z/rollup-plugin-flat-dts/workflows/Build/badge.svg" alt="Build Status"></a>
+<a href="https://www.codacy.com/gh/run-z/rollup-plugin-flat-dts/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=run-z/rollup-plugin-flat-dts&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/387d9672b1c546cda630bf3cb04d5cd2" alt="Code Quality"></a>
+<a href="https://github.com/run-z/rollup-plugin-flat-dts"><img src="https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational" alt="GitHub Project"></a>
+<a href="https://run-z.github.io/rollup-plugin-flat-dts"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
 
-<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #AF00DB">default</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #001080">input:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./src/index.ts&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">plugins:</span><span style="color: #000000"> [</span>
-<span style="color: #000000">    </span><span style="color: #795E26">commonjs</span><span style="color: #000000">(),</span>
-<span style="color: #000000">    </span><span style="color: #795E26">ts</span><span style="color: #000000">(),</span>
-<span style="color: #000000">    </span><span style="color: #795E26">nodeResolve</span><span style="color: #000000">(),</span>
-<span style="color: #000000">    </span><span style="color: #795E26">sourcemaps</span><span style="color: #000000">(),</span>
-<span style="color: #000000">  ],</span>
-<span style="color: #000000">  </span><span style="color: #001080">output:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">format:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;esm&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">sourcemap:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">file:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dist/index.js&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">plugins:</span><span style="color: #000000"> [</span>
-<span style="color: #000000">      </span><span style="color: #795E26">flatDts</span><span style="color: #000000">(),</span>
-<span style="color: #000000">    ],</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">};</span>
+<a href="#example-configuration" id="example-configuration" style="color: inherit; text-decoration: none;">
+  <h2>Example Configuration</h2>
+</a>
+<p>Add the following <code>rollup.config.js</code>:</p>
+<pre><code class="language-javascript"><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">commonjs</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@rollup/plugin-commonjs&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">nodeResolve</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@rollup/plugin-node-resolve&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">flatDts</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;rollup-plugin-flat-dts&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">sourcemaps</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;rollup-plugin-sourcemaps&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">ts</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;rollup-plugin-typescript2&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-0">export</span><span class="hl-1"> </span><span class="hl-0">default</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-2">input:</span><span class="hl-1"> </span><span class="hl-3">&#39;./src/index.ts&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">plugins:</span><span class="hl-1"> [</span><br/><span class="hl-1">    </span><span class="hl-4">commonjs</span><span class="hl-1">(),</span><br/><span class="hl-1">    </span><span class="hl-4">ts</span><span class="hl-1">(),</span><br/><span class="hl-1">    </span><span class="hl-4">nodeResolve</span><span class="hl-1">(),</span><br/><span class="hl-1">    </span><span class="hl-4">sourcemaps</span><span class="hl-1">(),</span><br/><span class="hl-1">  ],</span><br/><span class="hl-1">  </span><span class="hl-2">output:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-2">format:</span><span class="hl-1"> </span><span class="hl-3">&#39;esm&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">sourcemap:</span><span class="hl-1"> </span><span class="hl-5">true</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">file:</span><span class="hl-1"> </span><span class="hl-3">&#39;dist/index.js&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">plugins:</span><span class="hl-1"> [</span><br/><span class="hl-1">      </span><span class="hl-4">flatDts</span><span class="hl-1">(),</span><br/><span class="hl-1">    ],</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">};</span>
 </code></pre>
-				<p>Then the command <code>rollup --config ./rollup.config.js</code> would transpile TypeScript files from <code>src/</code> directory
-				to <code>dist/index.js</code>, and generate <code>dist/index.d.ts</code> with flattened type definitions.</p>
-				<a href="#limitations" id="limitations" style="color: inherit; text-decoration: none;">
-					<h2>Limitations</h2>
-				</a>
-				<p>This plugin flattens type definitions instead of merging them. This applies severe limitations to the source code:</p>
-				<ol>
-					<li><p>Every export in every TypeScript file considered exported from the package (i.e. part of public API).</p>
-						<p>Mark internal exports (internal API) with <code>@internal</code> jsdoc tag to prevent this, or declare internal modules with
-						<code>internal</code> option. </p>
-					</li>
-					<li><p>Default exports supported only at the top level and in entry points (<a href="#multiple-entries">see below</a>).</p>
-					</li>
-					<li><p>Exported symbols should be unique across the code base.</p>
-					</li>
-					<li><p>Exports should not be renamed when re-exporting them.</p>
-						<p>Aliasing is still possible.</p>
-					</li>
-				</ol>
-				<a href="#project-structure" id="project-structure" style="color: inherit; text-decoration: none;">
-					<h2>Project Structure</h2>
-				</a>
-				<p>To adhere to these limitations the project structure could be like this:</p>
-				<ol>
-					<li><p>An index file (<code>index.ts</code>) is present in each source directory with exported symbols.</p>
-						<p>Index file re-exports all publicly available symbols from the same directory with statements like
-						<code>export * from &#39;./file&#39;;</code>.</p>
-						<p>Index file also re-export all symbols from nested directories with statements like <code>export * from &#39;./dir&#39;;</code></p>
-					</li>
-					<li><p>All exported symbols that are not re-exported by index files considered part of internal API.</p>
-						<p>Every such symbols has a jsdoc block containing <code>@internal</code> tag.</p>
-						<p>Alternatively, the internal modules follow some naming convention. The <code>internal</code> option reflects this convention.
-							E.g. <code>internal: [&#39;**/impl/**&#39;, &#39;**/*.impl&#39;]</code> would treat all <code>.impl.ts</code> source files and files in <code>impl/</code> directories
-						as part of internal API. </p>
-					</li>
-					<li><p>Rollup entry points are index files.</p>
-					</li>
-				</ol>
-				<a href="#configuration-options" id="configuration-options" style="color: inherit; text-decoration: none;">
-					<h2>Configuration Options</h2>
-				</a>
-				<p><code>flatDts({})</code> accepts configuration object with the following properties:</p>
-				<ul>
-					<li><p><code>tsconfig</code> - <code>tsconfig.json</code> file location relative to working directory.</p>
-						<p><code>tsconfig.json</code> by default.</p>
-					</li>
-					<li><p><code>compilerOptions</code> - TypeScript compiler options to apply.</p>
-						<p>Override the options from <code>tsconfig</code>.</p>
-					</li>
-					<li><p><code>file</code> - Output <code>.d.ts</code> file name relative to output directory.</p>
-						<p><code>index.d.ts</code> by default.</p>
-					</li>
-					<li><p><code>moduleName</code> - The module name to replace flattened module declarations with.</p>
-						<p>Defaults to package name extracted from <code>package.json</code>.</p>
-					</li>
-					<li><p><code>entries</code> - Module entries.</p>
-						<p>A map of entry name declarations (<a href="#multiple-entries">see below</a>).</p>
-					</li>
-					<li><p><code>lib</code> - Whether to add <a href="https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html">triple-slash</a> directives to refer the libraries used.</p>
-						<p>Allowed values:</p>
-						<ul>
-							<li><code>true</code> to add an entry for each referred library from <code>lib</code> compiler option,</li>
-							<li><code>false</code> (the default) to not add any library references,</li>
-							<li>an explicit list of libraries to refer.</li>
-						</ul>
-					</li>
-					<li><p><code>refs</code> - Whether to add file references.</p>
-						<p>A file reference is added when one entry refers another one.</p>
-						<p><code>true</code> by default.</p>
-					</li>
-					<li><p><code>external</code> - External module names.</p>
-						<p>An array of external module names and their <a href="https://www.npmjs.com/package/micromatch">glob</a> patterns. These names won&#39;t be changed during flattening
-						process.</p>
-						<p>This is useful for external module augmentation.</p>
-					</li>
-					<li><p><code>internal</code> - Internal module names.</p>
-						<p>An array of internal module names and their <a href="https://www.npmjs.com/package/micromatch">glob</a> patterns. Internal module type definitions are excluded from
-						generated <code>.d.ts</code> files.</p>
-					</li>
-				</ul>
-				<a href="#declaration-maps-experimental" id="declaration-maps-experimental" style="color: inherit; text-decoration: none;">
-					<h2>Declaration Maps (Experimental)</h2>
-				</a>
-				<p>When <a href="https://www.typescriptlang.org/tsconfig#declarationMap">declarationMap</a> compiler option enabled a declaration map file(s) (<code>.d.ts.map</code>) will be generated next to <code>.d.ts</code>
-				ones:</p>
-				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">commonjs</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@rollup/plugin-commonjs&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">nodeResolve</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@rollup/plugin-node-resolve&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">flatDts</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rollup-plugin-flat-dts&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">sourcemaps</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rollup-plugin-sourcemaps&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">ts</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rollup-plugin-typescript2&#039;</span><span style="color: #000000">;</span>
+<p>Then the command <code>rollup --config ./rollup.config.js</code> would transpile TypeScript files from <code>src/</code> directory
+to <code>dist/index.js</code>, and generate <code>dist/index.d.ts</code> with flattened type definitions.</p>
 
-<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #AF00DB">default</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #001080">input:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./src/index.ts&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #001080">plugins:</span><span style="color: #000000"> [</span>
-<span style="color: #000000">    </span><span style="color: #795E26">commonjs</span><span style="color: #000000">(),</span>
-<span style="color: #000000">    </span><span style="color: #795E26">ts</span><span style="color: #000000">(),</span>
-<span style="color: #000000">    </span><span style="color: #795E26">nodeResolve</span><span style="color: #000000">(),</span>
-<span style="color: #000000">    </span><span style="color: #795E26">sourcemaps</span><span style="color: #000000">(),</span>
-<span style="color: #000000">  ],</span>
-<span style="color: #000000">  </span><span style="color: #001080">output:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">format:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;esm&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">sourcemap:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">file:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dist/index.js&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">plugins:</span><span style="color: #000000"> [</span>
-<span style="color: #000000">      </span><span style="color: #795E26">flatDts</span><span style="color: #000000">({</span>
-<span style="color: #000000">        </span><span style="color: #001080">compilerOptions:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">          </span><span style="color: #001080">declarationMap:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">, </span><span style="color: #008000">/* Generate declaration maps */</span>
-<span style="color: #000000">        },</span>
-<span style="color: #000000">      }),</span>
-<span style="color: #000000">    ],</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">};</span>
-</code></pre>
-				<p>Declaration maps can be used by IDE to navigate to TypeScript source file instead of type declaration when both
-					available. This functionality relies on IDE heuristics, and declaration maps generated by this tool may not suit it
-				fully. So, don&#39;t be surprised if that does not work as expected.</p>
-				<a href="#multiple-entries" id="multiple-entries" style="color: inherit; text-decoration: none;">
-					<h2>Multiple Entries</h2>
-				</a>
-				<p>By default, the generated <code>.d.ts</code> file contains <code>declare module</code> statements with the same <code>moduleName</code>.</p>
-				<p>If your package has additional <a href="https://nodejs.org/dist/latest-v14.x/docs/api/packages.html#packages_package_entry_points">entry points</a> then you probably want to reflect this in type definition.
-				This can be achieved with <code>entries</code> option.</p>
-				<p>Here is an example configuration:</p>
-				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">commonjs</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@rollup/plugin-commonjs&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">nodeResolve</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@rollup/plugin-node-resolve&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">flatDts</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rollup-plugin-flat-dts&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">sourcemaps</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rollup-plugin-sourcemaps&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">ts</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rollup-plugin-typescript2&#039;</span><span style="color: #000000">;</span>
+<a href="#limitations" id="limitations" style="color: inherit; text-decoration: none;">
+  <h2>Limitations</h2>
+</a>
+<p>This plugin flattens type definitions instead of merging them. This applies severe limitations to the source code:</p>
+<ol>
+<li><p>Every export in every TypeScript file considered exported from the package (i.e. part of public API).</p>
+<p>Mark internal exports (internal API) with <code>@internal</code> jsdoc tag to prevent this, or declare internal modules with
+<code>internal</code> option. </p>
+</li>
+<li><p>Default exports supported only at the top level and in entry points (<a href="#multiple-entries">see below</a>).</p>
+</li>
+<li><p>Exported symbols should be unique across the code base.</p>
+</li>
+<li><p>Exports should not be renamed when re-exporting them.</p>
+<p>Aliasing is still possible.</p>
+</li>
+</ol>
 
-<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #AF00DB">default</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #001080">input:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">main:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./src/index.ts&#039;</span><span style="color: #000000">,        </span><span style="color: #008000">// Main entry point</span>
-<span style="color: #000000">    </span><span style="color: #001080">node:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./src/node/index.ts&#039;</span><span style="color: #000000">,   </span><span style="color: #008000">// Node.js-specific API</span>
-<span style="color: #000000">    </span><span style="color: #001080">web:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;./src/browser/index.ts&#039;</span><span style="color: #000000">, </span><span style="color: #008000">// Browser-specific API</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">  </span><span style="color: #001080">plugins:</span><span style="color: #000000"> [</span>
-<span style="color: #000000">    </span><span style="color: #795E26">commonjs</span><span style="color: #000000">(),</span>
-<span style="color: #000000">    </span><span style="color: #795E26">ts</span><span style="color: #000000">(),</span>
-<span style="color: #000000">    </span><span style="color: #795E26">nodeResolve</span><span style="color: #000000">(),</span>
-<span style="color: #000000">    </span><span style="color: #795E26">sourcemaps</span><span style="color: #000000">(),</span>
-<span style="color: #000000">  ],</span>
-<span style="color: #000000">  </span><span style="color: #001080">output:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">format:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;esm&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">sourcemap:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #001080">dir:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;dist&#039;</span><span style="color: #000000">,                    </span><span style="color: #008000">// Place the output files to `dist` directory.</span>
-<span style="color: #000000">    </span><span style="color: #001080">entryFileNames:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;[name].js&#039;</span><span style="color: #000000">,    </span><span style="color: #008000">// Entry file names have `.js` extension.</span>
-<span style="color: #000000">    </span><span style="color: #001080">chunkFileNames:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;_[name].js&#039;</span><span style="color: #000000">,   </span><span style="color: #008000">// Chunks have underscore prefix.</span>
-<span style="color: #000000">    </span><span style="color: #001080">plugins:</span><span style="color: #000000"> [</span>
-<span style="color: #000000">      </span><span style="color: #795E26">flatDts</span><span style="color: #000000">({</span>
-<span style="color: #000000">        </span><span style="color: #001080">moduleName:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;my-package&#039;</span><span style="color: #000000">,   </span><span style="color: #008000">// By default, exports belong to `my-package` module.</span>
-<span style="color: #000000">        </span><span style="color: #001080">entries:</span><span style="color: #000000"> {</span>
-<span style="color: #000000">          </span><span style="color: #001080">node:</span><span style="color: #000000"> {},                 </span><span style="color: #008000">// All exports from `src/node` directory</span>
-<span style="color: #000000">                                    </span><span style="color: #008000">// belong to `my-package/node` sub-module.</span>
-<span style="color: #000000">          </span><span style="color: #001080">browser:</span><span style="color: #000000"> {                </span><span style="color: #008000">// All exports from `src/browser` directory</span>
-<span style="color: #000000">            </span><span style="color: #001080">as:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;web&#039;</span><span style="color: #000000">,              </span><span style="color: #008000">// belong to `my-package/web` sub-module.</span>
-<span style="color: #000000">                                    </span><span style="color: #008000">// (Would be `my-package/browser` if omitted)</span>
-<span style="color: #000000">            </span><span style="color: #001080">lib:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;DOM&#039;</span><span style="color: #000000">,             </span><span style="color: #008000">// Add `DOM` library reference.</span>
-<span style="color: #000000">            </span><span style="color: #001080">refs:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000">,            </span><span style="color: #008000">// Do not add triple-slash file references to other entries.</span>
-<span style="color: #000000">                                    </span><span style="color: #008000">// Otherwise, a file reference will be added for each entry this one refers.</span>
-<span style="color: #000000">            </span><span style="color: #001080">file:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;web/index.d.ts&#039;</span><span style="color: #000000">, </span><span style="color: #008000">// Write type definitions to separate `.d.ts` file.</span>
-<span style="color: #000000">                                    </span><span style="color: #008000">// (Would be written to main `index.d.ts` if omitted) </span>
-<span style="color: #000000">          },</span>
-<span style="color: #000000">        },</span>
-<span style="color: #000000">      }),</span>
-<span style="color: #000000">    ],</span>
-<span style="color: #000000">  },</span>
-<span style="color: #000000">};</span>
-</code></pre>
-				<p>The <code>package.json</code> would contain the following then:</p>
-				<pre><code class="language-json"><span style="color: #000000">{</span>
-<span style="color: #000000">  </span><span style="color: #0451A5">&quot;name&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;my-package&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #0451A5">&quot;type&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;module&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #0451A5">&quot;types&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;./dist/index.d.ts&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #0451A5">&quot;exports&quot;</span><span style="color: #000000">: {</span>
-<span style="color: #000000">    </span><span style="color: #0451A5">&quot;.&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;./dist/main.js&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #0451A5">&quot;./node&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;./dist/node.js&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">    </span><span style="color: #0451A5">&quot;./web&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;./dist/web.js&quot;</span>
-<span style="color: #000000">  }</span>
-<span style="color: #000000">}</span>
-</code></pre>
-				<a href="#standalone-usage" id="standalone-usage" style="color: inherit; text-decoration: none;">
-					<h2>Standalone Usage</h2>
-				</a>
-				<p>The API is available standalone, without using Rollup:</p>
-				<pre><code class="language-javascript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">emitFlatDts</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;rollup-plugin-flat-dts/api&#039;</span><span style="color: #000000">;</span>
+<a href="#project-structure" id="project-structure" style="color: inherit; text-decoration: none;">
+  <h2>Project Structure</h2>
+</a>
+<p>To adhere to these limitations the project structure could be like this:</p>
+<ol>
+<li><p>An index file (<code>index.ts</code>) is present in each source directory with exported symbols.</p>
+<p>Index file re-exports all publicly available symbols from the same directory with statements like
+<code>export * from &#39;./file&#39;;</code>.</p>
+<p>Index file also re-export all symbols from nested directories with statements like <code>export * from &#39;./dir&#39;;</code></p>
+</li>
+<li><p>All exported symbols that are not re-exported by index files considered part of internal API.</p>
+<p>Every such symbols has a jsdoc block containing <code>@internal</code> tag.</p>
+<p>Alternatively, the internal modules follow some naming convention. The <code>internal</code> option reflects this convention.
+E.g. <code>internal: [&#39;**/impl/**&#39;, &#39;**/*.impl&#39;]</code> would treat all <code>.impl.ts</code> source files and files in <code>impl/</code> directories
+as part of internal API. </p>
+</li>
+<li><p>Rollup entry points are index files.</p>
+</li>
+</ol>
 
-<span style="color: #795E26">emitFlatDts</span><span style="color: #000000">({</span>
-<span style="color: #000000">  </span><span style="color: #008000">/* Type definition options */</span>
-<span style="color: #000000">}).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">flatDts</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">flatDts</span><span style="color: #000000">.</span><span style="color: #001080">diagnostics</span><span style="color: #000000">.</span><span style="color: #001080">length</span><span style="color: #000000">) {</span>
-<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #001080">flatDts</span><span style="color: #000000">.</span><span style="color: #795E26">formatDiagnostics</span><span style="color: #000000">());</span>
-<span style="color: #000000">  }  </span>
-<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">flatDts</span><span style="color: #000000">.</span><span style="color: #795E26">writeOut</span><span style="color: #000000">();</span>
-<span style="color: #000000">}).</span><span style="color: #795E26">catch</span><span style="color: #000000">(</span><span style="color: #001080">error</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Failed to generate type definitions&#039;</span><span style="color: #000000">, </span><span style="color: #001080">error</span><span style="color: #000000">);</span>
-<span style="color: #000000">  </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #795E26">exit</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">);</span>
-<span style="color: #000000">});</span>
+<a href="#configuration-options" id="configuration-options" style="color: inherit; text-decoration: none;">
+  <h2>Configuration Options</h2>
+</a>
+<p><code>flatDts({})</code> accepts configuration object with the following properties:</p>
+<ul>
+<li><p><code>tsconfig</code> - <code>tsconfig.json</code> file location relative to working directory.</p>
+<p><code>tsconfig.json</code> by default.</p>
+</li>
+<li><p><code>compilerOptions</code> - TypeScript compiler options to apply.</p>
+<p>Override the options from <code>tsconfig</code>.</p>
+</li>
+<li><p><code>file</code> - Output <code>.d.ts</code> file name relative to output directory.</p>
+<p><code>index.d.ts</code> by default.</p>
+</li>
+<li><p><code>moduleName</code> - The module name to replace flattened module declarations with.</p>
+<p>Defaults to package name extracted from <code>package.json</code>.</p>
+</li>
+<li><p><code>entries</code> - Module entries.</p>
+<p>A map of entry name declarations (<a href="#multiple-entries">see below</a>).</p>
+</li>
+<li><p><code>lib</code> - Whether to add <a href="https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html">triple-slash</a> directives to refer the libraries used.</p>
+<p>Allowed values:</p>
+<ul>
+<li><code>true</code> to add an entry for each referred library from <code>lib</code> compiler option,</li>
+<li><code>false</code> (the default) to not add any library references,</li>
+<li>an explicit list of libraries to refer.</li>
+</ul>
+</li>
+<li><p><code>refs</code> - Whether to add file references.</p>
+<p>A file reference is added when one entry refers another one.</p>
+<p><code>true</code> by default.</p>
+</li>
+<li><p><code>external</code> - External module names.</p>
+<p>An array of external module names and their <a href="https://www.npmjs.com/package/micromatch">glob</a> patterns. These names won&#39;t be changed during flattening
+process.</p>
+<p>This is useful for external module augmentation.</p>
+</li>
+<li><p><code>internal</code> - Internal module names.</p>
+<p>An array of internal module names and their <a href="https://www.npmjs.com/package/micromatch">glob</a> patterns. Internal module type definitions are excluded from
+generated <code>.d.ts</code> files.</p>
+</li>
+</ul>
+
+<a href="#declaration-maps-experimental" id="declaration-maps-experimental" style="color: inherit; text-decoration: none;">
+  <h2>Declaration Maps (Experimental)</h2>
+</a>
+<p>When <a href="https://www.typescriptlang.org/tsconfig#declarationMap">declarationMap</a> compiler option enabled a declaration map file(s) (<code>.d.ts.map</code>) will be generated next to <code>.d.ts</code>
+ones:</p>
+<pre><code class="language-javascript"><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">commonjs</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@rollup/plugin-commonjs&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">nodeResolve</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@rollup/plugin-node-resolve&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">flatDts</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;rollup-plugin-flat-dts&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">sourcemaps</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;rollup-plugin-sourcemaps&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">ts</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;rollup-plugin-typescript2&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-0">export</span><span class="hl-1"> </span><span class="hl-0">default</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-2">input:</span><span class="hl-1"> </span><span class="hl-3">&#39;./src/index.ts&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">plugins:</span><span class="hl-1"> [</span><br/><span class="hl-1">    </span><span class="hl-4">commonjs</span><span class="hl-1">(),</span><br/><span class="hl-1">    </span><span class="hl-4">ts</span><span class="hl-1">(),</span><br/><span class="hl-1">    </span><span class="hl-4">nodeResolve</span><span class="hl-1">(),</span><br/><span class="hl-1">    </span><span class="hl-4">sourcemaps</span><span class="hl-1">(),</span><br/><span class="hl-1">  ],</span><br/><span class="hl-1">  </span><span class="hl-2">output:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-2">format:</span><span class="hl-1"> </span><span class="hl-3">&#39;esm&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">sourcemap:</span><span class="hl-1"> </span><span class="hl-5">true</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">file:</span><span class="hl-1"> </span><span class="hl-3">&#39;dist/index.js&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">plugins:</span><span class="hl-1"> [</span><br/><span class="hl-1">      </span><span class="hl-4">flatDts</span><span class="hl-1">({</span><br/><span class="hl-1">        </span><span class="hl-2">compilerOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">          </span><span class="hl-2">declarationMap:</span><span class="hl-1"> </span><span class="hl-5">true</span><span class="hl-1">, </span><span class="hl-6">/* Generate declaration maps */</span><br/><span class="hl-1">        },</span><br/><span class="hl-1">      }),</span><br/><span class="hl-1">    ],</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">};</span>
 </code></pre>
-				<a href="#algorithm-explained" id="algorithm-explained" style="color: inherit; text-decoration: none;">
-					<h2>Algorithm Explained</h2>
-				</a>
-				<p>The plugin algorithm is not very sophisticated, but simple and straightforward. This made it actually usable on my
-				projects, where <a href="#other-tools">other tools</a> failed to generate valid type definitions.</p>
-				<p>The simplicity comes at a price. So, this plugin applies limitations on code base rather trying to resolve all
-				non-trivial cases.</p>
-				<p>So, here what this plugin is doing:</p>
-				<ol>
-					<li><p>Generates single-file type definition by overriding original <code>tsconfig.json</code> options with the following:</p>
-						<pre><code class="language-jsonc"><span style="color: #000000">{</span>
-<span style="color: #000000">  </span><span style="color: #008000">// Avoid extra work</span>
-<span style="color: #000000">  </span><span style="color: #CD3131">checkJs</span><span style="color: #000000">: </span><span style="color: #0000FF">false</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #008000">// Ensure &quot;.d.ts&quot; modules are generated</span>
-<span style="color: #000000">  </span><span style="color: #CD3131">declaration</span><span style="color: #000000">: </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #008000">// Prevent output to declaration directory</span>
-<span style="color: #000000">  </span><span style="color: #CD3131">declarationDir</span><span style="color: #000000">: </span><span style="color: #0000FF">null</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #008000">// Skip &quot;.js&quot; generation</span>
-<span style="color: #000000">  </span><span style="color: #CD3131">emitDeclarationOnly</span><span style="color: #000000">: </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #008000">// Single file emission is impossible with this flag set</span>
-<span style="color: #000000">  </span><span style="color: #CD3131">isolatedModules</span><span style="color: #000000">: </span><span style="color: #0000FF">false</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #008000">// Generate single file</span>
-<span style="color: #000000">  </span><span style="color: #008000">// `System`, in contrast to `None`, permits the use of `import.meta`</span>
-<span style="color: #000000">  </span><span style="color: #CD3131">module</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;System&quot;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #008000">// Always emit</span>
-<span style="color: #000000">  </span><span style="color: #CD3131">noEmit</span><span style="color: #000000">: </span><span style="color: #0000FF">false</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #008000">// Skip code generation when error occurs</span>
-<span style="color: #000000">  </span><span style="color: #CD3131">noEmitOnError</span><span style="color: #000000">: </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #008000">// Ignore errors in library type definitions</span>
-<span style="color: #000000">  </span><span style="color: #CD3131">skipLibCheck</span><span style="color: #000000">: </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
-<span style="color: #000000">  </span><span style="color: #008000">// Always strip internal exports</span>
-<span style="color: #000000">  </span><span style="color: #CD3131">stripInternal</span><span style="color: #000000">: </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
-<span style="color: #000000">}</span>
+<p>Declaration maps can be used by IDE to navigate to TypeScript source file instead of type declaration when both
+available. This functionality relies on IDE heuristics, and declaration maps generated by this tool may not suit it
+fully. So, don&#39;t be surprised if that does not work as expected.</p>
+
+<a href="#multiple-entries" id="multiple-entries" style="color: inherit; text-decoration: none;">
+  <h2>Multiple Entries</h2>
+</a>
+<p>By default, the generated <code>.d.ts</code> file contains <code>declare module</code> statements with the same <code>moduleName</code>.</p>
+<p>If your package has additional <a href="https://nodejs.org/dist/latest-v14.x/docs/api/packages.html#packages_package_entry_points">entry points</a> then you probably want to reflect this in type definition.
+This can be achieved with <code>entries</code> option.</p>
+<p>Here is an example configuration:</p>
+<pre><code class="language-javascript"><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">commonjs</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@rollup/plugin-commonjs&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">nodeResolve</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@rollup/plugin-node-resolve&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">flatDts</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;rollup-plugin-flat-dts&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">sourcemaps</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;rollup-plugin-sourcemaps&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> </span><span class="hl-2">ts</span><span class="hl-1"> </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;rollup-plugin-typescript2&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-0">export</span><span class="hl-1"> </span><span class="hl-0">default</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-2">input:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-2">main:</span><span class="hl-1"> </span><span class="hl-3">&#39;./src/index.ts&#39;</span><span class="hl-1">,        </span><span class="hl-6">// Main entry point</span><br/><span class="hl-1">    </span><span class="hl-2">node:</span><span class="hl-1"> </span><span class="hl-3">&#39;./src/node/index.ts&#39;</span><span class="hl-1">,   </span><span class="hl-6">// Node.js-specific API</span><br/><span class="hl-1">    </span><span class="hl-2">web:</span><span class="hl-1"> </span><span class="hl-3">&#39;./src/browser/index.ts&#39;</span><span class="hl-1">, </span><span class="hl-6">// Browser-specific API</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-2">plugins:</span><span class="hl-1"> [</span><br/><span class="hl-1">    </span><span class="hl-4">commonjs</span><span class="hl-1">(),</span><br/><span class="hl-1">    </span><span class="hl-4">ts</span><span class="hl-1">(),</span><br/><span class="hl-1">    </span><span class="hl-4">nodeResolve</span><span class="hl-1">(),</span><br/><span class="hl-1">    </span><span class="hl-4">sourcemaps</span><span class="hl-1">(),</span><br/><span class="hl-1">  ],</span><br/><span class="hl-1">  </span><span class="hl-2">output:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-2">format:</span><span class="hl-1"> </span><span class="hl-3">&#39;esm&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">sourcemap:</span><span class="hl-1"> </span><span class="hl-5">true</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">dir:</span><span class="hl-1"> </span><span class="hl-3">&#39;dist&#39;</span><span class="hl-1">,                    </span><span class="hl-6">// Place the output files to `dist` directory.</span><br/><span class="hl-1">    </span><span class="hl-2">entryFileNames:</span><span class="hl-1"> </span><span class="hl-3">&#39;[name].js&#39;</span><span class="hl-1">,    </span><span class="hl-6">// Entry file names have `.js` extension.</span><br/><span class="hl-1">    </span><span class="hl-2">chunkFileNames:</span><span class="hl-1"> </span><span class="hl-3">&#39;_[name].js&#39;</span><span class="hl-1">,   </span><span class="hl-6">// Chunks have underscore prefix.</span><br/><span class="hl-1">    </span><span class="hl-2">plugins:</span><span class="hl-1"> [</span><br/><span class="hl-1">      </span><span class="hl-4">flatDts</span><span class="hl-1">({</span><br/><span class="hl-1">        </span><span class="hl-2">moduleName:</span><span class="hl-1"> </span><span class="hl-3">&#39;my-package&#39;</span><span class="hl-1">,   </span><span class="hl-6">// By default, exports belong to `my-package` module.</span><br/><span class="hl-1">        </span><span class="hl-2">entries:</span><span class="hl-1"> {</span><br/><span class="hl-1">          </span><span class="hl-2">node:</span><span class="hl-1"> {},                 </span><span class="hl-6">// All exports from `src/node` directory</span><br/><span class="hl-1">                                    </span><span class="hl-6">// belong to `my-package/node` sub-module.</span><br/><span class="hl-1">          </span><span class="hl-2">browser:</span><span class="hl-1"> {                </span><span class="hl-6">// All exports from `src/browser` directory</span><br/><span class="hl-1">            </span><span class="hl-2">as:</span><span class="hl-1"> </span><span class="hl-3">&#39;web&#39;</span><span class="hl-1">,              </span><span class="hl-6">// belong to `my-package/web` sub-module.</span><br/><span class="hl-1">                                    </span><span class="hl-6">// (Would be `my-package/browser` if omitted)</span><br/><span class="hl-1">            </span><span class="hl-2">lib:</span><span class="hl-1"> </span><span class="hl-3">&#39;DOM&#39;</span><span class="hl-1">,             </span><span class="hl-6">// Add `DOM` library reference.</span><br/><span class="hl-1">            </span><span class="hl-2">refs:</span><span class="hl-1"> </span><span class="hl-5">false</span><span class="hl-1">,            </span><span class="hl-6">// Do not add triple-slash file references to other entries.</span><br/><span class="hl-1">                                    </span><span class="hl-6">// Otherwise, a file reference will be added for each entry this one refers.</span><br/><span class="hl-1">            </span><span class="hl-2">file:</span><span class="hl-1"> </span><span class="hl-3">&#39;web/index.d.ts&#39;</span><span class="hl-1">, </span><span class="hl-6">// Write type definitions to separate `.d.ts` file.</span><br/><span class="hl-1">                                    </span><span class="hl-6">// (Would be written to main `index.d.ts` if omitted) </span><br/><span class="hl-1">          },</span><br/><span class="hl-1">        },</span><br/><span class="hl-1">      }),</span><br/><span class="hl-1">    ],</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">};</span>
 </code></pre>
-					</li>
-					<li><p>The generated file consists of <code>declare module &quot;path/to/file&quot; { ... }</code> statements. One such statement per each
-						source file.</p>
-						<p>The plugin replaces all <code>&quot;path/to/file&quot;</code> references with corresponding module name. I.e. either with
-						<code>${packageName}</code>, or <code>${packageName}/${entry.as}</code> for matching entry point.</p>
-					</li>
-					<li><p>Updates all <code>import</code> and <code>export</code> statements and adjusts module references.</p>
-						<p>Some imports and exports removed along the way. E.g. there is no point to import to the module from itself, unless
-						the named import or export assigns an alias to the imported symbol.</p>
-					</li>
-					<li><p>Updates inner module declarations.</p>
-						<p>Just like <code>2.</code>, but also expands declarations if inner module receives the same name as enclosing one.</p>
-					</li>
-					<li><p>Removes module declarations that became (or was originally) empty.</p>
-					</li>
-				</ol>
-				<a href="#other-tools" id="other-tools" style="color: inherit; text-decoration: none;">
-					<h2>Other Tools</h2>
-				</a>
-				<ul>
-					<li><a href="https://www.npmjs.com/package/rollup-plugin-dts">rollup-plugin-dts</a> Does not support multiple entries, as far as I know.</li>
-					<li><a href="https://www.npmjs.com/package/@wessberg/rollup-plugin-ts">@wessberg/rollup-plugin-ts</a> Is able to generate merged type definitions as well.</li>
-					<li><a href="https://api-extractor.com/">API extractor</a> Does not support multiple entries intentionally.</li>
-				</ul>
-				<p>See more <a href="https://github.com/timocov/dts-bundle-generator/discussions/68">here</a>. </p>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Modules</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/Module_rollup_plugin_flat_dts.html">Module rollup-<wbr>plugin-<wbr>flat-<wbr>dts</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/Module_rollup_plugin_flat_dts_api.html">Module rollup-<wbr>plugin-<wbr>flat-<wbr>dts/api</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+<p>The <code>package.json</code> would contain the following then:</p>
+<pre><code class="language-json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-7">&quot;name&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;my-package&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-7">&quot;type&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;module&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-7">&quot;types&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;./dist/index.d.ts&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-7">&quot;exports&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;.&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;./dist/main.js&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;./node&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;./dist/node.js&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;./web&quot;</span><span class="hl-1">: </span><span class="hl-3">&quot;./dist/web.js&quot;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span>
+</code></pre>
+
+<a href="#standalone-usage" id="standalone-usage" style="color: inherit; text-decoration: none;">
+  <h2>Standalone Usage</h2>
+</a>
+<p>The API is available standalone, without using Rollup:</p>
+<pre><code class="language-javascript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">emitFlatDts</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;rollup-plugin-flat-dts/api&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">emitFlatDts</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-6">/* Type definition options */</span><br/><span class="hl-1">}).</span><span class="hl-4">then</span><span class="hl-1">(</span><span class="hl-2">flatDts</span><span class="hl-1"> </span><span class="hl-5">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-0">if</span><span class="hl-1"> (</span><span class="hl-2">flatDts</span><span class="hl-1">.</span><span class="hl-2">diagnostics</span><span class="hl-1">.</span><span class="hl-2">length</span><span class="hl-1">) {</span><br/><span class="hl-1">    </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-4">error</span><span class="hl-1">(</span><span class="hl-2">flatDts</span><span class="hl-1">.</span><span class="hl-4">formatDiagnostics</span><span class="hl-1">());</span><br/><span class="hl-1">  }  </span><br/><span class="hl-1">  </span><span class="hl-0">return</span><span class="hl-1"> </span><span class="hl-2">flatDts</span><span class="hl-1">.</span><span class="hl-4">writeOut</span><span class="hl-1">();</span><br/><span class="hl-1">}).</span><span class="hl-4">catch</span><span class="hl-1">(</span><span class="hl-2">error</span><span class="hl-1"> </span><span class="hl-5">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-4">error</span><span class="hl-1">(</span><span class="hl-3">&#39;Failed to generate type definitions&#39;</span><span class="hl-1">, </span><span class="hl-2">error</span><span class="hl-1">);</span><br/><span class="hl-1">  </span><span class="hl-2">process</span><span class="hl-1">.</span><span class="hl-4">exit</span><span class="hl-1">(</span><span class="hl-8">1</span><span class="hl-1">);</span><br/><span class="hl-1">});</span>
+</code></pre>
+
+<a href="#algorithm-explained" id="algorithm-explained" style="color: inherit; text-decoration: none;">
+  <h2>Algorithm Explained</h2>
+</a>
+<p>The plugin algorithm is not very sophisticated, but simple and straightforward. This made it actually usable on my
+projects, where <a href="#other-tools">other tools</a> failed to generate valid type definitions.</p>
+<p>The simplicity comes at a price. So, this plugin applies limitations on code base rather trying to resolve all
+non-trivial cases.</p>
+<p>So, here what this plugin is doing:</p>
+<ol>
+<li><p>Generates single-file type definition by overriding original <code>tsconfig.json</code> options with the following:</p>
+<pre><code class="language-jsonc"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-6">// Avoid extra work</span><br/><span class="hl-1">  </span><span class="hl-9">checkJs</span><span class="hl-1">: </span><span class="hl-5">false</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">// Ensure &quot;.d.ts&quot; modules are generated</span><br/><span class="hl-1">  </span><span class="hl-9">declaration</span><span class="hl-1">: </span><span class="hl-5">true</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">// Prevent output to declaration directory</span><br/><span class="hl-1">  </span><span class="hl-9">declarationDir</span><span class="hl-1">: </span><span class="hl-5">null</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">// Skip &quot;.js&quot; generation</span><br/><span class="hl-1">  </span><span class="hl-9">emitDeclarationOnly</span><span class="hl-1">: </span><span class="hl-5">true</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">// Single file emission is impossible with this flag set</span><br/><span class="hl-1">  </span><span class="hl-9">isolatedModules</span><span class="hl-1">: </span><span class="hl-5">false</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">// Generate single file</span><br/><span class="hl-1">  </span><span class="hl-6">// `System`, in contrast to `None`, permits the use of `import.meta`</span><br/><span class="hl-1">  </span><span class="hl-9">module</span><span class="hl-1">: </span><span class="hl-3">&quot;System&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">// Always emit</span><br/><span class="hl-1">  </span><span class="hl-9">noEmit</span><span class="hl-1">: </span><span class="hl-5">false</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">// Skip code generation when error occurs</span><br/><span class="hl-1">  </span><span class="hl-9">noEmitOnError</span><span class="hl-1">: </span><span class="hl-5">true</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">// Ignore errors in library type definitions</span><br/><span class="hl-1">  </span><span class="hl-9">skipLibCheck</span><span class="hl-1">: </span><span class="hl-5">true</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">// Always strip internal exports</span><br/><span class="hl-1">  </span><span class="hl-9">stripInternal</span><span class="hl-1">: </span><span class="hl-5">true</span><span class="hl-1">,</span><br/><span class="hl-1">}</span>
+</code></pre>
+</li>
+<li><p>The generated file consists of <code>declare module &quot;path/to/file&quot; { ... }</code> statements. One such statement per each
+source file.</p>
+<p>The plugin replaces all <code>&quot;path/to/file&quot;</code> references with corresponding module name. I.e. either with
+<code>${packageName}</code>, or <code>${packageName}/${entry.as}</code> for matching entry point.</p>
+</li>
+<li><p>Updates all <code>import</code> and <code>export</code> statements and adjusts module references.</p>
+<p>Some imports and exports removed along the way. E.g. there is no point to import to the module from itself, unless
+the named import or export assigns an alias to the imported symbol.</p>
+</li>
+<li><p>Updates inner module declarations.</p>
+<p>Just like <code>2.</code>, but also expands declarations if inner module receives the same name as enclosing one.</p>
+</li>
+<li><p>Removes module declarations that became (or was originally) empty.</p>
+</li>
+</ol>
+
+<a href="#other-tools" id="other-tools" style="color: inherit; text-decoration: none;">
+  <h2>Other Tools</h2>
+</a>
+<ul>
+<li><a href="https://www.npmjs.com/package/rollup-plugin-dts">rollup-plugin-dts</a> Does not support multiple entries, as far as I know.</li>
+<li><a href="https://www.npmjs.com/package/@wessberg/rollup-plugin-ts">@wessberg/rollup-plugin-ts</a> Is able to generate merged type definitions as well.</li>
+<li><a href="https://api-extractor.com/">API extractor</a> Does not support multiple entries intentionally.</li>
+</ul>
+<p>See more <a href="https://github.com/timocov/dts-bundle-generator/discussions/68">here</a>. </p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/rollup_plugin_flat_dts.html">rollup-<wbr/>plugin-<wbr/>flat-<wbr/>dts</a></li><li class=" tsd-kind-module"><a href="modules/rollup_plugin_flat_dts_api.html">rollup-<wbr/>plugin-<wbr/>flat-<wbr/>dts/api</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li><li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
