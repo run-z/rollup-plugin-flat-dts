@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-flat-dts",
-  "version": "1.3.0",
+  "version": "1.4.0-beta.0",
   "description": ".d.ts files flattener and Rollup plugin",
   "keywords": [
     "rollup-plugin",
@@ -33,7 +33,7 @@
   },
   "peerDependencies": {
     "rollup": "^2.60.0",
-    "typescript": "4.3.5 - 4.5"
+    "typescript": "4.3.5 - 4.6"
   },
   "peerDependenciesMeta": {
     "rollup": {
@@ -66,13 +66,13 @@
     "remark-preset-lint-recommended": "^6.1.1",
     "rollup": "^2.60.0",
     "rollup-plugin-sourcemaps": "^0.6.3",
-    "rollup-plugin-typescript2": "^0.30.0",
+    "rollup-plugin-typescript2": "^0.31.0",
     "run-z": "=1.9.3-bootstrap",
     "shx": "^0.3.3",
     "ts-jest": "^27.0.7",
     "tslib": "^2.3.1",
     "typedoc": "^0.22.8",
-    "typescript": "~4.4.4"
+    "typescript": "~4.5.2"
   },
   "scripts": {
     "all": "run-z +z build,lint,test",
