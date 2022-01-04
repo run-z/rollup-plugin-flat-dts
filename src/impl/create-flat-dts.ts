@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import { resolve } from 'node:path';
 import ts from 'typescript';
 import type { FlatDts } from '../api';
 

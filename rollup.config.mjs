@@ -1,7 +1,7 @@
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
-import { builtinModules, createRequire } from 'module';
-import path from 'path';
+import { builtinModules, createRequire } from 'node:module';
+import path from 'node:path';
 import { defineConfig } from 'rollup';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import ts from 'rollup-plugin-typescript2';
@@ -9,6 +9,11 @@ import typescript from 'typescript';
 
 const req = createRequire(import.meta.url);
 const pkg = req('./package.json');
+const externals = new Set([
+  ...builtinModules,
+  ...Object.keys(pkg.peerDependencies),
+  ...Object.keys(pkg.dependencies),
+]);
 
 export default defineConfig({
   input: {
@@ -25,11 +30,9 @@ export default defineConfig({
     nodeResolve(),
     sourcemaps(),
   ],
-  external: [
-    ...Object.keys(pkg.peerDependencies),
-    ...Object.keys(pkg.dependencies),
-    ...builtinModules,
-  ],
+  external(id) {
+    return id.startsWith('node:') || externals.has(id);
+  },
   manualChunks(id) {
     if (id === path.resolve('src', 'plugin.ts')) {
       return 'flat-dts.plugin';

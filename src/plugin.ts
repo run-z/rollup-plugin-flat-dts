@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module rollup-plugin-flat-dts
  */
-import { dirname, relative, resolve } from 'path';
+import { dirname, relative, resolve } from 'node:path';
 import type { OutputPlugin } from 'rollup';
 import type { FlatDts } from './api';
 import { emitFlatDts } from './api';

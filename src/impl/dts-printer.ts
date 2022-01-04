@@ -1,5 +1,5 @@
-import { promises as fs } from 'fs';
-import { dirname } from 'path';
+import { promises as fs } from 'node:fs';
+import { dirname } from 'node:path';
 import ts from 'typescript';
 import type { FlatDts } from '../api';
 import type { DtsSource } from './dts-source';

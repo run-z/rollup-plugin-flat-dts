@@ -1,5 +1,6 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+// eslint-disable-next-line no-restricted-imports
 import { emitFlatDts } from '../dist/flat-dts.api.js';
 
 const moduleFile = fileURLToPath(import.meta.url);

@@ -1,6 +1,6 @@
-import path from 'path';
+import path from 'node:path';
 import ts from 'typescript';
-import { pathToFileURL, URL } from 'url';
+import { pathToFileURL, URL } from 'node:url';
 import type { FlatDts } from '../api';
 
 const MANDATORY_COMPILER_OPTIONS: ts.CompilerOptions = {
