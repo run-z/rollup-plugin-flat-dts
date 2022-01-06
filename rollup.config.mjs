@@ -1,5 +1,3 @@
-import commonjs from '@rollup/plugin-commonjs';
-import nodeResolve from '@rollup/plugin-node-resolve';
 import { builtinModules, createRequire } from 'node:module';
 import path from 'node:path';
 import { defineConfig } from 'rollup';
@@ -21,13 +19,11 @@ export default defineConfig({
     'flat-dts.plugin': './src/plugin.ts',
   },
   plugins: [
-    commonjs(),
     ts({
       typescript,
       cacheRoot: 'target/.rts2_cache',
       useTsconfigDeclarationDir: true,
     }),
-    nodeResolve(),
     sourcemaps(),
   ],
   external(id) {
