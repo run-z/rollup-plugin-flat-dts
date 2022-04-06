@@ -77,7 +77,7 @@
     "bootstrap": "rollup -c",
     "build": "run-z +z bootstrap dts",
     "ci:all": "run-z all +cmd:jest/--ci/--runInBand",
-    "clean": "run-z +z --then shx rm -rf 'index.d.ts?(.map)' '*/index.d.ts?(.map)' dist target",
+    "clean": "run-z +z --then shx rm -rf \"index.d.ts?(.map)\" \"*/index.d.ts?(.map)\" dist target",
     "doc": "run-z +z --then typedoc",
     "doc:publish": "run-z doc --then gh-pages --dist target/typedoc --dotfiles",
     "dts": "node --enable-source-maps ./build/build-dts.js",
