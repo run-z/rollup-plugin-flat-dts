@@ -60,10 +60,6 @@
     "jest": "^27.5.1",
     "jest-junit": "^13.2.0",
     "prettier": "^2.6.2",
-    "remark-cli": "^10.0.1",
-    "remark-lint-list-item-indent": "^3.1.1",
-    "remark-lint-no-shortcut-reference-link": "^3.1.1",
-    "remark-preset-lint-recommended": "^6.1.2",
     "rollup": "^2.70.2",
     "rollup-plugin-sourcemaps": "^0.6.3",
     "rollup-plugin-typescript2": "^0.31.2",
@@ -84,8 +80,7 @@
     "doc:publish": "run-z doc --then gh-pages --dist target/typedoc --dotfiles",
     "dts": "node --enable-source-maps ./build/build-dts.js",
     "format": "run-z +z --then prettier --write \"**/*.{json,md}\"",
-    "lint": "run-z + lint:md --and eslint .",
-    "lint:md": "run-z +z --then remark .",
+    "lint": "run-z +z --then eslint .",
     "test": "run-z +z env:NODE_OPTIONS=\"--experimental-vm-modules --no-warnings\" --then jest",
     "z": "run-z +cmd:rollup,+cmd:eslint,+cmd:remark,+cmd:jest +dts,+cmd:eslint,+cmd:remark,+cmd:jest"
   }
