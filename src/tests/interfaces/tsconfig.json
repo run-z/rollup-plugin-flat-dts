@@ -1,7 +1,5 @@
 {
   "extends": "../../../tsconfig.json",
-  "files": [
-    "./interfaces.ts"
-  ],
+  "files": ["./interfaces.ts"],
   "include": []
 }

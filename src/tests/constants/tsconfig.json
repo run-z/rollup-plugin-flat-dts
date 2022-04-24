@@ -1,7 +1,5 @@
 {
   "extends": "../../../tsconfig.json",
-  "files": [
-    "./constants.ts"
-  ],
+  "files": ["./constants.ts"],
   "include": []
 }

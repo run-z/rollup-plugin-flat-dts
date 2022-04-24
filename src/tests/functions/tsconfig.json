@@ -1,7 +1,5 @@
 {
   "extends": "../../../tsconfig.json",
-  "files": [
-    "./functions.ts"
-  ],
+  "files": ["./functions.ts"],
   "include": []
 }

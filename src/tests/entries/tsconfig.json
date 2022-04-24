@@ -1,7 +1,5 @@
 {
   "extends": "../../../tsconfig.json",
-  "files": [
-    "./root.ts"
-  ],
+  "files": ["./root.ts"],
   "include": []
 }
