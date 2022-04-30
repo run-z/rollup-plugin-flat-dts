@@ -32,7 +32,7 @@
     }
   },
   "peerDependencies": {
-    "rollup": "^2.70.2",
+    "rollup": "^2.71.0",
     "typescript": "4.3.5 - 4.7"
   },
   "peerDependenciesMeta": {
@@ -51,16 +51,16 @@
     "@run-z/prettier-config": "^2.0.0",
     "@types/is-glob": "^4.0.2",
     "@types/micromatch": "^4.0.2",
-    "@types/node": "^14.18.13",
-    "@typescript-eslint/eslint-plugin": "^5.20.0",
-    "@typescript-eslint/parser": "^5.20.0",
+    "@types/node": "^14.18.16",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
     "eslint": "^8.14.0",
     "eslint-plugin-jest": "^26.1.5",
     "gh-pages": "^3.2.3",
     "jest": "^27.5.1",
     "jest-junit": "^13.2.0",
     "prettier": "^2.6.2",
-    "rollup": "^2.70.2",
+    "rollup": "^2.71.0",
     "rollup-plugin-sourcemaps": "^0.6.3",
     "rollup-plugin-typescript2": "^0.31.2",
     "run-z": "=1.10.0-bootstrap",
@@ -68,7 +68,7 @@
     "ts-jest": "^27.1.4",
     "tslib": "^2.4.0",
     "typedoc": "^0.22.15",
-    "typescript": "~4.6.3"
+    "typescript": "~4.6.4"
   },
   "scripts": {
     "all": "run-z +z build,lint,test",
