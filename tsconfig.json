@@ -11,7 +11,6 @@
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "allowSyntheticDefaultImports": true,
-    "importsNotUsedAsValues": "error",
     "noEmitHelpers": true,
     "lib": ["ES2019"],
     "types": ["node"],

@@ -20,13 +20,15 @@
   },
   "type": "module",
   "main": "./dist/flat-dts.plugin.cjs",
-  "types": "./index.d.ts",
+  "types": "./dist/flat-dts.plugin.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/flat-dts.plugin.d.ts",
       "import": "./dist/flat-dts.plugin.js",
       "require": "./dist/flat-dts.plugin.cjs"
     },
     "./api": {
+      "types": "./dist/flat-dts.api.d.ts",
       "import": "./dist/flat-dts.api.js",
       "require": "./dist/flat-dts.api.cjs"
     }

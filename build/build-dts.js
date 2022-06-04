@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 // eslint-disable-next-line no-restricted-imports
-import { emitFlatDts } from '../dist/flat-dts.api.js';
+import { emitFlatDts } from 'rollup-plugin-flat-dts/api';
 
 const moduleFile = fileURLToPath(import.meta.url);
 const moduleDir = path.dirname(moduleFile);
@@ -14,8 +14,9 @@ emitFlatDts({
   compilerOptions: {
     declarationMap: true,
   },
+  file: 'dist/flat-dts.plugin.d.ts',
   entries: {
-    api: { file: 'api/index.d.ts' },
+    api: { file: 'dist/flat-dts.api.d.ts' },
   },
   internal: 'impl',
 }).then(flatDts => {
