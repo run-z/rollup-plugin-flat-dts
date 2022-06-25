@@ -1,6 +1,6 @@
 import path from 'node:path';
-import ts from 'typescript';
 import { pathToFileURL, URL } from 'node:url';
+import ts, { Diagnostic } from 'typescript';
 import type { FlatDts } from '../api';
 
 const MANDATORY_COMPILER_OPTIONS: ts.CompilerOptions = {
@@ -59,7 +59,10 @@ export class DtsSetup {
 
       dirName = path.dirname(configPath);
 
-      const { config, error } = ts.readConfigFile(configPath, ts.sys.readFile);
+      const { config, error } = ts.readConfigFile(configPath, ts.sys.readFile) as {
+        config?: unknown;
+        error?: Diagnostic;
+      };
 
       if (error) {
         this.compilerOptions = compilerOptions;
