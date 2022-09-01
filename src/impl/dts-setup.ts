@@ -36,7 +36,6 @@ export class DtsSetup {
   readonly eol: string;
 
   constructor(readonly dtsOptions: FlatDts.Options) {
-
     const { tsconfig = 'tsconfig.json', file: dtsFile = 'index.d.ts' } = dtsOptions;
     let { compilerOptions = {} } = dtsOptions;
 
@@ -56,7 +55,6 @@ export class DtsSetup {
       this.files = [];
       this.errors = [];
     } else {
-
       dirName = path.dirname(configPath);
 
       const { config, error } = ts.readConfigFile(configPath, ts.sys.readFile) as {
@@ -69,8 +67,11 @@ export class DtsSetup {
         this.files = [];
         this.errors = [error];
       } else {
-
-        const { options, errors, fileNames: files } = ts.parseJsonConfigFileContent(config, ts.sys, dirName);
+        const {
+          options,
+          errors,
+          fileNames: files,
+        } = ts.parseJsonConfigFileContent(config, ts.sys, dirName);
 
         this.compilerOptions = {
           ...options,
@@ -91,7 +92,6 @@ export class DtsSetup {
   }
 
   relativePath(path: string): string {
-
     const cwd = this.root();
     const { href: cwdHref } = cwd;
     const { href } = new URL(path, cwd);
@@ -104,14 +104,12 @@ export class DtsSetup {
   }
 
   basename(path: string): string {
-
     const idx = path.lastIndexOf('/');
 
     return idx < 0 ? path : path.substr(idx + 1);
   }
 
   pathToRoot(path: string): string {
-
     const cwd = this.root();
     const { href: cwdHref } = cwd;
     const { href } = new URL(path, cwd);
@@ -124,7 +122,6 @@ export class DtsSetup {
     let result = '';
 
     for (;;) {
-
       const idx = relative.lastIndexOf('/');
 
       if (idx < 0) {
@@ -146,7 +143,6 @@ export class DtsSetup {
 }
 
 function scriptTarget(compilerOptions: ts.CompilerOptions): ts.ScriptTarget {
-
   let { target } = compilerOptions;
 
   if (!target) {
@@ -159,11 +155,11 @@ function scriptTarget(compilerOptions: ts.CompilerOptions): ts.ScriptTarget {
 
 function eolString({ newLine }: ts.CompilerOptions): string {
   switch (newLine) {
-  case ts.NewLineKind.LineFeed:
-    return '\n';
-  case ts.NewLineKind.CarriageReturnLineFeed:
-    return '\r\n';
-  default:
-    return ts.sys.newLine;
+    case ts.NewLineKind.LineFeed:
+      return '\n';
+    case ts.NewLineKind.CarriageReturnLineFeed:
+      return '\r\n';
+    default:
+      return ts.sys.newLine;
   }
 }

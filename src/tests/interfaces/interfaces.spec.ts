@@ -3,13 +3,13 @@ import { testDts } from '../test-dts';
 
 describe('For interfaces', () => {
   it('emits type definitions', async () => {
-
-    const { files: [{ content }] } = await testDts('interfaces');
+    const {
+      files: [{ content }],
+    } = await testDts('interfaces');
 
     expect(content).toMatchSnapshot();
   });
   it('emits declaration map', async () => {
-
     const { files } = await testDts('interfaces', { compilerOptions: { declarationMap: true } });
 
     expect(files).toHaveLength(2);

@@ -3,13 +3,13 @@ import { testDts } from '../test-dts';
 
 describe('For class', () => {
   it('emits type definitions', async () => {
-
-    const { files: [{ content }] } = await testDts('classes');
+    const {
+      files: [{ content }],
+    } = await testDts('classes');
 
     expect(content).toMatchSnapshot();
   });
   it('emits declaration map', async () => {
-
     const { files } = await testDts('classes', { compilerOptions: { declarationMap: true } });
 
     expect(files).toHaveLength(2);

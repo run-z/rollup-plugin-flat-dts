@@ -6,15 +6,14 @@ export class DtsSourceMap {
 
   static async create(path: string, content: string, setup: DtsSetup): Promise<DtsSourceMap> {
     return new DtsSourceMap(
-        await new SourceMapConsumer(content, setup.sourceURL(path).href),
-        setup,
+      await new SourceMapConsumer(content, setup.sourceURL(path).href),
+      setup,
     );
   }
 
   private constructor(readonly map: SourceMapConsumer, readonly setup: DtsSetup) {}
 
   originalRange(node: ts.Node, source: ts.SourceFile): DtsLocationRange | undefined {
-
     const startPos = node.getStart(source);
     const endPos = node.getEnd();
 

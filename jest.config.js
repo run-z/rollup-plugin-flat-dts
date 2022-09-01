@@ -3,7 +3,7 @@ export default {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.ts',
-    '!src/tests/**',     // Exclude tests
+    '!src/tests/**', // Exclude tests
     '!src/**/index.ts',
     '!src/**/main.ts',
     '!**/node_modules/**',

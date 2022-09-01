@@ -11,16 +11,15 @@ export class DtsMapper {
   private readonly _line: Mapping[] = [];
 
   constructor(private readonly _source: DtsSource.WithMap, dtsFile: FlatDts.File) {
-
     const { setup } = _source;
 
     // Re-parse just generated `.d.ts`.
     this._genDts = ts.createSourceFile(
-        dtsFile.path,
-        dtsFile.content,
-        setup.scriptTarget,
-        false,
-        ts.ScriptKind.TS,
+      dtsFile.path,
+      dtsFile.content,
+      setup.scriptTarget,
+      false,
+      ts.ScriptKind.TS,
     );
 
     this._generator = new SourceMapGenerator({
@@ -43,7 +42,6 @@ export class DtsMapper {
     const genIt = genNodes[Symbol.iterator]();
 
     for (;;) {
-
       const orgNext = orgIt.next();
       const genNext = genIt.next();
 
@@ -56,7 +54,6 @@ export class DtsMapper {
   }
 
   private _mapNode(orgNode: ts.Node, genNode: ts.Node): void {
-
     const orgRange = this._source.map.originalRange(orgNode, this._source.source);
     const genStartPos = genNode.getStart(this._genDts);
 
@@ -91,13 +88,14 @@ export class DtsMapper {
   }
 
   private _addMapping(mapping: Mapping): void {
-
     const [prev] = this._line;
 
-    if (prev
-        && prev.source === mapping.source
-        && prev.generated.line === mapping.generated.line
-        && prev.original.line === mapping.original.line) {
+    if (
+      prev
+      && prev.source === mapping.source
+      && prev.generated.line === mapping.generated.line
+      && prev.original.line === mapping.original.line
+    ) {
       // Mapping from and to the same line
       this._line.push(mapping);
 
@@ -116,7 +114,8 @@ export class DtsMapper {
     const lastIdx = this._line.length - 1;
 
     this._line.forEach((mapping, i) => {
-      if (i && i < lastIdx) {// Always record the first and the last mapping
+      if (i && i < lastIdx) {
+        // Always record the first and the last mapping
 
         const prev = this._line[i - 1];
         const genOffset = mapping.generated.column - prev.generated.column;
@@ -145,8 +144,8 @@ export class DtsMapper {
 }
 
 function compareMappingColumns(
-    { generated: { column: col1 } }: Mapping,
-    { generated: { column: col2 } }: Mapping,
+  { generated: { column: col1 } }: Mapping,
+  { generated: { column: col2 } }: Mapping,
 ): number {
   return col1 - col2;
 }

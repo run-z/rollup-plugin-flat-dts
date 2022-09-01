@@ -4,8 +4,10 @@ import { DtsSourceMap } from './dts-source-map';
 
 export class DtsSource {
 
-  static async create(sources: readonly DtsSourceFile[], setup: DtsSetup): Promise<DtsSource | undefined> {
-
+  static async create(
+    sources: readonly DtsSourceFile[],
+    setup: DtsSetup,
+  ): Promise<DtsSource | undefined> {
     let source: ts.SourceFile | undefined;
     let sourceMap: { path: string; content: string } | undefined;
 
@@ -17,19 +19,21 @@ export class DtsSource {
       }
     }
 
-    return source && new DtsSource(
+    return (
+      source
+      && new DtsSource(
         source,
-        sourceMap && await DtsSourceMap.create(sourceMap.path, sourceMap.content, setup),
+        sourceMap && (await DtsSourceMap.create(sourceMap.path, sourceMap.content, setup)),
         setup,
+      )
     );
   }
 
   constructor(
-      readonly source: ts.SourceFile,
-      readonly map: DtsSourceMap | undefined,
-      readonly setup: DtsSetup,
-  ) {
-  }
+    readonly source: ts.SourceFile,
+    readonly map: DtsSourceMap | undefined,
+    readonly setup: DtsSetup,
+  ) {}
 
   destroy(): void {
     this.map?.destroy();
@@ -42,19 +46,13 @@ export class DtsSource {
 }
 
 export namespace DtsSource {
-
   export interface WithMap extends DtsSource {
-
     readonly map: DtsSourceMap;
-
   }
-
 }
 
 export interface DtsSourceFile {
-
   readonly path: string;
 
   readonly content: string;
-
 }

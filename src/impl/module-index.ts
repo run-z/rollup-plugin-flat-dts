@@ -14,8 +14,10 @@ export class ModuleIndex {
   private readonly _byName = new Map<string, Promise<ModuleInfo>>();
 
   constructor(private readonly _source: DtsSource) {
-
-    const { source, setup: { dtsOptions } } = _source;
+    const {
+      source,
+      setup: { dtsOptions },
+    } = _source;
     const { entries = {} } = dtsOptions;
 
     this._meta = new DtsMeta(source);
@@ -40,7 +42,6 @@ export class ModuleIndex {
   }
 
   byName(name: string): Promise<ModuleInfo> {
-
     const found = this._byName.get(name);
 
     if (found) {
@@ -60,7 +61,10 @@ export class ModuleIndex {
 
     if (decl) {
       // Entry declared.
-      return this._put(name, this.main().then(main => main.nested(name, decl)));
+      return this._put(
+        name,
+        this.main().then(main => main.nested(name, decl)),
+      );
     }
     if (!this._meta.isModuleDeclared(name)) {
       // No such module declaration in `.d.ts` file.
@@ -81,14 +85,12 @@ export class ModuleIndex {
   }
 
   main(): Promise<ModuleInfo> {
-
     const main = ModuleInfo.main(this._source);
 
     return (this.main = () => main)();
   }
 
   private _put(name: string, info: ModuleInfo | PromiseLike<ModuleInfo>): Promise<ModuleInfo> {
-
     const result = Promise.resolve(info);
 
     this._byName.set(name, result);

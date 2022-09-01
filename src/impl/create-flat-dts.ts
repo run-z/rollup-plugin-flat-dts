@@ -10,8 +10,8 @@ const FORMAT_HOST: ts.FormatDiagnosticsHost = {
 
 function formatDiagnostics(this: FlatDts): string {
   return this.diagnostics.length
-      ? ts.formatDiagnosticsWithColorAndContext(this.diagnostics, FORMAT_HOST)
-      : '';
+    ? ts.formatDiagnosticsWithColorAndContext(this.diagnostics, FORMAT_HOST)
+    : '';
 }
 
 export function emptyFlatDts(diagnostics: readonly ts.Diagnostic[]): FlatDts {
@@ -26,18 +26,16 @@ export function emptyFlatDts(diagnostics: readonly ts.Diagnostic[]): FlatDts {
 }
 
 export function createFlatDts(
-    files: readonly FlatDts.File[],
-    diagnostics: readonly ts.Diagnostic[] = [],
+  files: readonly FlatDts.File[],
+  diagnostics: readonly ts.Diagnostic[] = [],
 ): FlatDts {
   return {
     files,
     diagnostics,
     formatDiagnostics,
     writeOut(rootDir) {
-
-      const filePath: (file: FlatDts.File) => string | undefined = rootDir != null
-          ? ({ path }) => resolve(rootDir, path)
-          : ({ path }) => path;
+      const filePath: (file: FlatDts.File) => string | undefined
+        = rootDir != null ? ({ path }) => resolve(rootDir, path) : ({ path }) => path;
 
       return Promise.all(files.map(file => file.writeOut(filePath(file)))).then(() => void 0);
     },

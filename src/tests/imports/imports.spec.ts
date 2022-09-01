@@ -3,25 +3,19 @@ import { testDts } from '../test-dts';
 
 describe('For imports with `.js` extension', () => {
   it('emits type definitions', async () => {
-
-    const { files: [{ content }] } = await testDts(
-        'imports',
-        {
-          entries: { imported: {} },
-        },
-    );
+    const {
+      files: [{ content }],
+    } = await testDts('imports', {
+      entries: { imported: {} },
+    });
 
     expect(content).toMatchSnapshot();
   });
   it('emits declaration map', async () => {
-
-    const { files } = await testDts(
-        'imports',
-        {
-          entries: { imported: {} },
-          compilerOptions: { declarationMap: true },
-        },
-    );
+    const { files } = await testDts('imports', {
+      entries: { imported: {} },
+      compilerOptions: { declarationMap: true },
+    });
 
     expect(files).toHaveLength(2);
 

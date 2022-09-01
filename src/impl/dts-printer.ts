@@ -10,11 +10,9 @@ export abstract class DtsPrinter<TSource extends DtsSource = DtsSource> {
   private _out = '';
 
   constructor(readonly source: TSource) {
-    this._printer = ts.createPrinter(
-        {
-          newLine: source.setup.compilerOptions.newLine,
-        },
-    );
+    this._printer = ts.createPrinter({
+      newLine: source.setup.compilerOptions.newLine,
+    });
   }
 
   print(node: ts.Node): this {

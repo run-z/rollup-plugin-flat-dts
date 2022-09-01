@@ -15,15 +15,14 @@ export class SourceMapDtsPrinter extends DtsPrinter<DtsSource.WithMap> {
   }
 
   toFiles(name: string): readonly FlatDts.File[] {
-
     const dts = this.createFile(name);
     const sourceMap = this._createSourceMapFile(dts);
     const { setup } = this.source;
 
     return [
       this.createFile(
-          dts.path,
-          `${dts.content}//# sourceMappingURL=${setup.basename(sourceMap.path)}${setup.eol}`,
+        dts.path,
+        `${dts.content}//# sourceMappingURL=${setup.basename(sourceMap.path)}${setup.eol}`,
       ),
       sourceMap,
     ];
@@ -31,8 +30,8 @@ export class SourceMapDtsPrinter extends DtsPrinter<DtsSource.WithMap> {
 
   private _createSourceMapFile(dtsFile: FlatDts.File): FlatDts.File {
     return this.createFile(
-        `${dtsFile.path}.map`,
-        new DtsMapper(this.source, dtsFile).map(this._nodes).toString(),
+      `${dtsFile.path}.map`,
+      new DtsMapper(this.source, dtsFile).map(this._nodes).toString(),
     );
   }
 

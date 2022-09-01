@@ -18,11 +18,9 @@ export type { FlatDts };
  */
 export default function flatDtsPlugin(dtsOptions?: FlatDts.Options): OutputPlugin {
   return {
-
     name: 'flat-dts',
 
     async generateBundle({ dir, file }): Promise<void> {
-
       let assetPath = (filePath: string): string => filePath;
 
       if (file != null) {
@@ -52,22 +50,21 @@ export default function flatDtsPlugin(dtsOptions?: FlatDts.Options): OutputPlugi
 }
 
 function dtsOptionsRelativeToDir(dir: string, dtsOptions: FlatDts.Options = {}): FlatDts.Options {
-
   const { file = 'index.d.ts', entries = {} } = dtsOptions;
 
   return {
     ...dtsOptions,
     file: relative(process.cwd(), resolve(dir, file)),
     entries: Object.fromEntries(
-        Object
-            .entries(entries)
-            .map(([key, dtsEntry = {}]) => [key, dtsEntryRelativeToDir(dir, dtsEntry)]),
+      Object.entries(entries).map(([key, dtsEntry = {}]) => [
+        key,
+        dtsEntryRelativeToDir(dir, dtsEntry),
+      ]),
     ),
   };
 }
 
 function dtsEntryRelativeToDir(dir: string, dtsEntry: FlatDts.EntryDecl = {}): FlatDts.EntryDecl {
-
   const { file } = dtsEntry;
 
   if (file == null) {

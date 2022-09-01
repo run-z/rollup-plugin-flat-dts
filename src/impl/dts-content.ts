@@ -11,8 +11,7 @@ export class DtsContent {
   private readonly _refs = new Set<ModuleInfo>();
   private readonly _statements: ts.Statement[] = [];
 
-  constructor(readonly source: DtsSource, readonly module: ModuleInfo) {
-  }
+  constructor(readonly source: DtsSource, readonly module: ModuleInfo) {}
 
   refer(refs: readonly ModuleInfo[] | undefined): this {
     if (refs) {
@@ -27,10 +26,9 @@ export class DtsContent {
   }
 
   toFiles(): readonly FlatDts.File[] {
-
     const printer = this.source.hasMap()
-        ? new SourceMapDtsPrinter(this.source)
-        : new SimpleDtsPrinter(this.source);
+      ? new SourceMapDtsPrinter(this.source)
+      : new SimpleDtsPrinter(this.source);
 
     this.module.prelude(printer);
     this._prelude(printer);
@@ -48,7 +46,6 @@ export class DtsContent {
   private _prelude(printer: DtsPrinter): void {
     if (this.module.refs) {
       for (const ref of this._refs) {
-
         const path = this.module.pathTo(ref);
 
         if (path) {

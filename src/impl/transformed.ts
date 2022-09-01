@@ -16,28 +16,16 @@ export function noneTransformed<T extends unknown[]>(): Transformed<T> {
 }
 
 export async function allTransformed<T>(
-    transformed: Promise<Transformed<T[]>>[],
+  transformed: Promise<Transformed<T[]>>[],
 ): Promise<Transformed<T[]>> {
-
   const list = await Promise.all(transformed);
 
   return list.reduce(
-      (
-          {
-            to: all,
-            dia: fullDia,
-            refs: allRefs,
-          },
-          {
-            to,
-            dia,
-            refs,
-          },
-      ) => ({
-        to: [...all, ...to],
-        dia: dia ? (fullDia ? [...fullDia, ...dia] : dia) : fullDia,
-        refs: refs ? (allRefs ? [...allRefs, ...refs] : refs) : allRefs,
-      }),
-      noneTransformed<T[]>(),
+    ({ to: all, dia: fullDia, refs: allRefs }, { to, dia, refs }) => ({
+      to: [...all, ...to],
+      dia: dia ? (fullDia ? [...fullDia, ...dia] : dia) : fullDia,
+      refs: refs ? (allRefs ? [...allRefs, ...refs] : refs) : allRefs,
+    }),
+    noneTransformed<T[]>(),
   );
 }

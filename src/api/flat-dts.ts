@@ -4,7 +4,6 @@ import type * as ts from 'typescript';
  * Flattened type definitions.
  */
 export interface FlatDts {
-
   /**
    * An array of emitted `.d.ts` files.
    *
@@ -32,11 +31,9 @@ export interface FlatDts {
    * @returns A promise resolved when all files written.
    */
   writeOut(rootDir: string): Promise<void>;
-
 }
 
 export namespace FlatDts {
-
   /**
    * Type definitions flattening options.
    *
@@ -45,7 +42,6 @@ export namespace FlatDts {
    * Accepted by {@link emitFlatDts}.
    */
   export interface Options {
-
     /**
      * `tsconfig.json` file location relative to working directory.
      *
@@ -127,14 +123,12 @@ export namespace FlatDts {
      * [glob]: https://www.npmjs.com/package/micromatch
      */
     readonly internal?: string | readonly string[] | undefined;
-
   }
 
   /**
    * Declaration of module entry.
    */
   export interface EntryDecl {
-
     /**
      * Final entry name.
      *
@@ -172,7 +166,6 @@ export namespace FlatDts {
      * @defaultValue Inherited from {@link Options.refs `refs` flattening option}.
      */
     readonly refs?: boolean | undefined;
-
   }
 
   /**
@@ -181,7 +174,6 @@ export namespace FlatDts {
    * The file is not actually written to the disk by {@link File.writeOut} call.
    */
   export interface File {
-
     /**
      * Emitted `.d.ts` file path.
      */
@@ -202,7 +194,5 @@ export namespace FlatDts {
      * @returns A promise resolved when file written.
      */
     writeOut(path?: string): Promise<void>;
-
   }
-
 }

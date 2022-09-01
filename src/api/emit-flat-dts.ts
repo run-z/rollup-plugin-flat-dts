@@ -11,10 +11,7 @@ import type { FlatDts } from './flat-dts';
  *
  * @returns A promise resolved to flattened type definitions representation.
  */
-export async function emitFlatDts(
-    dtsOptions: FlatDts.Options = {},
-): Promise<FlatDts> {
-
+export async function emitFlatDts(dtsOptions: FlatDts.Options = {}): Promise<FlatDts> {
   const setup = new DtsSetup(dtsOptions);
   const { compilerOptions, files, errors } = setup;
 
@@ -26,32 +23,32 @@ export async function emitFlatDts(
   });
 
   const { sources, diagnostics } = await new Promise<EmittedDts>(resolve => {
-
     const sources: DtsSourceFile[] = [];
 
     try {
-
       const { diagnostics } = program.emit(
-          undefined /* all source files */,
-          (path, content) => {
-            sources.push({ path, content });
-          },
-          undefined /* cancellationToken */,
-          true /* emitOnlyDtsFiles */,
+        undefined /* all source files */,
+        (path, content) => {
+          sources.push({ path, content });
+        },
+        undefined /* cancellationToken */,
+        true /* emitOnlyDtsFiles */,
       );
 
       resolve({ sources, diagnostics });
     } catch (error) {
       resolve({
         sources,
-        diagnostics: [{
-          category: ts.DiagnosticCategory.Error,
-          code: 9999,
-          file: undefined,
-          start: undefined,
-          length: undefined,
-          messageText: error instanceof Error ? error.message : String(error),
-        }],
+        diagnostics: [
+          {
+            category: ts.DiagnosticCategory.Error,
+            code: 9999,
+            file: undefined,
+            start: undefined,
+            length: undefined,
+            messageText: error instanceof Error ? error.message : String(error),
+          },
+        ],
       });
     }
   });
@@ -63,7 +60,6 @@ export async function emitFlatDts(
   }
 
   try {
-
     const transformer = new DtsTransformer(source);
 
     return transformer.transform(diagnostics);
@@ -73,9 +69,7 @@ export async function emitFlatDts(
 }
 
 interface EmittedDts {
-
   readonly sources: readonly DtsSourceFile[];
 
   readonly diagnostics: readonly ts.Diagnostic[];
-
 }

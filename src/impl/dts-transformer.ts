@@ -17,7 +17,6 @@ export class DtsTransformer {
   }
 
   async transform(initialDiagnostics: readonly ts.Diagnostic[]): Promise<FlatDts> {
-
     const topLevel = await this._transform();
     const diagnostics: ts.Diagnostic[] = initialDiagnostics.slice();
     const files = this._emitFiles(topLevel, diagnostics);
@@ -26,10 +25,9 @@ export class DtsTransformer {
   }
 
   private _emitFiles(
-      statements: readonly Transformed<TopLevelStatement[]>[],
-      diagnostics: ts.Diagnostic[],
+    statements: readonly Transformed<TopLevelStatement[]>[],
+    diagnostics: ts.Diagnostic[],
   ): readonly FlatDts.File[] {
-
     const contentByPath = new Map<string, DtsContent>();
 
     for (const { to: topLevel, dia, refs } of statements) {
@@ -39,7 +37,6 @@ export class DtsTransformer {
 
       for (const [info, statement] of topLevel) {
         if (info.file) {
-
           const key = resolve(info.file);
           let dtsContent = contentByPath.get(key);
 
@@ -57,11 +54,7 @@ export class DtsTransformer {
   }
 
   private async _transform(): Promise<Transformed<TopLevelStatement[]>[]> {
-    return Promise.all(
-        this._source.source.statements.map(
-            statement => this._topLevel(statement),
-        ),
-    );
+    return Promise.all(this._source.source.statements.map(statement => this._topLevel(statement)));
   }
 
   private async _topLevel(statement: ts.Statement): Promise<Transformed<TopLevelStatement[]>> {
@@ -73,7 +66,7 @@ export class DtsTransformer {
   }
 
   private async _topLevelModuleDecl(
-      decl: ts.ModuleDeclaration,
+    decl: ts.ModuleDeclaration,
   ): Promise<Transformed<TopLevelStatement[]>> {
     if (ts.isMemberName(decl.name)) {
       return { to: [[await this._index.main(), decl]] };
@@ -92,40 +85,49 @@ export class DtsTransformer {
     }
 
     // Rename the module.
-    const { to: [body], dia, refs } = await this._moduleBody(target, decl);
+    const {
+      to: [body],
+      dia,
+      refs,
+    } = await this._moduleBody(target, decl);
 
     return {
       to: body
-          ? [[
-            target,
-            ts.factory.updateModuleDeclaration(
+        ? [
+            [
+              target,
+              ts.factory.updateModuleDeclaration(
                 decl,
                 decl.decorators,
                 decl.modifiers,
                 ts.factory.createStringLiteral(target.declareAs),
                 body,
-            ),
-          ]]
-          : [],
+              ),
+            ],
+          ]
+        : [],
       dia,
       refs,
     };
   }
 
   private async _moduleBody(
-      enclosing: ModuleInfo,
-      decl: ts.ModuleDeclaration,
+    enclosing: ModuleInfo,
+    decl: ts.ModuleDeclaration,
   ): Promise<Transformed<[ts.ModuleBody]>> {
-
     const { body } = decl;
 
     if (!isBodyBlock(body)) {
       return noneTransformed();
     }
 
-    const { to: statements, dia, refs }: Transformed<ts.Statement[]> = await allTransformed(body.statements.map(
-        statement => this._statement(enclosing, statement),
-    ));
+    const {
+      to: statements,
+      dia,
+      refs,
+    }: Transformed<ts.Statement[]> = await allTransformed(
+      body.statements.map(statement => this._statement(enclosing, statement)),
+    );
 
     if (!statements.length) {
       return noneTransformed();
@@ -139,26 +141,25 @@ export class DtsTransformer {
   }
 
   private async _statement(
-      enclosing: ModuleInfo,
-      statement: ts.Statement,
+    enclosing: ModuleInfo,
+    statement: ts.Statement,
   ): Promise<Transformed<ts.Statement[]>> {
     switch (statement.kind) {
-    case ts.SyntaxKind.ImportDeclaration:
-      return this._import(enclosing, statement as ts.ImportDeclaration);
-    case ts.SyntaxKind.ExportDeclaration:
-      return this._export(enclosing, statement as ts.ExportDeclaration);
-    case ts.SyntaxKind.ModuleDeclaration:
-      return this._innerModuleDecl(enclosing, statement as ts.ModuleDeclaration);
-    default:
-      return { to: [statement] };
+      case ts.SyntaxKind.ImportDeclaration:
+        return this._import(enclosing, statement as ts.ImportDeclaration);
+      case ts.SyntaxKind.ExportDeclaration:
+        return this._export(enclosing, statement as ts.ExportDeclaration);
+      case ts.SyntaxKind.ModuleDeclaration:
+        return this._innerModuleDecl(enclosing, statement as ts.ModuleDeclaration);
+      default:
+        return { to: [statement] };
     }
   }
 
   private async _import(
-      enclosing: ModuleInfo,
-      statement: ts.ImportDeclaration,
+    enclosing: ModuleInfo,
+    statement: ts.ImportDeclaration,
   ): Promise<Transformed<[ts.ImportDeclaration]>> {
-
     const { moduleSpecifier } = statement;
 
     if (moduleSpecifier.kind !== ts.SyntaxKind.StringLiteral) {
@@ -179,14 +180,16 @@ export class DtsTransformer {
 
       // Replace module reference.
       return {
-        to: [ts.factory.updateImportDeclaration(
+        to: [
+          ts.factory.updateImportDeclaration(
             statement,
             statement.decorators,
             statement.modifiers,
             statement.importClause,
             ts.factory.createStringLiteral(fromModule.declareAs),
             statement.assertClause,
-        )],
+          ),
+        ],
         refs: [fromModule],
       };
     }
@@ -222,17 +225,12 @@ export class DtsTransformer {
     return {
       to: [
         ts.factory.updateImportDeclaration(
-            statement,
-            statement.decorators,
-            statement.modifiers,
-            ts.factory.updateImportClause(
-                importClause,
-                importClause.isTypeOnly,
-                name,
-                namedBindings,
-            ),
-            ts.factory.createStringLiteral(enclosing.declareAs),
-            statement.assertClause,
+          statement,
+          statement.decorators,
+          statement.modifiers,
+          ts.factory.updateImportClause(importClause, importClause.isTypeOnly, name, namedBindings),
+          ts.factory.createStringLiteral(enclosing.declareAs),
+          statement.assertClause,
         ),
       ],
       dia: name ? [this._diagnostics(statement, 'Unsupported default import')] : undefined,
@@ -240,10 +238,9 @@ export class DtsTransformer {
   }
 
   private async _export(
-      enclosing: ModuleInfo,
-      statement: ts.ExportDeclaration,
+    enclosing: ModuleInfo,
+    statement: ts.ExportDeclaration,
   ): Promise<Transformed<[ts.ExportDeclaration]>> {
-
     const { moduleSpecifier } = statement;
 
     if (!moduleSpecifier) {
@@ -269,7 +266,8 @@ export class DtsTransformer {
 
       // Replace module reference.
       return {
-        to: [ts.factory.updateExportDeclaration(
+        to: [
+          ts.factory.updateExportDeclaration(
             statement,
             statement.decorators,
             statement.modifiers,
@@ -277,7 +275,8 @@ export class DtsTransformer {
             statement.exportClause,
             ts.factory.createStringLiteral(fromModule.declareAs),
             statement.assertClause,
-        )],
+          ),
+        ],
         refs: [fromModule],
       };
     }
@@ -300,7 +299,8 @@ export class DtsTransformer {
       }
 
       return {
-        to: [ts.factory.updateExportDeclaration(
+        to: [
+          ts.factory.updateExportDeclaration(
             statement,
             statement.decorators,
             statement.modifiers,
@@ -308,7 +308,8 @@ export class DtsTransformer {
             ts.factory.updateNamedExports(exportClause, elements),
             undefined,
             statement.assertClause,
-        )],
+          ),
+        ],
       };
     }
 
@@ -321,8 +322,8 @@ export class DtsTransformer {
   }
 
   private async _innerModuleDecl(
-      enclosing: ModuleInfo,
-      decl: ts.ModuleDeclaration,
+    enclosing: ModuleInfo,
+    decl: ts.ModuleDeclaration,
   ): Promise<Transformed<ts.Statement[]>> {
     if (ts.isMemberName(decl.name)) {
       return { to: [decl] };
@@ -348,31 +349,36 @@ export class DtsTransformer {
       }
 
       // Expand module body.
-      return allTransformed(body.statements.map(
-          statement => this._statement(enclosing, statement),
-      ));
+      return allTransformed(
+        body.statements.map(statement => this._statement(enclosing, statement)),
+      );
     }
 
     // Rename the module.
-    const { to: [body], dia, refs } = await this._moduleBody(target, decl);
+    const {
+      to: [body],
+      dia,
+      refs,
+    } = await this._moduleBody(target, decl);
 
     return {
       to: body
-          ? [ts.factory.updateModuleDeclaration(
+        ? [
+            ts.factory.updateModuleDeclaration(
               decl,
               decl.decorators,
               decl.modifiers,
               ts.factory.createStringLiteral(target.declareAs),
               body,
-          )]
-          : [],
+            ),
+          ]
+        : [],
       dia,
       refs,
     };
   }
 
   private _diagnostics(node: ts.Node, messageText: string): ts.DiagnosticWithLocation {
-
     const { source } = this._source;
     const start = node.getStart(source);
     const end = node.getEnd();

@@ -4,34 +4,23 @@ import type { FlatDts } from '../api';
 import type { DtsPrinter } from './dts-printer';
 import type { DtsSource } from './dts-source';
 
-const noReferredLibs: ReadonlySet<string> = (/*#__PURE__*/ new Set());
+const noReferredLibs: ReadonlySet<string> = /*#__PURE__*/ new Set();
 
 export class ModuleInfo {
 
   static async main(source: DtsSource): Promise<ModuleInfo> {
-
     const {
-      source: {
-        fileName: file,
-      },
+      source: { fileName: file },
       setup: {
-        dtsOptions: {
-          moduleName = await packageName(),
-          lib,
-          refs = true,
-        },
+        dtsOptions: { moduleName = await packageName(), lib, refs = true },
       },
     } = source;
 
-    return new ModuleInfo(
-        source,
-        moduleName,
-        {
-          file,
-          libs: referredLibs(source, lib),
-          refs,
-        },
-    );
+    return new ModuleInfo(source, moduleName, {
+      file,
+      libs: referredLibs(source, lib),
+      refs,
+    });
   }
 
   static external(source: DtsSource, name: string): ModuleInfo {
@@ -49,16 +38,16 @@ export class ModuleInfo {
   private readonly _libs: ReadonlySet<string>;
 
   private constructor(
-      readonly source: DtsSource,
-      readonly declareAs: string,
-      kind:
-          | 'internal'
-          | 'external'
-          | {
-        file: string;
-        libs: ReadonlySet<string>;
-        refs: boolean;
-      },
+    readonly source: DtsSource,
+    readonly declareAs: string,
+    kind:
+      | 'internal'
+      | 'external'
+      | {
+          file: string;
+          libs: ReadonlySet<string>;
+          refs: boolean;
+        },
   ) {
     if (typeof kind === 'string') {
       this.isExternal = kind === 'external';
@@ -82,7 +71,6 @@ export class ModuleInfo {
   }
 
   nested(name: string, decl: FlatDts.EntryDecl): ModuleInfo {
-
     let { as: declareAs = name } = decl;
 
     if (this.declareAs) {
@@ -90,22 +78,17 @@ export class ModuleInfo {
     }
     if (declareAs) {
       // Nested entry name.
-      return new ModuleInfo(
-          this.source,
-          declareAs,
-          {
-            file: decl.file ?? this.file!,
-            libs: referredLibs(this.source, decl.lib, this._libs),
-            refs: decl.refs ?? this.refs,
-          },
-      );
+      return new ModuleInfo(this.source, declareAs, {
+        file: decl.file ?? this.file!,
+        libs: referredLibs(this.source, decl.lib, this._libs),
+        refs: decl.refs ?? this.refs,
+      });
     }
 
     return this;
   }
 
   pathTo({ file: to }: ModuleInfo): string | undefined {
-
     const from = this.file;
 
     if (!from || !to || from === to) {
@@ -120,14 +103,13 @@ export class ModuleInfo {
 }
 
 async function packageName(): Promise<string> {
-
   const packageJson = await fs.readFile('package.json', { encoding: 'utf-8' });
   const { name } = JSON.parse(packageJson) as { name?: string | undefined };
 
   if (!name) {
     throw new Error(
-        'Can not detect module name automatically. '
-        + 'Consider to set `flatDts({ moduleName: \'<MODULE>\' })` option explicitly',
+      'Can not detect module name automatically. '
+        + "Consider to set `flatDts({ moduleName: '<MODULE>' })` option explicitly",
     );
   }
 
@@ -135,9 +117,9 @@ async function packageName(): Promise<string> {
 }
 
 function referredLibs(
-    source: DtsSource,
-    lib: FlatDts.Options['lib'],
-    defaultLibs = noReferredLibs,
+  source: DtsSource,
+  lib: FlatDts.Options['lib'],
+  defaultLibs = noReferredLibs,
 ): ReadonlySet<string> {
   if (lib === true) {
     lib = source.setup.compilerOptions.lib;
