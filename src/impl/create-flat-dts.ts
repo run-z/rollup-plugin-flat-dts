@@ -34,8 +34,8 @@ export function createFlatDts(
     diagnostics,
     formatDiagnostics,
     writeOut(rootDir) {
-      const filePath: (file: FlatDts.File) => string | undefined
-        = rootDir != null ? ({ path }) => resolve(rootDir, path) : ({ path }) => path;
+      const filePath: (file: FlatDts.File) => string | undefined =
+        rootDir != null ? ({ path }) => resolve(rootDir, path) : ({ path }) => path;
 
       return Promise.all(files.map(file => file.writeOut(filePath(file)))).then(() => void 0);
     },
