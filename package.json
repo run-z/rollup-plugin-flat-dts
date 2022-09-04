@@ -78,7 +78,7 @@
     "bootstrap": "rollup -c && node --enable-source-maps ./build/build-dts.js",
     "build": "run-z +z build:bundle build:dts",
     "build:bundle": "run-z +z --then rollup -c",
-    "build:dts": "run-z +z -- then node --enable-source-maps ./build/build-dts.js",
+    "build:dts": "run-z +z --then node --enable-source-maps ./build/build-dts.js",
     "ci:all": "run-z all +cmd:jest/--ci/--runInBand",
     "clean": "run-z +z --then shx rm -rf dist target",
     "doc": "run-z +z --then typedoc",
