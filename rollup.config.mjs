@@ -1,7 +1,6 @@
 import { builtinModules, createRequire } from 'node:module';
 import path from 'node:path';
 import { defineConfig } from 'rollup';
-import sourcemaps from 'rollup-plugin-sourcemaps';
 import ts from 'rollup-plugin-typescript2';
 import typescript from 'typescript';
 
@@ -24,17 +23,9 @@ export default defineConfig({
       cacheRoot: 'target/.rts2_cache',
       useTsconfigDeclarationDir: true,
     }),
-    sourcemaps(),
   ],
   external(id) {
     return id.startsWith('node:') || externals.has(id);
-  },
-  manualChunks(id) {
-    if (id === path.resolve('src', 'plugin.ts')) {
-      return 'flat-dts.plugin';
-    }
-
-    return 'flat-dts.api';
   },
   output: [
     {
@@ -44,6 +35,7 @@ export default defineConfig({
       exports: 'auto',
       entryFileNames: '[name].cjs',
       chunkFileNames: '_[name].cjs',
+      manualChunks,
       hoistTransitiveImports: false,
     },
     {
@@ -52,7 +44,16 @@ export default defineConfig({
       dir: '.',
       entryFileNames: 'dist/[name].js',
       chunkFileNames: 'dist/_[name].js',
+      manualChunks,
       hoistTransitiveImports: false,
     },
   ],
 });
+
+function manualChunks(id) {
+  if (id === path.resolve('src', 'plugin.ts')) {
+    return 'flat-dts.plugin';
+  }
+
+  return 'flat-dts.api';
+}
