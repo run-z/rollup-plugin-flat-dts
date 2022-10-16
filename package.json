@@ -83,7 +83,7 @@
     "doc": "run-z +z --then typedoc",
     "doc:publish": "run-z doc --then gh-pages --dist target/typedoc --dotfiles",
     "dts": "node --enable-source-maps ./build/build-dts.js",
-    "format": "run-z +z --then prettier-eslint --write --include-dot-files \"src/**/*.*\" \"*.{js,cjs,mjs,json,md}\"",
+    "format": "run-z +z --then prettier-eslint --write --include-dot-files \"src/**/*.*\" \"*.{js,cjs,json,md}\"",
     "lint": "run-z +z --then eslint .",
     "test": "run-z +z env:NODE_OPTIONS=\"--experimental-vm-modules --no-warnings\" --then jest",
     "z": "run-z +cmd:rollup,+cmd:eslint,+cmd:jest +dts,+cmd:eslint,+cmd:jest"
