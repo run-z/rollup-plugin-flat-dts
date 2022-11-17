@@ -85,7 +85,7 @@ To adhere to these limitations the project structure could be like this:
 
 `flatDts({})` accepts configuration object with the following properties:
 
-- `tsconfig` - `tsconfig.json` file location relative to working directory.
+- `tsconfig` - Either `tsconfig.json` file location relative to working directory, or parsed `tsconfig.json` contents.
 
   `tsconfig.json` by default.
 

@@ -43,11 +43,11 @@ export namespace FlatDts {
    */
   export interface Options {
     /**
-     * `tsconfig.json` file location relative to working directory.
+     * Either `tsconfig.json` file location relative to working directory, or parsed `tsconfig.json` contents.
      *
      * @defaultValue `"tsconfig.json"`
      */
-    readonly tsconfig?: string | undefined;
+    readonly tsconfig?: string | unknown | undefined;
 
     /**
      * TypeScript compiler options to apply.

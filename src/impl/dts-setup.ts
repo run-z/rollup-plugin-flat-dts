@@ -1,7 +1,151 @@
 import path from 'node:path';
+import process from 'node:process';
 import { pathToFileURL, URL } from 'node:url';
 import ts, { type Diagnostic } from 'typescript';
 import type { FlatDts } from '../api';
+
+export class DtsSetup {
+
+  readonly compilerOptions: Readonly<ts.CompilerOptions>;
+  readonly files: readonly string[];
+  readonly errors: readonly ts.Diagnostic[];
+  readonly scriptTarget: ts.ScriptTarget;
+  readonly eol: string;
+
+  constructor(readonly dtsOptions: FlatDts.Options) {
+    const { compilerOptions, files, errors } = parseDtsOptions(dtsOptions);
+
+    this.compilerOptions = compilerOptions;
+    this.files = files;
+    this.errors = errors;
+
+    this.scriptTarget = detectScriptTarget(compilerOptions);
+    this.eol = detectEOL(compilerOptions);
+  }
+
+  sourceURL(path: string): URL {
+    return new URL(path, this.root());
+  }
+
+  root(): URL {
+    return pathToFileURL('./');
+  }
+
+  relativePath(path: string): string {
+    const cwd = this.root();
+    const { href: cwdHref } = cwd;
+    const { href } = new URL(path, cwd);
+
+    if (!href.startsWith(cwdHref)) {
+      return path;
+    }
+
+    return href.slice(cwdHref.length);
+  }
+
+  basename(path: string): string {
+    const idx = path.lastIndexOf('/');
+
+    return idx < 0 ? path : path.slice(idx + 1);
+  }
+
+  pathToRoot(path: string): string {
+    const cwd = this.root();
+    const { href: cwdHref } = cwd;
+    const { href } = new URL(path, cwd);
+
+    if (!href.startsWith(cwdHref)) {
+      return path;
+    }
+
+    let relative = href.slice(cwdHref.length);
+    let result = '';
+
+    for (;;) {
+      const idx = relative.lastIndexOf('/');
+
+      if (idx < 0) {
+        break;
+      }
+
+      if (result) {
+        result += '/..';
+      } else {
+        result = '..';
+      }
+
+      relative = relative.slice(0, idx);
+    }
+
+    return result;
+  }
+
+}
+
+function parseDtsOptions(dtsOptions: FlatDts.Options): {
+  readonly compilerOptions: Readonly<ts.CompilerOptions>;
+  readonly files: readonly string[];
+  readonly errors: readonly ts.Diagnostic[];
+} {
+  const { tsconfig = 'tsconfig.json', file: outFile = 'index.d.ts' } = dtsOptions;
+  let { compilerOptions = {} } = dtsOptions;
+
+  compilerOptions = {
+    ...compilerOptions,
+    ...MANDATORY_COMPILER_OPTIONS,
+    outDir: undefined,
+    outFile,
+  };
+
+  let dirName: string;
+  let tsconfigFile: string | undefined;
+  let tsconfigJson: unknown;
+
+  if (typeof tsconfig !== 'string') {
+    dirName = process.cwd();
+    tsconfigJson = tsconfig;
+  } else {
+    dirName = path.dirname(tsconfig);
+    tsconfigFile = path.basename(tsconfig);
+
+    const configPath = ts.findConfigFile(dirName, ts.sys.fileExists, tsconfig);
+
+    if (!configPath) {
+      return { compilerOptions, files: [], errors: [] };
+    }
+
+    dirName = path.dirname(configPath);
+
+    const {
+      config,
+      error,
+    }: {
+      readonly config?: unknown;
+      readonly error?: Diagnostic;
+    } = ts.readConfigFile(configPath, ts.sys.readFile);
+
+    if (error) {
+      return { compilerOptions, files: [], errors: [error] };
+    }
+
+    tsconfigJson = config;
+  }
+
+  const {
+    options,
+    errors,
+    fileNames: files,
+  } = ts.parseJsonConfigFileContent(tsconfigJson, ts.sys, dirName, undefined, tsconfigFile);
+
+  return {
+    compilerOptions: {
+      ...options,
+      ...compilerOptions,
+    },
+    files,
+    errors,
+  };
+}
 
 const MANDATORY_COMPILER_OPTIONS: ts.CompilerOptions = {
   // Avoid extra work
@@ -27,129 +171,7 @@ const MANDATORY_COMPILER_OPTIONS: ts.CompilerOptions = {
   stripInternal: true,
 };
 
-export class DtsSetup {
-
-  readonly compilerOptions: Readonly<ts.CompilerOptions>;
-  readonly files: readonly string[];
-  readonly errors: readonly ts.Diagnostic[];
-  readonly scriptTarget: ts.ScriptTarget;
-  readonly eol: string;
-
-  constructor(readonly dtsOptions: FlatDts.Options) {
-    const { tsconfig = 'tsconfig.json', file: dtsFile = 'index.d.ts' } = dtsOptions;
-    let { compilerOptions = {} } = dtsOptions;
-
-    compilerOptions = { ...compilerOptions, ...MANDATORY_COMPILER_OPTIONS };
-
-    delete compilerOptions.outDir;
-    compilerOptions.outFile = dtsFile;
-    this.scriptTarget = scriptTarget(compilerOptions);
-
-    this.eol = eolString(compilerOptions);
-
-    let dirName = path.dirname(tsconfig);
-    const configPath = ts.findConfigFile(dirName, ts.sys.fileExists, tsconfig);
-
-    if (!configPath) {
-      this.compilerOptions = compilerOptions;
-      this.files = [];
-      this.errors = [];
-
-      return;
-    }
-
-    dirName = path.dirname(configPath);
-
-    const {
-      config,
-      error,
-    }: {
-      readonly config?: unknown;
-      readonly error?: Diagnostic;
-    } = ts.readConfigFile(configPath, ts.sys.readFile);
-
-    if (error) {
-      this.compilerOptions = compilerOptions;
-      this.files = [];
-      this.errors = [error];
-
-      return;
-    }
-
-    const {
-      options,
-      errors,
-      fileNames: files,
-    } = ts.parseJsonConfigFileContent(config, ts.sys, dirName);
-
-    this.compilerOptions = {
-      ...options,
-      ...compilerOptions,
-    };
-    this.files = files;
-    this.errors = errors;
-  }
-
-  sourceURL(path: string): URL {
-    return new URL(path, this.root());
-  }
-
-  root(): URL {
-    return pathToFileURL('./');
-  }
-
-  relativePath(path: string): string {
-    const cwd = this.root();
-    const { href: cwdHref } = cwd;
-    const { href } = new URL(path, cwd);
-
-    if (!href.startsWith(cwdHref)) {
-      return path;
-    }
-
-    return href.substr(cwdHref.length);
-  }
-
-  basename(path: string): string {
-    const idx = path.lastIndexOf('/');
-
-    return idx < 0 ? path : path.substr(idx + 1);
-  }
-
-  pathToRoot(path: string): string {
-    const cwd = this.root();
-    const { href: cwdHref } = cwd;
-    const { href } = new URL(path, cwd);
-
-    if (!href.startsWith(cwdHref)) {
-      return path;
-    }
-
-    let relative = href.substr(cwdHref.length);
-    let result = '';
-
-    for (;;) {
-      const idx = relative.lastIndexOf('/');
-
-      if (idx < 0) {
-        break;
-      }
-
-      if (result) {
-        result += '/..';
-      } else {
-        result = '..';
-      }
-
-      relative = relative.substr(0, idx);
-    }
-
-    return result;
-  }
-
-}
-
-function scriptTarget(compilerOptions: ts.CompilerOptions): ts.ScriptTarget {
+function detectScriptTarget(compilerOptions: ts.CompilerOptions): ts.ScriptTarget {
   let { target } = compilerOptions;
 
   if (!target) {
@@ -160,7 +182,7 @@ function scriptTarget(compilerOptions: ts.CompilerOptions): ts.ScriptTarget {
   return target;
 }
 
-function eolString({ newLine }: ts.CompilerOptions): string {
+function detectEOL({ newLine }: ts.CompilerOptions): string {
   switch (newLine) {
     case ts.NewLineKind.LineFeed:
       return '\n';
