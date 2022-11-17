@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { pathToFileURL, URL } from 'node:url';
-import ts, { Diagnostic } from 'typescript';
+import ts, { type Diagnostic } from 'typescript';
 import type { FlatDts } from '../api';
 
 const MANDATORY_COMPILER_OPTIONS: ts.CompilerOptions = {
@@ -54,33 +54,40 @@ export class DtsSetup {
       this.compilerOptions = compilerOptions;
       this.files = [];
       this.errors = [];
-    } else {
-      dirName = path.dirname(configPath);
 
-      const { config, error } = ts.readConfigFile(configPath, ts.sys.readFile) as {
-        config?: unknown;
-        error?: Diagnostic;
-      };
-
-      if (error) {
-        this.compilerOptions = compilerOptions;
-        this.files = [];
-        this.errors = [error];
-      } else {
-        const {
-          options,
-          errors,
-          fileNames: files,
-        } = ts.parseJsonConfigFileContent(config, ts.sys, dirName);
-
-        this.compilerOptions = {
-          ...options,
-          ...compilerOptions,
-        };
-        this.files = files;
-        this.errors = errors;
-      }
+      return;
     }
+
+    dirName = path.dirname(configPath);
+
+    const {
+      config,
+      error,
+    }: {
+      readonly config?: unknown;
+      readonly error?: Diagnostic;
+    } = ts.readConfigFile(configPath, ts.sys.readFile);
+
+    if (error) {
+      this.compilerOptions = compilerOptions;
+      this.files = [];
+      this.errors = [error];
+
+      return;
+    }
+
+    const {
+      options,
+      errors,
+      fileNames: files,
+    } = ts.parseJsonConfigFileContent(config, ts.sys, dirName);
+
+    this.compilerOptions = {
+      ...options,
+      ...compilerOptions,
+    };
+    this.files = files;
+    this.errors = errors;
   }
 
   sourceURL(path: string): URL {
