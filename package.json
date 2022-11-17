@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-flat-dts",
-  "version": "1.8.1",
+  "version": "2.0.0",
   "description": ".d.ts files flattener and Rollup plugin",
   "keywords": [
     "rollup-plugin",
