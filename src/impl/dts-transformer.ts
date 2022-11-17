@@ -98,7 +98,6 @@ export class DtsTransformer {
               target,
               ts.factory.updateModuleDeclaration(
                 decl,
-                decl.decorators,
                 decl.modifiers,
                 ts.factory.createStringLiteral(target.declareAs),
                 body,
@@ -183,7 +182,6 @@ export class DtsTransformer {
         to: [
           ts.factory.updateImportDeclaration(
             statement,
-            statement.decorators,
             statement.modifiers,
             statement.importClause,
             ts.factory.createStringLiteral(fromModule.declareAs),
@@ -226,7 +224,6 @@ export class DtsTransformer {
       to: [
         ts.factory.updateImportDeclaration(
           statement,
-          statement.decorators,
           statement.modifiers,
           ts.factory.updateImportClause(importClause, importClause.isTypeOnly, name, namedBindings),
           ts.factory.createStringLiteral(enclosing.declareAs),
@@ -269,7 +266,6 @@ export class DtsTransformer {
         to: [
           ts.factory.updateExportDeclaration(
             statement,
-            statement.decorators,
             statement.modifiers,
             statement.isTypeOnly,
             statement.exportClause,
@@ -302,7 +298,6 @@ export class DtsTransformer {
         to: [
           ts.factory.updateExportDeclaration(
             statement,
-            statement.decorators,
             statement.modifiers,
             statement.isTypeOnly,
             ts.factory.updateNamedExports(exportClause, elements),
@@ -366,7 +361,6 @@ export class DtsTransformer {
         ? [
             ts.factory.updateModuleDeclaration(
               decl,
-              decl.decorators,
               decl.modifiers,
               ts.factory.createStringLiteral(target.declareAs),
               body,
