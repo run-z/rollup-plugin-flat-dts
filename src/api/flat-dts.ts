@@ -39,7 +39,7 @@ export namespace FlatDts {
    *
    * Contains options for `rollup-plugin-flat-dts` plugin.
    *
-   * Accepted by {@link emitFlatDts}.
+   * Accepted by {@link rollup-plugin-flat-dts/api!emitFlatDts emitFlatDts} function.
    */
   export interface Options {
     /**
@@ -134,7 +134,7 @@ export namespace FlatDts {
      *
      * When specified, the original entry name is replaced with `<moduleName>/<as>`.
      *
-     * @defaultValue The same as {@link name}.
+     * @defaultValue The same as entry name.
      */
     readonly as?: string | undefined;
 
@@ -189,7 +189,7 @@ export namespace FlatDts {
      *
      * Creates the necessary directories.
      *
-     * @param path - Target file path. Defaults to {@link name}.
+     * @param path - Target file path. Defaults to {@link path}.
      *
      * @returns A promise resolved when file written.
      */

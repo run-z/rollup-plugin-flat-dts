@@ -1,5 +1,4 @@
 /**
- * @packageDocumentation
  * @module rollup-plugin-flat-dts
  */
 import { dirname, relative, resolve } from 'node:path';
