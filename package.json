@@ -65,7 +65,7 @@
     "prettier-eslint-cli": "^7.1.0",
     "rollup": "^3.10.1",
     "rollup-plugin-typescript2": "^0.34.1",
-    "run-z": "1.10.1-bootstrap",
+    "run-z": "1.11.0-bootstrap",
     "shx": "^0.3.4",
     "ts-jest": "^29.0.5",
     "tslib": "^2.4.1",
