@@ -1,4 +1,0 @@
-{
-  "main": "../dist/flat-dts.api.cjs",
-  "types": "../dist/flat-dts.api.d.ts"
-}

@@ -19,18 +19,24 @@
     "url": "https://github.com/run-z/rollup-plugin-flat-dts/issues"
   },
   "type": "module",
-  "main": "./dist/flat-dts.plugin.cjs",
   "types": "./dist/flat-dts.plugin.d.ts",
+  "typesVersions": {
+    "*": {
+      "api": [
+        "./dist/flat-dts.api.d.ts"
+      ]
+    }
+  },
   "exports": {
     ".": {
       "types": "./dist/flat-dts.plugin.d.ts",
-      "import": "./dist/flat-dts.plugin.js",
-      "require": "./dist/flat-dts.plugin.cjs"
+      "require": "./dist/flat-dts.plugin.cjs",
+      "default": "./dist/flat-dts.plugin.js"
     },
     "./api": {
       "types": "./dist/flat-dts.api.d.ts",
-      "import": "./dist/flat-dts.api.js",
-      "require": "./dist/flat-dts.api.cjs"
+      "require": "./dist/flat-dts.api.cjs",
+      "default": "./dist/flat-dts.api.js"
     }
   },
   "peerDependencies": {
