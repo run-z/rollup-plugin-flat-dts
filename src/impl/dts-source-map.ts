@@ -14,6 +14,10 @@ export class DtsSourceMap {
   private constructor(readonly map: SourceMapConsumer, readonly setup: DtsSetup) {}
 
   originalRange(node: ts.Node, source: ts.SourceFile): DtsLocationRange | undefined {
+    if (!(node.pos >= 0) || !(node.end >= 0)) {
+      return;
+    }
+
     const startPos = node.getStart(source);
     const endPos = node.getEnd();
 
