@@ -1,7 +1,7 @@
+import ts from '@rollup/plugin-typescript';
 import { builtinModules, createRequire } from 'node:module';
 import path from 'node:path';
 import { defineConfig } from 'rollup';
-import ts from 'rollup-plugin-typescript2';
 import typescript from 'typescript';
 
 const req = createRequire(import.meta.url);
@@ -20,8 +20,7 @@ export default defineConfig({
   plugins: [
     ts({
       typescript,
-      cacheRoot: 'target/.rts2_cache',
-      useTsconfigDeclarationDir: true,
+      cacheDir: 'target/.rts_cache',
     }),
   ],
   external(id) {
@@ -31,10 +30,10 @@ export default defineConfig({
     {
       format: 'cjs',
       sourcemap: true,
-      dir: './dist',
+      dir: '.',
       exports: 'auto',
-      entryFileNames: '[name].cjs',
-      chunkFileNames: '_[name].cjs',
+      entryFileNames: 'dist/[name].cjs',
+      chunkFileNames: 'dist/_[name].cjs',
       manualChunks,
       hoistTransitiveImports: false,
     },
