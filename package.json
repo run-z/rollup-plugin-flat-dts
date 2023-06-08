@@ -57,7 +57,7 @@
   "devDependencies": {
     "@jest/globals": "^29.5.0",
     "@rollup/plugin-typescript": "^11.1.1",
-    "@run-z/eslint-config": "^3.3.1",
+    "@run-z/eslint-config": "^3.4.0",
     "@run-z/prettier-config": "^2.0.0",
     "@types/is-glob": "^4.0.2",
     "@types/micromatch": "^4.0.2",
