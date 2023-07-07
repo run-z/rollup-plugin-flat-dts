@@ -53,6 +53,7 @@ function manualChunks(id) {
   if (id === path.resolve('src', 'plugin.ts')) {
     return 'flat-dts.plugin';
   }
-
-  return 'flat-dts.api';
+  if (id.startsWith(path.resolve('src'))) {
+    return 'flat-dts.api';
+  }
 }
