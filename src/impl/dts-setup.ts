@@ -111,7 +111,11 @@ function parseDtsOptions(dtsOptions: FlatDts.Options): {
     const configPath = ts.findConfigFile(dirName, ts.sys.fileExists, tsconfig);
 
     if (!configPath) {
-      return { compilerOptions, files: [], errors: [] };
+      return {
+        compilerOptions: patchCompilerOptions(compilerOptions),
+        files: [],
+        errors: [],
+      };
     }
 
     dirName = path.dirname(configPath);
@@ -125,7 +129,11 @@ function parseDtsOptions(dtsOptions: FlatDts.Options): {
     } = ts.readConfigFile(configPath, ts.sys.readFile);
 
     if (error) {
-      return { compilerOptions, files: [], errors: [error] };
+      return {
+        compilerOptions: patchCompilerOptions(compilerOptions),
+        files: [],
+        errors: [error],
+      };
     }
 
     tsconfigJson = config;
@@ -138,13 +146,31 @@ function parseDtsOptions(dtsOptions: FlatDts.Options): {
   } = ts.parseJsonConfigFileContent(tsconfigJson, ts.sys, dirName, undefined, tsconfigFile);
 
   return {
-    compilerOptions: {
+    compilerOptions: patchCompilerOptions({
       ...options,
       ...compilerOptions,
-    },
+    }),
     files,
     errors,
   };
+}
+
+function patchCompilerOptions(compilerOptions: ts.CompilerOptions): ts.CompilerOptions {
+  const { moduleResolution } = compilerOptions;
+
+  if (
+    moduleResolution == null
+    || moduleResolution === ts.ModuleResolutionKind.Node16
+    || moduleResolution === ts.ModuleResolutionKind.NodeNext
+  ) {
+    // SystemJS does not support `Node16` and `NodeNext` resolutions
+    compilerOptions = {
+      ...compilerOptions,
+      moduleResolution: ts.ModuleResolutionKind.Node10,
+    };
+  }
+
+  return compilerOptions;
 }
 
 const MANDATORY_COMPILER_OPTIONS: ts.CompilerOptions = {
@@ -169,6 +195,8 @@ const MANDATORY_COMPILER_OPTIONS: ts.CompilerOptions = {
   skipLibCheck: true,
   // Always strip internal exports
   stripInternal: true,
+  // Unsupported by SystemJS
+  verbatimModuleSyntax: false,
 };
 
 function detectScriptTarget(compilerOptions: ts.CompilerOptions): ts.ScriptTarget {

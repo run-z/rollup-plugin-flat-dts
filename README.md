@@ -288,6 +288,9 @@ So, here what this plugin is doing:
      // Generate single file
      // `System`, in contrast to `None`, permits the use of `import.meta`
      "module": "System",
+     // When set to "Node16" or "NodeNext", or when unspecified
+     // Otherwise, it conflicts with SystemJS
+     "moduleResolution": "Node",
      // Always emit
      "noEmit": false,
      // Skip code generation when error occurs
@@ -295,7 +298,9 @@ So, here what this plugin is doing:
      // Ignore errors in library type definitions
      "skipLibCheck": true,
      // Always strip internal exports
-     "stripInternal": true
+     "stripInternal": true,
+     // Unsupported by SystemJS
+     "verbatimModuleSyntax": false
    }
    ```
 
