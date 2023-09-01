@@ -295,6 +295,8 @@ So, here what this plugin is doing:
      "noEmit": false,
      // Skip code generation when error occurs
      "noEmitOnError": true,
+     // SystemJS does not support JSON module imports
+     "resolveJsonModule": false,
      // Ignore errors in library type definitions
      "skipLibCheck": true,
      // Always strip internal exports
