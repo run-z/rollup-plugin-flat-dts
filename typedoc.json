@@ -2,5 +2,5 @@
   "entryPoints": ["src/plugin.ts", "src/api/index.ts"],
   "name": ".d.ts Flattener",
   "out": "./target/typedoc",
-  "tsconfig": "tsconfig.json"
+  "sort": ["static-first", "visibility", "enum-value-ascending", "alphabetical", "kind"]
 }
