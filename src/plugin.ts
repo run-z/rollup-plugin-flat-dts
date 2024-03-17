@@ -28,7 +28,7 @@ export default function flatDtsPlugin(dtsOptions?: FlatDts.Options): OutputPlugi
 
       if (dir != null) {
         dtsOptions = dtsOptionsRelativeToDir(dir, dtsOptions);
-        assetPath = filePath => relative(dir as string, filePath);
+        assetPath = filePath => relative(dir, filePath);
       }
 
       const dts = await emitFlatDts(dtsOptions);
