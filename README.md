@@ -302,7 +302,7 @@ So, here what this plugin is doing:
      // Always strip internal exports
      "stripInternal": true,
      // Unsupported by SystemJS
-     "verbatimModuleSyntax": false
+     "verbatimModuleSyntax": false,
    }
    ```
 

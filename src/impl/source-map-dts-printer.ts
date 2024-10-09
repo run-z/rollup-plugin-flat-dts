@@ -5,7 +5,6 @@ import { DtsPrinter } from './dts-printer';
 import type { DtsSource } from './dts-source';
 
 export class SourceMapDtsPrinter extends DtsPrinter<DtsSource.WithMap> {
-
   private readonly _nodes: ts.Node[] = [];
 
   print(node: ts.Node): this {
@@ -34,5 +33,4 @@ export class SourceMapDtsPrinter extends DtsPrinter<DtsSource.WithMap> {
       new DtsMapper(this.source, dtsFile).map(this._nodes).toString(),
     );
   }
-
 }

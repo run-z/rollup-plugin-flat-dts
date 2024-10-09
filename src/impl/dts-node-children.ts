@@ -1,7 +1,6 @@
 import ts from 'typescript';
 
 export class DtsNodeChildren extends Set<ts.Node> {
-
   constructor(node: ts.Node) {
     super();
 
@@ -9,5 +8,4 @@ export class DtsNodeChildren extends Set<ts.Node> {
       this.add(child);
     });
   }
-
 }

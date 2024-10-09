@@ -5,7 +5,6 @@ import ts, { type Diagnostic } from 'typescript';
 import type { FlatDts } from '../api';
 
 export class DtsSetup {
-
   readonly compilerOptions: Readonly<ts.CompilerOptions>;
   readonly files: readonly string[];
   readonly errors: readonly ts.Diagnostic[];
@@ -79,7 +78,6 @@ export class DtsSetup {
 
     return result;
   }
-
 }
 
 function parseDtsOptions(dtsOptions: FlatDts.Options): {
@@ -159,9 +157,9 @@ function patchCompilerOptions(compilerOptions: ts.CompilerOptions): ts.CompilerO
   const { moduleResolution } = compilerOptions;
 
   if (
-    moduleResolution == null
-    || moduleResolution === ts.ModuleResolutionKind.Node16
-    || moduleResolution === ts.ModuleResolutionKind.NodeNext
+    moduleResolution == null ||
+    moduleResolution === ts.ModuleResolutionKind.Node16 ||
+    moduleResolution === ts.ModuleResolutionKind.NodeNext
   ) {
     // SystemJS does not support `Node16` and `NodeNext` resolutions
     compilerOptions = {

@@ -9,7 +9,6 @@ import type { ModuleInfo } from './module-info';
 import { allTransformed, noneTransformed, TopLevelStatement, Transformed } from './transformed';
 
 export class DtsTransformer {
-
   private readonly _index: ModuleIndex;
 
   constructor(private readonly _source: DtsSource) {
@@ -386,7 +385,6 @@ export class DtsTransformer {
       messageText,
     };
   }
-
 }
 
 function isBodyBlock(body: ts.ModuleDeclaration['body']): body is ts.ModuleBlock {

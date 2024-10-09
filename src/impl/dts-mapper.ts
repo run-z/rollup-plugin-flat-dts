@@ -5,12 +5,14 @@ import { DtsNodeChildren } from './dts-node-children';
 import type { DtsSource } from './dts-source';
 
 export class DtsMapper {
-
   private readonly _genDts: ts.SourceFile;
   private readonly _generator: SourceMapGenerator;
   private readonly _line: Mapping[] = [];
 
-  constructor(private readonly _source: DtsSource.WithMap, dtsFile: FlatDts.File) {
+  constructor(
+    private readonly _source: DtsSource.WithMap,
+    dtsFile: FlatDts.File,
+  ) {
     const { setup } = _source;
 
     // Re-parse just generated `.d.ts`.
@@ -91,10 +93,10 @@ export class DtsMapper {
     const [prev] = this._line;
 
     if (
-      prev
-      && prev.source === mapping.source
-      && prev.generated.line === mapping.generated.line
-      && prev.original.line === mapping.original.line
+      prev &&
+      prev.source === mapping.source &&
+      prev.generated.line === mapping.generated.line &&
+      prev.original.line === mapping.original.line
     ) {
       // Mapping from and to the same line
       this._line.push(mapping);
@@ -140,7 +142,6 @@ export class DtsMapper {
       this._generator.addMapping(mapping);
     });
   }
-
 }
 
 function compareMappingColumns(

@@ -7,11 +7,13 @@ import { SimpleDtsPrinter } from './simple-dts-printer';
 import { SourceMapDtsPrinter } from './source-map-dts-printer';
 
 export class DtsContent {
-
   private readonly _refs = new Set<ModuleInfo>();
   private readonly _statements: ts.Statement[] = [];
 
-  constructor(readonly source: DtsSource, readonly module: ModuleInfo) {}
+  constructor(
+    readonly source: DtsSource,
+    readonly module: ModuleInfo,
+  ) {}
 
   refer(refs: readonly ModuleInfo[] | undefined): this {
     if (refs) {
@@ -55,5 +57,4 @@ export class DtsContent {
       }
     }
   }
-
 }

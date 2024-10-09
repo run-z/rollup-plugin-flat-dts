@@ -1,6 +1,5 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-// eslint-disable-next-line no-restricted-imports
 import { emitFlatDts } from 'rollup-plugin-flat-dts/api';
 
 const moduleFile = fileURLToPath(import.meta.url);
@@ -19,13 +18,15 @@ emitFlatDts({
     api: { file: 'dist/flat-dts.api.d.ts' },
   },
   internal: 'impl',
-}).then(flatDts => {
-  if (flatDts.diagnostics.length) {
-    console.error(flatDts.formatDiagnostics());
-  }
+})
+  .then(flatDts => {
+    if (flatDts.diagnostics.length) {
+      console.error(flatDts.formatDiagnostics());
+    }
 
-  return flatDts.writeOut();
-}).catch(error => {
-  console.error('Failed to generate type definitions', error);
-  process.exit(1);
-});
+    return flatDts.writeOut();
+  })
+  .catch(error => {
+    console.error('Failed to generate type definitions', error);
+    process.exit(1);
+  });

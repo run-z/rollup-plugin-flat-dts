@@ -13,7 +13,7 @@ exports[`For class emits declaration map: dts 1`] = `
 "
 `;
 
-exports[`For class emits declaration map: source map 1`] = `"{"version":3,"sources":["src/tests/classes/classes.ts"],"names":[],"mappings":";IAAA,MAAM,OAAO,SAAS;QAEpB,GAAG,IAAI,MAAM,CAAA;KAId;IAED,MAAM,OAAO,SAAU,CAAA,QAAQ,SAAS;QAE7B,GAAG,IAAI,MAAM,CAAA;KAIvB","file":"index.d.ts","sourceRoot":""}"`;
+exports[`For class emits declaration map: source map 1`] = `"{"version":3,"sources":["src/tests/classes/classes.ts"],"names":[],"mappings":";IAAA,MAAM,OAAO,SAAS;QACpB,GAAG,IAAI,MAAM,CAAA;KAGd;IAED,MAAM,OAAO,SAAU,CAAA,QAAQ,SAAS;QAC7B,GAAG,IAAI,MAAM,CAAA;KAGvB","file":"index.d.ts","sourceRoot":""}"`;
 
 exports[`For class emits type definitions 1`] = `
 "declare module "test-package" {

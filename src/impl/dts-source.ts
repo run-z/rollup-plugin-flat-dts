@@ -3,7 +3,6 @@ import type { DtsSetup } from './dts-setup';
 import { DtsSourceMap } from './dts-source-map';
 
 export class DtsSource {
-
   static async create(
     sources: readonly DtsSourceFile[],
     setup: DtsSetup,
@@ -20,8 +19,8 @@ export class DtsSource {
     }
 
     return (
-      source
-      && new DtsSource(
+      source &&
+      new DtsSource(
         source,
         sourceMap && (await DtsSourceMap.create(sourceMap.path, sourceMap.content, setup)),
         setup,
@@ -42,7 +41,6 @@ export class DtsSource {
   hasMap(): this is DtsSource.WithMap {
     return !!this.map;
   }
-
 }
 
 export namespace DtsSource {

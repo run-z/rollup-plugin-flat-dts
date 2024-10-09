@@ -3,7 +3,6 @@ import type ts from 'typescript';
 import type { DtsSetup } from './dts-setup';
 
 export class DtsSourceMap {
-
   static async create(path: string, content: string, setup: DtsSetup): Promise<DtsSourceMap> {
     return new DtsSourceMap(
       await new SourceMapConsumer(content, setup.sourceURL(path).href),
@@ -11,7 +10,10 @@ export class DtsSourceMap {
     );
   }
 
-  private constructor(readonly map: SourceMapConsumer, readonly setup: DtsSetup) {}
+  private constructor(
+    readonly map: SourceMapConsumer,
+    readonly setup: DtsSetup,
+  ) {}
 
   originalRange(node: ts.Node, source: ts.SourceFile): DtsLocationRange | undefined {
     if (!(node.pos >= 0) || !(node.end >= 0)) {
@@ -65,7 +67,6 @@ export class DtsSourceMap {
       col: column,
     };
   }
-
 }
 
 export type DtsLocationRange = readonly [DtsLocation, DtsLocation];

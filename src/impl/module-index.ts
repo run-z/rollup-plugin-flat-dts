@@ -5,7 +5,6 @@ import { ModuleInfo } from './module-info';
 import { moduleMatcher } from './module-matcher';
 
 export class ModuleIndex {
-
   private readonly _meta: DtsMeta;
   private readonly _isInternal: (name: string) => boolean;
   private readonly _isExternal: (name: string) => boolean;
@@ -97,5 +96,4 @@ export class ModuleIndex {
 
     return result;
   }
-
 }

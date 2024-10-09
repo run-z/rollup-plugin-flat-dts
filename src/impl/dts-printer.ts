@@ -5,7 +5,6 @@ import type { FlatDts } from '../api';
 import type { DtsSource } from './dts-source';
 
 export abstract class DtsPrinter<TSource extends DtsSource = DtsSource> {
-
   private readonly _printer: ts.Printer;
   private _out = '';
 
@@ -44,5 +43,4 @@ export abstract class DtsPrinter<TSource extends DtsSource = DtsSource> {
       },
     };
   }
-
 }

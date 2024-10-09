@@ -1,7 +1,6 @@
 import ts from 'typescript';
 
 export class DtsMeta {
-
   private readonly _declaredModules: ReadonlySet<string>;
 
   constructor(source: ts.SourceFile) {
@@ -23,5 +22,4 @@ export class DtsMeta {
   isModuleDeclared(name: string): boolean {
     return this._declaredModules.has(name);
   }
-
 }

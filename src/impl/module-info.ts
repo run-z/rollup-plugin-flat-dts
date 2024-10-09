@@ -7,7 +7,6 @@ import type { DtsSource } from './dts-source';
 const noReferredLibs: ReadonlySet<string> = /*#__PURE__*/ new Set();
 
 export class ModuleInfo {
-
   static async main(source: DtsSource): Promise<ModuleInfo> {
     const {
       source: { fileName: file },
@@ -99,7 +98,6 @@ export class ModuleInfo {
 
     return relativePath.split(path.sep).map(encodeURIComponent).join(path.sep);
   }
-
 }
 
 async function packageName(): Promise<string> {
@@ -108,8 +106,8 @@ async function packageName(): Promise<string> {
 
   if (!name) {
     throw new Error(
-      'Can not detect module name automatically. '
-        + "Consider to set `flatDts({ moduleName: '<MODULE>' })` option explicitly",
+      'Can not detect module name automatically. ' +
+        "Consider to set `flatDts({ moduleName: '<MODULE>' })` option explicitly",
     );
   }
 
